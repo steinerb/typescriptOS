@@ -192,10 +192,37 @@ var TSOS;
             if (args.length > 0) {
                 var topic = args[0];
                 switch (topic) {
+                    //ver
+                    case "ver":
+                        _StdOut.putText("Ver displays the version information of this operating system.");
+                        break;
+                    //help
                     case "help":
                         _StdOut.putText("Help displays a list of (hopefully) valid commands.");
                         break;
-                    // TODO: Make descriptive MANual page entries for the the rest of the shell commands here.
+                    //shutdown
+                    case "shutdown":
+                        _StdOut.putText("Shutdown turns off the operating system.");
+                        break;
+                    //cls
+                    case "cls":
+                        _StdOut.putText("Cls clears the screan, reseting the cursor to the top left.");
+                        break;
+                    //man
+                    case "man":
+                        _StdOut.putText("You clearly already know how to use this command, but for your information man stands for MANual.");
+                        break;
+                    //trace
+                    case "trace":
+                        _StdOut.putText("not totally sure???");
+                        break;
+                    //rot13
+                    case "rot13":
+                        _StdOut.putText("Rot13 encrypts a string using the rot13 algorithm.");
+                        break;
+                    //prompt
+                    case "prompt":
+                        _StdOut.putText("Prompt changes the prompt from > to whatever you please.");
                     default:
                         _StdOut.putText("No manual entry for " + args[0] + ".");
                 }
