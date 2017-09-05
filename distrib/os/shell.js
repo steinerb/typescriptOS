@@ -52,6 +52,9 @@ var TSOS;
             // guess <int>
             sc = new TSOS.ShellCommand(this.shellGuess, "guess", "<int> - Compares your input to a random number, 1-10.");
             this.commandList[this.commandList.length] = sc;
+            // roll <int>
+            sc = new TSOS.ShellCommand(this.shellRoll, "roll", "<int> - Rolls any amount of D6 dice.");
+            this.commandList[this.commandList.length] = sc;
             // ps  - list the running processes and their IDs
             // kill <id> - kills the specified process id.
             //
@@ -226,11 +229,15 @@ var TSOS;
                     //prompt
                     case "prompt":
                         _StdOut.putText("Prompt changes the prompt from > to whatever you please.");
+                        break;
                     //guess
                     case "guess":
                         _StdOut.putText("Guess compares an integer from 1-10 and compares it to a random integer from 1-10.");
+                        break;
                     //roll
-                    //case "roll":
+                    case "roll":
+                        _StdOut.putText("Roll rolls an amount of D6 dice.");
+                        break;
                     default:
                         _StdOut.putText("No manual entry for " + args[0] + ".");
                 }
@@ -293,6 +300,26 @@ var TSOS;
             }
             else
                 _StdOut.putText("Invalid Input!");
+        };
+        //NEW SHELL FUNCTION
+        Shell.prototype.shellRoll = function (args) {
+            var numDice = args[0];
+            var diceVals = [];
+            var current;
+            var diceSum = 0;
+            //gets values of dice and adds to total
+            for (var i = 0; i < numDice; i++) {
+                current = Math.floor((Math.random() * 6) + 1);
+                diceVals[diceVals.length] = current;
+                diceSum += current;
+            }
+            //prints values of dice
+            for (var i = 0; i < diceVals.length; i++) {
+                _StdOut.putText("Die " + (i + 1) + ": " + diceVals[i]);
+                _StdOut.advanceLine();
+            }
+            //prints sum of dice
+            _StdOut.putText("TOTAL: " + diceSum);
         };
         return Shell;
     }());
