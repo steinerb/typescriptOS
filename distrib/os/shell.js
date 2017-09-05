@@ -49,6 +49,9 @@ var TSOS;
             // prompt <string>
             sc = new TSOS.ShellCommand(this.shellPrompt, "prompt", "<string> - Sets the prompt.");
             this.commandList[this.commandList.length] = sc;
+            // guess <int>
+            sc = new TSOS.ShellCommand(this.shellGuess, "guess", "<int> - Compares your input to a random number, 1-10.");
+            this.commandList[this.commandList.length] = sc;
             // ps  - list the running processes and their IDs
             // kill <id> - kills the specified process id.
             //
@@ -214,7 +217,7 @@ var TSOS;
                         break;
                     //trace
                     case "trace":
-                        _StdOut.putText("not totally sure???");
+                        _StdOut.putText("Trace on logs OS calls.");
                         break;
                     //rot13
                     case "rot13":
@@ -223,6 +226,11 @@ var TSOS;
                     //prompt
                     case "prompt":
                         _StdOut.putText("Prompt changes the prompt from > to whatever you please.");
+                    //guess
+                    case "guess":
+                        _StdOut.putText("Guess compares an integer from 1-10 and compares it to a random integer from 1-10.");
+                    //roll
+                    //case "roll":
                     default:
                         _StdOut.putText("No manual entry for " + args[0] + ".");
                 }
@@ -272,6 +280,19 @@ var TSOS;
             else {
                 _StdOut.putText("Usage: prompt <string>  Please supply a string.");
             }
+        };
+        //NEW SHELL FUNCTION
+        Shell.prototype.shellGuess = function (args) {
+            if (args.length == 1) {
+                var guess = args[0];
+                var answer = Math.floor((Math.random() * 10) + 1);
+                if (guess == answer)
+                    _StdOut.putText("You guessed correctly!");
+                else
+                    _StdOut.putText("Incorrect");
+            }
+            else
+                _StdOut.putText("Invalid Input!");
         };
         return Shell;
     }());
