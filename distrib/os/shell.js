@@ -58,6 +58,9 @@ var TSOS;
             // date
             sc = new TSOS.ShellCommand(this.shellDate, "date", "- Displays the current time.");
             this.commandList[this.commandList.length] = sc;
+            // whereami
+            sc = new TSOS.ShellCommand(this.shellWhereAmI, "whereami", "- Description of your current location.");
+            this.commandList[this.commandList.length] = sc;
             // ps  - list the running processes and their IDs
             // kill <id> - kills the specified process id.
             //
@@ -245,6 +248,10 @@ var TSOS;
                     case "date":
                         _StdOut.putText("Date displays the current date.");
                         break;
+                    //whereami
+                    case "whereami":
+                        _StdOut.putText("Helps you find where you are.");
+                        break;
                     default:
                         _StdOut.putText("No manual entry for " + args[0] + ".");
                 }
@@ -332,6 +339,10 @@ var TSOS;
         Shell.prototype.shellDate = function (args) {
             var date = new Date();
             _StdOut.putText(date.getMonth() + "/" + date.getDate() + "/" + date.getFullYear());
+        };
+        //NEW SHELL FUNCTION
+        Shell.prototype.shellWhereAmI = function (args) {
+            _StdOut.putText("[A better answer coming soon!]");
         };
         return Shell;
     }());

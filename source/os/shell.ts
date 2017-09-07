@@ -97,6 +97,12 @@ module TSOS {
             					"- Displays the current time.");
           	this.commandList[this.commandList.length] = sc;
 
+          	// whereami
+            sc = new ShellCommand(this.shellWhereAmI,
+                                  "whereami",
+                                  "- Description of your current location.");
+            this.commandList[this.commandList.length] = sc;
+
             // ps  - list the running processes and their IDs
             // kill <id> - kills the specified process id.
 
@@ -296,6 +302,11 @@ module TSOS {
                     case "date":
                         _StdOut.putText("Date displays the current date.");
                         break;
+                    //whereami
+                    case "whereami":
+                        _StdOut.putText("Helps you find where you are.");
+                        break;
+
 
                     default:
                         _StdOut.putText("No manual entry for " + args[0] + ".");
@@ -388,6 +399,11 @@ module TSOS {
         public shellDate(args) {
         	var date = new Date();
         	_StdOut.putText(date.getMonth()+"/"+date.getDate()+"/"+date.getFullYear());
+        }
+
+        //NEW SHELL FUNCTION
+        public shellWhereAmI(args) {
+            _StdOut.putText("[A better answer coming soon!]");
         }
 
     }
