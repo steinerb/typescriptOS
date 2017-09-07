@@ -55,6 +55,9 @@ var TSOS;
             // roll <int>
             sc = new TSOS.ShellCommand(this.shellRoll, "roll", "<int> - Rolls any amount of D6 dice.");
             this.commandList[this.commandList.length] = sc;
+            // date
+            sc = new TSOS.ShellCommand(this.shellDate, "date", "- Displays the current time.");
+            this.commandList[this.commandList.length] = sc;
             // ps  - list the running processes and their IDs
             // kill <id> - kills the specified process id.
             //
@@ -238,6 +241,10 @@ var TSOS;
                     case "roll":
                         _StdOut.putText("Roll rolls an amount of D6 dice.");
                         break;
+                    //date
+                    case "date":
+                        _StdOut.putText("Date displays the current date.");
+                        break;
                     default:
                         _StdOut.putText("No manual entry for " + args[0] + ".");
                 }
@@ -320,6 +327,11 @@ var TSOS;
             }
             //prints sum of dice
             _StdOut.putText("TOTAL: " + diceSum);
+        };
+        //NEW SHELL FUCNTION
+        Shell.prototype.shellDate = function (args) {
+            var date = new Date();
+            _StdOut.putText(date.getMonth() + "/" + date.getDate() + "/" + date.getFullYear());
         };
         return Shell;
     }());
