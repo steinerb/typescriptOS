@@ -61,6 +61,9 @@ var TSOS;
             // whereami
             sc = new TSOS.ShellCommand(this.shellWhereAmI, "whereami", "- Description of your current location.");
             this.commandList[this.commandList.length] = sc;
+            // test
+            sc = new TSOS.ShellCommand(this.shellTest, "test", "- A shell command for the developer to experiment with new shell commands.");
+            this.commandList[this.commandList.length] = sc;
             // ps  - list the running processes and their IDs
             // kill <id> - kills the specified process id.
             //
@@ -222,7 +225,7 @@ var TSOS;
                         break;
                     //man
                     case "man":
-                        _StdOut.putText("You clearly already know how to use this command, but for your information man stands for MANual.");
+                        _StdOut.putText("You clearly already know how to use this command, but for your information man is a prefix of MANual.");
                         break;
                     //trace
                     case "trace":
@@ -251,6 +254,10 @@ var TSOS;
                     //whereami
                     case "whereami":
                         _StdOut.putText("Helps you find where you are.");
+                        break;
+                    //test
+                    case "test":
+                        _StdOut.putText("For the dev to try and add new stuff.");
                         break;
                     default:
                         _StdOut.putText("No manual entry for " + args[0] + ".");
@@ -343,6 +350,10 @@ var TSOS;
         //NEW SHELL FUNCTION
         Shell.prototype.shellWhereAmI = function (args) {
             _StdOut.putText("[A better answer coming soon!]");
+        };
+        //NEW SHELL FUNCTION
+        Shell.prototype.shellTest = function (args) {
+            _StdOut.putText("Just a test!");
         };
         return Shell;
     }());

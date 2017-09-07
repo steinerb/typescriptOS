@@ -103,6 +103,12 @@ module TSOS {
                                   "- Description of your current location.");
             this.commandList[this.commandList.length] = sc;
 
+            // test
+            sc = new ShellCommand(this.shellTest,
+                                  "test",
+                                  "- A shell command for the developer to experiment with new shell commands.");
+            this.commandList[this.commandList.length] = sc;
+
             // ps  - list the running processes and their IDs
             // kill <id> - kills the specified process id.
 
@@ -276,7 +282,7 @@ module TSOS {
                         break; 
                     //man
                     case "man":
-                        _StdOut.putText("You clearly already know how to use this command, but for your information man stands for MANual.");
+                        _StdOut.putText("You clearly already know how to use this command, but for your information man is a prefix of MANual.");
                         break; 
                     //trace
                     case "trace":
@@ -305,6 +311,10 @@ module TSOS {
                     //whereami
                     case "whereami":
                         _StdOut.putText("Helps you find where you are.");
+                        break;
+                    //test
+                    case "test":
+                        _StdOut.putText("For the dev to try and add new stuff.");
                         break;
 
 
@@ -404,6 +414,11 @@ module TSOS {
         //NEW SHELL FUNCTION
         public shellWhereAmI(args) {
             _StdOut.putText("[A better answer coming soon!]");
+        }
+
+        //NEW SHELL FUNCTION
+        public shellTest(args) {
+        	_StdOut.putText("Just a test!");
         }
 
     }
