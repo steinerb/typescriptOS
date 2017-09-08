@@ -420,7 +420,7 @@ module TSOS {
         public shellTest(args) {
         	var firstArg = args[0];
 
-        	_StdOut.measureText(_DefaultFontFamily, _DefaultFontSize, firstArg);
+        	_StdOut.putText("used for adding test commands!");
         }
 
     }
