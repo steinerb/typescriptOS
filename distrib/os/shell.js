@@ -328,7 +328,7 @@ var TSOS;
             var diceVals = [];
             var current;
             var diceSum = 0;
-            //gets values of dice and adds to total
+            //gets values of dice and adds to sum
             for (var i = 0; i < numDice; i++) {
                 current = Math.floor((Math.random() * 6) + 1);
                 diceVals[diceVals.length] = current;

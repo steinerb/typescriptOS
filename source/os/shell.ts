@@ -384,19 +384,19 @@ module TSOS {
 
         //NEW SHELL FUNCTION
         public shellRoll(args) {
-            var numDice = args[0];
-            var diceVals = [];
-            var current;
-            var diceSum = 0;
-            //gets values of dice and adds to total
-            for (var i = 0; i < numDice; i++)
+            let numDice = args[0];
+            let diceVals: number[] = [];
+            let current: number;
+            let diceSum: number = 0;
+            //gets values of dice and adds to sum
+            for (let i: number = 0; i < numDice; i++)
             {
                 current = Math.floor((Math.random() * 6) + 1);
                 diceVals[diceVals.length] = current;
                 diceSum += current;
             }
             //prints values of dice
-            for (var i = 0; i < diceVals.length; i++)
+            for (let i: number = 0; i < diceVals.length; i++)
             {
                 _StdOut.putText("Die " + (i+1) + ": " + diceVals[i]);
                 _StdOut.advanceLine();
