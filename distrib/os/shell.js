@@ -353,7 +353,8 @@ var TSOS;
         };
         //NEW SHELL FUNCTION
         Shell.prototype.shellTest = function (args) {
-            _StdOut.putText("Just a test!");
+            var firstArg = args[0];
+            _StdOut.measureText(_DefaultFontFamily, _DefaultFontSize, firstArg);
         };
         return Shell;
     }());

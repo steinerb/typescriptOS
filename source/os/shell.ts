@@ -371,8 +371,8 @@ module TSOS {
         public shellGuess(args) {
             if (args.length == 1) 
             {
-                var guess = args[0];
-                var answer = Math.floor((Math.random() * 10) + 1);
+                let guess = args[0];
+                let answer = Math.floor((Math.random() * 10) + 1);
                 if(guess == answer)
                     _StdOut.putText("You guessed correctly!");
                 else
@@ -407,7 +407,7 @@ module TSOS {
 
         //NEW SHELL FUCNTION
         public shellDate(args) {
-        	var date = new Date();
+        	let date = new Date();
         	_StdOut.putText(date.getMonth()+"/"+date.getDate()+"/"+date.getFullYear());
         }
 
@@ -418,7 +418,9 @@ module TSOS {
 
         //NEW SHELL FUNCTION
         public shellTest(args) {
-        	_StdOut.putText("Just a test!");
+        	var firstArg = args[0];
+
+        	_StdOut.measureText(_DefaultFontFamily, _DefaultFontSize, firstArg);
         }
 
     }
