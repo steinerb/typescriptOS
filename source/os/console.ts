@@ -99,8 +99,6 @@ module TSOS {
 
          		//draw a clear rectangle over the last letter
          		_DrawingContext.clearRect(this.currentXPosition, this.currentYPosition, lastCharWidth, this.currentFontSize);
-
-         		//possibley set point to where it was one letter ago, again?
          	}
          }
       
