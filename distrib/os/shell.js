@@ -354,7 +354,9 @@ var TSOS;
         //NEW SHELL FUNCTION
         Shell.prototype.shellTest = function (args) {
             var firstArg = args[0];
-            _StdOut.measureText(_DefaultFontFamily, _DefaultFontSize, firstArg);
+            _StdOut.putText("abcdef");
+            _StdOut.backspace("f");
+            _StdOut.putText("g");
         };
         return Shell;
     }());

@@ -87,5 +87,22 @@ module TSOS {
 
             // TODO: Handle scrolling. (iProject 1)
         }
+
+        //NEW FUNCTION [INCOMPLETE]
+         
+        public backspace(text): void {
+         	if (text.length === 1)
+         	{
+         		var lastCharWidth = _DrawingContext.measureText(this.currentFont, this.currentFontSize, text);
+         		//set point to where it was one letter ago
+         		this.currentXPosition = this.currentXPosition - lastCharWidth;
+
+         		//draw a clear rectangle over the last letter
+         		_DrawingContext.clearRect(this.currentXPosition, this.currentYPosition, lastCharWidth, this.currentFontSize);
+
+         		//possibley set point to where it was one letter ago, again?
+         	}
+         }
+      
     }
  }

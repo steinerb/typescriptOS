@@ -420,7 +420,10 @@ module TSOS {
         public shellTest(args) {
         	var firstArg = args[0];
 
-        	_StdOut.putText("used for adding test commands!");
+        	_StdOut.putText("abcdef");
+        	_StdOut.backspace("f");
+        	_StdOut.putText("g");
+
         }
 
     }
