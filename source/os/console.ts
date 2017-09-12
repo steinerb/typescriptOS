@@ -96,7 +96,6 @@ module TSOS {
          		var lastCharWidth = _DrawingContext.measureText(this.currentFont, this.currentFontSize, text);
          		//set point to where it was one letter ago
          		this.currentXPosition = this.currentXPosition - lastCharWidth;
-
          		//draw a clear rectangle over the last letter
          		_DrawingContext.clearRect(this.currentXPosition, (this.currentYPosition-this.currentFontSize), lastCharWidth, this.currentFontSize);
          	}

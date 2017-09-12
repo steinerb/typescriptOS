@@ -423,7 +423,6 @@ module TSOS {
         	_StdOut.putText("abcdef");
         	_StdOut.backspace("f");
         	_StdOut.putText("g");
-
         }
 
     }
