@@ -98,9 +98,9 @@ module TSOS {
          		this.currentXPosition = this.currentXPosition - lastCharWidth;
 
          		//draw a clear rectangle over the last letter
-         		_DrawingContext.clearRect(this.currentXPosition, this.currentYPosition, lastCharWidth, this.currentFontSize);
+         		_DrawingContext.clearRect(this.currentXPosition, (this.currentYPosition-this.currentFontSize), lastCharWidth, this.currentFontSize);
          	}
-         }
+        }
       
     }
  }
