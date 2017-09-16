@@ -51,15 +51,29 @@ var TSOS;
         };
         Control.hostLog = function (msg, source) {
             if (source === void 0) { source = "?"; }
+            //make handles for HTML elements first to make the time operations as fast as possible.
+            var taLog = document.getElementById("taHostLog");
+            var timeBox = document.getElementById("time");
             // Note the OS CLOCK.
             var clock = _OSclock;
             // Note the REAL clock in milliseconds since January 1, 1970.
-            var now = new Date().getTime();
+            // ALL OPERATIONS BELOW MUST BE AS FAST AS POSSIBLE for the sake of our time being in sync with real time.
+            var now = new Date();
+            var nowTime = now.getTime();
+            var nowYear = now.getFullYear();
+            var nowMonth = now.getMonth();
+            var nowDate = now.getDate();
+            var nowHours = now.getHours();
+            var nowMinutes = now.getMinutes();
             // Build the log string.
-            var str = "({ clock:" + clock + ", source:" + source + ", msg:" + msg + ", now:" + now + " })" + "\n";
+            var str = "({ clock:" + clock + ", source:" + source + ", msg:" + msg + ", now:" + String(nowTime) + " })" + "\n";
             // Update the log console.
-            var taLog = document.getElementById("taHostLog");
             taLog.value = str + taLog.value;
+            // Update the task bar time.
+            if (nowHours >= 12)
+                timeBox.value = String(nowHours - 12) + ':' + String(nowMinutes) + "pm   " + String(nowMonth) + "/" + String(nowDate) + "/" + String(nowYear);
+            else
+                timeBox.value = String(nowHours) + ':' + String(nowMinutes) + "am   " + String(nowMonth) + "/" + String(nowDate) + "/" + String(nowYear);
             // TODO in the future: Optionally update a log database or some streaming service.
         };
         //

@@ -427,8 +427,17 @@ module TSOS {
 
         //NEW SHELL FUCNTION
         public shellDate(args) {
-        	let date = new Date();
-        	_StdOut.putText(date.getMonth()+"/"+date.getDate()+"/"+date.getFullYear());
+            let now:             Date = new Date();
+            let nowYear:       number = now.getFullYear();
+            let nowMonth:      number = now.getMonth();
+            let nowDate:       number = now.getDate();
+            let nowHours:      number = now.getHours();
+            let nowMinutes:    number = now.getMinutes();
+
+            if (nowHours >= 12)
+        	    _StdOut.putText( String(nowHours-12)+':'+String(nowMinutes)+"pm   "+String(nowMonth)+"/"+String(nowDate)+"/"+String(nowYear) );
+            else
+                _StdOut.putText( String(nowHours)+':'+String(nowMinutes)+"am   "+String(nowMonth)+"/"+String(nowDate)+"/"+String(nowYear) );
         }
 
         //NEW SHELL FUNCTION

@@ -65,7 +65,7 @@ var TSOS;
             sc = new TSOS.ShellCommand(this.shellLoad, "load", "- Validates the program input.");
             this.commandList[this.commandList.length] = sc;
             // status
-            sc = new TSOS.ShellCommand(this.shellStatus, "status", "- Prints a message in the task bar.");
+            sc = new TSOS.ShellCommand(this.shellStatus, "status", "<string> - Prints a message in the task bar.");
             this.commandList[this.commandList.length] = sc;
             // test
             sc = new TSOS.ShellCommand(this.shellTest, "test", "- A shell command for the developer to experiment with new shell commands.");
@@ -358,8 +358,16 @@ var TSOS;
         };
         //NEW SHELL FUCNTION
         Shell.prototype.shellDate = function (args) {
-            var date = new Date();
-            _StdOut.putText(date.getMonth() + "/" + date.getDate() + "/" + date.getFullYear());
+            var now = new Date();
+            var nowYear = now.getFullYear();
+            var nowMonth = now.getMonth();
+            var nowDate = now.getDate();
+            var nowHours = now.getHours();
+            var nowMinutes = now.getMinutes();
+            if (nowHours >= 12)
+                _StdOut.putText(String(nowHours - 12) + ':' + String(nowMinutes) + "pm   " + String(nowMonth) + "/" + String(nowDate) + "/" + String(nowYear));
+            else
+                _StdOut.putText(String(nowHours) + ':' + String(nowMinutes) + "am   " + String(nowMonth) + "/" + String(nowDate) + "/" + String(nowYear));
         };
         //NEW SHELL FUNCTION
         Shell.prototype.shellWhereAmI = function (args) {

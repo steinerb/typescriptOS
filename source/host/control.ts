@@ -58,18 +58,35 @@ module TSOS {
         }
 
         public static hostLog(msg: string, source: string = "?"): void {
+            //make handles for HTML elements first to make the time operations as fast as possible.
+            var taLog = <HTMLInputElement> document.getElementById("taHostLog");
+            var timeBox = <HTMLInputElement> document.getElementById("time");
+
             // Note the OS CLOCK.
             var clock: number = _OSclock;
 
             // Note the REAL clock in milliseconds since January 1, 1970.
-            var now: number = new Date().getTime();
+            // ALL OPERATIONS BELOW MUST BE AS FAST AS POSSIBLE for the sake of our time being in sync with real time.
+            let now:             Date = new Date();
+            let nowTime:       number = now.getTime();
+            let nowYear:       number = now.getFullYear();
+            let nowMonth:      number = now.getMonth();
+            let nowDate:       number = now.getDate();
+            let nowHours:      number = now.getHours();
+            let nowMinutes:    number = now.getMinutes();
 
             // Build the log string.
-            var str: string = "({ clock:" + clock + ", source:" + source + ", msg:" + msg + ", now:" + now  + " })"  + "\n";
+            var str: string = "({ clock:" + clock + ", source:" + source + ", msg:" + msg + ", now:" + String(nowTime)  + " })"  + "\n";
 
             // Update the log console.
-            var taLog = <HTMLInputElement> document.getElementById("taHostLog");
+            
             taLog.value = str + taLog.value;
+
+            // Update the task bar time.
+            if (nowHours >= 12)
+                timeBox.value = String(nowHours-12)+':'+String(nowMinutes)+"pm   "+String(nowMonth)+"/"+String(nowDate)+"/"+String(nowYear);
+            else
+                timeBox.value =  String(nowHours)+':'+String(nowMinutes)+"am   "+String(nowMonth)+"/"+String(nowDate)+"/"+String(nowYear);
 
             // TODO in the future: Optionally update a log database or some streaming service.
         }
