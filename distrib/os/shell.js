@@ -358,16 +358,23 @@ var TSOS;
         };
         //NEW SHELL FUCNTION
         Shell.prototype.shellDate = function (args) {
+            var nowMinutesStr;
             var now = new Date();
             var nowYear = now.getFullYear();
             var nowMonth = now.getMonth();
             var nowDate = now.getDate();
             var nowHours = now.getHours();
             var nowMinutes = now.getMinutes();
-            if (nowHours >= 12)
-                _StdOut.putText(String(nowHours - 12) + ':' + String(nowMinutes) + "pm   " + String(nowMonth) + "/" + String(nowDate) + "/" + String(nowYear));
+            //make sure minutes value is 2 digits long
+            if (nowMinutes < 10)
+                nowMinutesStr = '0' + String(nowMinutes);
             else
-                _StdOut.putText(String(nowHours) + ':' + String(nowMinutes) + "am   " + String(nowMonth) + "/" + String(nowDate) + "/" + String(nowYear));
+                nowMinutesStr = String(nowMinutes);
+            //adjust to 12 hour clock
+            if (nowHours >= 12)
+                _StdOut.putText(String(nowHours - 12) + ':' + nowMinutesStr + "pm   " + String(nowMonth) + "/" + String(nowDate) + "/" + String(nowYear));
+            else
+                _StdOut.putText(String(nowHours) + ':' + nowMinutesStr + "am   " + String(nowMonth) + "/" + String(nowDate) + "/" + String(nowYear));
         };
         //NEW SHELL FUNCTION
         Shell.prototype.shellWhereAmI = function (args) {

@@ -58,6 +58,7 @@ var TSOS;
             var clock = _OSclock;
             // Note the REAL clock in milliseconds since January 1, 1970.
             // ALL OPERATIONS BELOW MUST BE AS FAST AS POSSIBLE for the sake of our time being in sync with real time.
+            var nowMinutesStr;
             var now = new Date();
             var nowTime = now.getTime();
             var nowYear = now.getFullYear();
@@ -67,13 +68,18 @@ var TSOS;
             var nowMinutes = now.getMinutes();
             // Build the log string.
             var str = "({ clock:" + clock + ", source:" + source + ", msg:" + msg + ", now:" + String(nowTime) + " })" + "\n";
+            //make sure minutes value is 2 digits long
+            if (nowMinutes < 10)
+                nowMinutesStr = '0' + String(nowMinutes);
+            else
+                nowMinutesStr = String(nowMinutes);
             // Update the log console.
             taLog.value = str + taLog.value;
             // Update the task bar time.
             if (nowHours >= 12)
-                timeBox.value = String(nowHours - 12) + ':' + String(nowMinutes) + "pm   " + String(nowMonth) + "/" + String(nowDate) + "/" + String(nowYear);
+                timeBox.value = String(nowHours - 12) + ':' + nowMinutesStr + "pm   " + String(nowMonth) + "/" + String(nowDate) + "/" + String(nowYear);
             else
-                timeBox.value = String(nowHours) + ':' + String(nowMinutes) + "am   " + String(nowMonth) + "/" + String(nowDate) + "/" + String(nowYear);
+                timeBox.value = String(nowHours) + ':' + nowMinutesStr + "am   " + String(nowMonth) + "/" + String(nowDate) + "/" + String(nowYear);
             // TODO in the future: Optionally update a log database or some streaming service.
         };
         //

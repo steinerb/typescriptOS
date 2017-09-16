@@ -427,6 +427,7 @@ module TSOS {
 
         //NEW SHELL FUCNTION
         public shellDate(args) {
+            let nowMinutesStr: string;
             let now:             Date = new Date();
             let nowYear:       number = now.getFullYear();
             let nowMonth:      number = now.getMonth();
@@ -434,10 +435,17 @@ module TSOS {
             let nowHours:      number = now.getHours();
             let nowMinutes:    number = now.getMinutes();
 
-            if (nowHours >= 12)
-        	    _StdOut.putText( String(nowHours-12)+':'+String(nowMinutes)+"pm   "+String(nowMonth)+"/"+String(nowDate)+"/"+String(nowYear) );
+            //make sure minutes value is 2 digits long
+            if (nowMinutes < 10)
+                nowMinutesStr = '0'+String(nowMinutes)
             else
-                _StdOut.putText( String(nowHours)+':'+String(nowMinutes)+"am   "+String(nowMonth)+"/"+String(nowDate)+"/"+String(nowYear) );
+                nowMinutesStr = String(nowMinutes)
+
+            //adjust to 12 hour clock
+            if (nowHours >= 12)
+        	    _StdOut.putText( String(nowHours-12)+':'+nowMinutesStr+"pm   "+String(nowMonth)+"/"+String(nowDate)+"/"+String(nowYear) );
+            else
+                _StdOut.putText( String(nowHours)+':'+nowMinutesStr+"am   "+String(nowMonth)+"/"+String(nowDate)+"/"+String(nowYear) );
         }
 
         //NEW SHELL FUNCTION
