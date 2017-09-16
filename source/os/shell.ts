@@ -112,7 +112,7 @@ module TSOS {
             // status
             sc = new ShellCommand(this.shellStatus,
                                   "status",
-                                  "- Prints a message in the task bar.");
+                                  "<string> - Prints a message in the task bar.");
             this.commandList[this.commandList.length] = sc;
 
             // test
