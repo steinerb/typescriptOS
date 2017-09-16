@@ -36,17 +36,6 @@ h3 {
   cursor: default;
 }
 
-#time {
-  background-color:#DFDBC3;
-  border: 2px solid red;
-  cursor: default;
-}
-
-#status {
-  background-color:#DFDBC3;
-  border: 2px solid red;
-  cursor: default;
-}
 
 .normal_button {
   width: 100px;

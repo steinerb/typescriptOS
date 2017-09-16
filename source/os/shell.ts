@@ -103,6 +103,12 @@ module TSOS {
                                   "- Description of your current location.");
             this.commandList[this.commandList.length] = sc;
 
+            //load
+            sc = new ShellCommand(this.shellLoad,
+                                  "load",
+                                  "- Validates the program input.");
+            this.commandList[this.commandList.length] = sc;
+
             // test
             sc = new ShellCommand(this.shellTest,
                                   "test",
@@ -312,6 +318,10 @@ module TSOS {
                     case "whereami":
                         _StdOut.putText("Helps you find where you are.");
                         break;
+                    //load
+                    case "load":
+                        _StdOut.putText("Loads a program from User Program Input.");
+                        break;
                     //test
                     case "test":
                         _StdOut.putText("For the dev to try and add new stuff.");
@@ -414,6 +424,24 @@ module TSOS {
         //NEW SHELL FUNCTION
         public shellWhereAmI(args) {
             _StdOut.putText("[A better answer coming soon!]");
+        }
+
+        //NEW SHELL FUNCTION
+        public shellLoad(args) {
+            var valid = [" ", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"];
+            var input = document.getElementById("taProgramInput");
+            var dataSTR = input.value.toLowerCase();
+            var dataLST = dataSTR.split("");
+            var current;
+            for (var i = 0; i < dataLST.length; i++)
+            {
+                current = dataLST[i];
+                if(valid.indexOf(current) === -1)
+                {
+                    _StdOut.putText("ERROR: Not all program input is valid!!!");
+                    break;
+                }
+            }
         }
 
         //NEW SHELL FUNCTION
