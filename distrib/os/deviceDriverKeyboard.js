@@ -62,7 +62,8 @@ var TSOS;
                 (keyCode == 13)) {
                 chr = String.fromCharCode(keyCode);
                 _KernelInputQueue.enqueue(chr);
-            }
+            } //else if (keyCode == 8) {			//backspace
+            //}
         };
         return DeviceDriverKeyboard;
     }(TSOS.DeviceDriver));
