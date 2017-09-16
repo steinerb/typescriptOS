@@ -64,6 +64,9 @@ var TSOS;
             // load
             sc = new TSOS.ShellCommand(this.shellLoad, "load", "- Validates the program input.");
             this.commandList[this.commandList.length] = sc;
+            // status
+            sc = new TSOS.ShellCommand(this.shellStatus, "status", "- Prints a message in the task bar.");
+            this.commandList[this.commandList.length] = sc;
             // test
             sc = new TSOS.ShellCommand(this.shellTest, "test", "- A shell command for the developer to experiment with new shell commands.");
             this.commandList[this.commandList.length] = sc;
@@ -256,11 +259,15 @@ var TSOS;
                         break;
                     //whereami
                     case "whereami":
-                        _StdOut.putText("Helps you find where you are.");
+                        _StdOut.putText("Whereami helps you find where you are.");
                         break;
                     //load
                     case "load":
                         _StdOut.putText("Loads a program from User Program Input.");
+                        break;
+                    //status
+                    case "status":
+                        _StdOut.putText("Status relays a message to the user.");
                         break;
                     //test
                     case "test":
@@ -373,12 +380,17 @@ var TSOS;
                 }
             }
         };
+        Shell.prototype.shellStatus = function (args) {
+            var statusBox = document.getElementById("status");
+            var statusMessage = args.join(' ');
+            statusBox.value = statusMessage;
+        };
         //NEW SHELL FUNCTION
         Shell.prototype.shellTest = function (args) {
-            var firstArg = args[0];
-            _StdOut.putText("abcdef");
-            _StdOut.backspace("f");
-            _StdOut.putText("g");
+            //TEST FOR BACKSPACE LOGIC
+            //_StdOut.putText("abcdef");
+            //_StdOut.backspace("f");
+            //_StdOut.putText("g");
         };
         return Shell;
     }());
