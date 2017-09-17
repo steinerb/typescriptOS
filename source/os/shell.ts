@@ -493,7 +493,7 @@ module TSOS {
 
             //TEST FOR BACKSPACE LOGIC
         	_StdOut.putText("abcdef");
-        	_StdOut.clearChar("f");
+        	_StdOut.clearWord("def");
         	_StdOut.putText("g");
         }
 

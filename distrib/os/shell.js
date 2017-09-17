@@ -409,7 +409,7 @@ var TSOS;
         Shell.prototype.shellTest = function (args) {
             //TEST FOR BACKSPACE LOGIC
             _StdOut.putText("abcdef");
-            _StdOut.clearChar("f");
+            _StdOut.clearWord("def");
             _StdOut.putText("g");
         };
         return Shell;

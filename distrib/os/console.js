@@ -43,6 +43,14 @@ var TSOS;
                 _DrawingContext.clearRect(this.currentXPosition, (this.currentYPosition - this.currentFontSize), lastCharWidth, this.currentFontSize);
             }
         };
+        Console.prototype.clearWord = function (text) {
+            var currentLast;
+            while (text.length > 0) {
+                currentLast = text.charAt(text.length - 1);
+                _Console.clearChar(currentLast);
+                text = text.slice(0, text.length - 1);
+            }
+        };
         Console.prototype.handleInput = function () {
             while (_KernelInputQueue.getSize() > 0) {
                 // Get the next character from the kernel input queue.

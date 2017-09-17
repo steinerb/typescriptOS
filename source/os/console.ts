@@ -53,6 +53,18 @@ module TSOS
          	}
         }
 
+        //like clearChar, but for multiple characters
+        public clearWord(text): void
+        {
+        	var currentLast;
+        	while (text.length > 0)
+        	{
+        		currentLast = text.charAt(text.length-1);
+        		_Console.clearChar(currentLast);
+        		text = text.slice(0, text.length-1);
+        	}
+        }
+
         public handleInput(): void 
         {
             while (_KernelInputQueue.getSize() > 0) 
@@ -75,7 +87,7 @@ module TSOS
                 		//save last letter
                 		var lastLetter = this.buffer[this.buffer.length-1];
                 		//chop off last latter
-                		this.buffer = this.buffer.substring(0, this.buffer.length - 1);
+                		this.buffer = this.buffer.substring(0, this.buffer.length-1);
                 		_Console.clearChar(lastLetter);
 
                 	}
