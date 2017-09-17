@@ -483,13 +483,15 @@ module TSOS {
             statusBox.value = statusMessage;
         }
 
-        public shellBSOD(args) {
+        public shellBSOD() {
             _StdOut.init();
             _StdOut.putText("IT BROKE!");
         }
 
         public shellTest(args) {
             
+
+            _Kernel.krnTrapError("Test ran successfully! Initiating BSOD...");
 
             //TEST FOR BACKSPACE LOGIC
         	//_StdOut.putText("abcdef");

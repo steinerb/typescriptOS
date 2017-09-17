@@ -402,11 +402,12 @@ var TSOS;
             var statusMessage = args.join(' ');
             statusBox.value = statusMessage;
         };
-        Shell.prototype.shellBSOD = function (args) {
+        Shell.prototype.shellBSOD = function () {
             _StdOut.init();
             _StdOut.putText("IT BROKE!");
         };
         Shell.prototype.shellTest = function (args) {
+            _Kernel.krnTrapError("Test ran successfully! Initiating BSOD...");
             //TEST FOR BACKSPACE LOGIC
             //_StdOut.putText("abcdef");
             //_StdOut.backspace("f");
