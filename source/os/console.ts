@@ -68,6 +68,18 @@ module TSOS
                     // ... and reset our buffer.
                     this.buffer = "";
                 }
+                else if (chr === String.fromCharCode(8))		//backspace
+                {
+                	if(this.buffer.length > 0)
+                	{
+                		//save last letter
+                		var lastLetter = this.buffer[this.buffer.length-1];
+                		//chop off last latter
+                		this.buffer = this.buffer.substring(0, this.buffer.length - 1);
+                		_Console.clearChar(lastLetter);
+
+                	}
+                }
                 else if (chr === String.fromCharCode(9))		//tab 
                 {
                 	var possibilities = [];
@@ -87,24 +99,6 @@ module TSOS
                         this.buffer = possibilities[0];
                         this.putText(possibilities[0]);
                 	}
-
-
-
-                //-----------------------------------------------
-            	/*
-                    var current;
-                    for (var i = 0; i < COMMAND_NAMES.length; i++)
-                    {
-                        current = COMMAND_NAMES[i];
-                        if (current.startsWith(this.buffer))
-                        {
-                            this.advanceLine();
-                            this.currentXPosition = 0;
-                            this.buffer = current;
-                            this.putText(this.buffer);
-                        }
-                    }
-                */
                 } 
                 else 
                 {

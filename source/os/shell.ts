@@ -491,12 +491,10 @@ module TSOS {
         public shellTest(args) {
             
 
-            _Kernel.krnTrapError("Test ran successfully! Initiating BSOD...");
-
             //TEST FOR BACKSPACE LOGIC
-        	//_StdOut.putText("abcdef");
-        	//_StdOut.backspace("f");
-        	//_StdOut.putText("g");
+        	_StdOut.putText("abcdef");
+        	_StdOut.clearChar("f");
+        	_StdOut.putText("g");
         }
 
     }
