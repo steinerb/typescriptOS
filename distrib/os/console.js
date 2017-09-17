@@ -21,7 +21,7 @@ var TSOS;
             this.currentXPosition = currentXPosition;
             this.currentYPosition = currentYPosition;
             this.buffer = buffer;
-        }
+        } //DO NOT REMOVE
         Console.prototype.init = function () {
             this.clearScreen();
             this.resetXY();
@@ -44,6 +44,18 @@ var TSOS;
                     _OsShell.handleInput(this.buffer);
                     // ... and reset our buffer.
                     this.buffer = "";
+                }
+                else if (chr === String.fromCharCode(9)) {
+                    var current;
+                    for (var i = 0; i < COMMAND_NAMES.length; i++) {
+                        current = COMMAND_NAMES[i];
+                        if (current.startsWith(this.buffer)) {
+                            this.advanceLine();
+                            this.currentXPosition = 0;
+                            this.buffer = current;
+                            this.putText(this.buffer);
+                        }
+                    }
                 }
                 else {
                     // This is a "normal" character, so ...

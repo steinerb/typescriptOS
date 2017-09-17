@@ -20,6 +20,25 @@ const TIMER_IRQ: number = 0;  // Pages 23 (timer), 9 (interrupts), and 561 (inte
                               // NOTE: The timer is different from hardware/host clock pulses. Don't confuse these.
 const KEYBOARD_IRQ: number = 1;
 
+const COMMAND_NAMES: string[] =
+[
+	"ver",
+	"help",
+	"shutdown",
+	"cls",
+	"man",
+	"trace",
+	"rot13",
+	"prompt",
+	"guess",
+	"roll",
+	"date",
+	"whereami",
+	"load",
+	"status",
+	"bsod",
+	"test"
+];
 
 //
 // Global Variables

@@ -51,19 +51,19 @@ var TSOS;
                 // Assume it's lowercase...
                 chr = String.fromCharCode(keyCode + 32);
                 // ... then check the shift key and re-adjust if necessary.
-                if (isShifted) {
+                if (isShifted)
                     chr = String.fromCharCode(keyCode);
-                }
                 // TODO: Check for caps-lock and handle as shifted if so.
                 _KernelInputQueue.enqueue(chr);
             }
             else if (((keyCode >= 48) && (keyCode <= 57)) ||
                 (keyCode == 32) ||
+                //(keyCode == 8)					  ||	// backspace						
+                (keyCode == 9) ||
                 (keyCode == 13)) {
                 chr = String.fromCharCode(keyCode);
                 _KernelInputQueue.enqueue(chr);
-            } //else if (keyCode == 8) {			//backspace
-            //}
+            }
         };
         return DeviceDriverKeyboard;
     }(TSOS.DeviceDriver));
