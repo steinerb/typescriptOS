@@ -26,12 +26,22 @@ var TSOS;
             this.clearScreen();
             this.resetXY();
         };
-        Console.prototype.clearScreen = function () {
-            _DrawingContext.clearRect(0, 0, _Canvas.width, _Canvas.height);
-        };
         Console.prototype.resetXY = function () {
             this.currentXPosition = 0;
             this.currentYPosition = this.currentFontSize;
+        };
+        Console.prototype.clearScreen = function () {
+            _DrawingContext.clearRect(0, 0, _Canvas.width, _Canvas.height);
+        };
+        //the canvas drawing part of backspace. goes back one letter.
+        Console.prototype.clearChar = function (text) {
+            if (text.length === 1) {
+                var lastCharWidth = _DrawingContext.measureText(this.currentFont, this.currentFontSize, text);
+                //set point to where it was one letter ago
+                this.currentXPosition = this.currentXPosition - lastCharWidth;
+                //draw a clear rectangle over the last letter
+                _DrawingContext.clearRect(this.currentXPosition, (this.currentYPosition - this.currentFontSize), lastCharWidth, this.currentFontSize);
+            }
         };
         Console.prototype.handleInput = function () {
             while (_KernelInputQueue.getSize() > 0) {
@@ -95,16 +105,6 @@ var TSOS;
                 _DrawingContext.fontDescent(this.currentFont, this.currentFontSize) +
                 _FontHeightMargin;
             // TODO: Handle scrolling. (iProject 1)
-        };
-        //NEW FUNCTION [INCOMPLETE]
-        Console.prototype.backspace = function (text) {
-            if (text.length === 1) {
-                var lastCharWidth = _DrawingContext.measureText(this.currentFont, this.currentFontSize, text);
-                //set point to where it was one letter ago
-                this.currentXPosition = this.currentXPosition - lastCharWidth;
-                //draw a clear rectangle over the last letter
-                _DrawingContext.clearRect(this.currentXPosition, (this.currentYPosition - this.currentFontSize), lastCharWidth, this.currentFontSize);
-            }
         };
         return Console;
     }());

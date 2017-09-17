@@ -29,15 +29,28 @@ module TSOS
             this.resetXY();
         }
 
+        private resetXY(): void 
+        {
+            this.currentXPosition = 0;
+            this.currentYPosition = this.currentFontSize;
+        }
+
         private clearScreen(): void 
         {
             _DrawingContext.clearRect(0, 0, _Canvas.width, _Canvas.height);
         }
 
-        private resetXY(): void 
+        //the canvas drawing part of backspace. goes back one letter.
+        public clearChar(text): void 
         {
-            this.currentXPosition = 0;
-            this.currentYPosition = this.currentFontSize;
+         	if (text.length === 1)
+         	{
+         		var lastCharWidth = _DrawingContext.measureText(this.currentFont, this.currentFontSize, text);
+         		//set point to where it was one letter ago
+         		this.currentXPosition = this.currentXPosition - lastCharWidth;
+         		//draw a clear rectangle over the last letter
+         		_DrawingContext.clearRect(this.currentXPosition, (this.currentYPosition-this.currentFontSize), lastCharWidth, this.currentFontSize);
+         	}
         }
 
         public handleInput(): void 
@@ -116,20 +129,8 @@ module TSOS
 
             // TODO: Handle scrolling. (iProject 1)
         }
-
-        //NEW FUNCTION [INCOMPLETE]
          
-        public backspace(text): void 
-        {
-         	if (text.length === 1)
-         	{
-         		var lastCharWidth = _DrawingContext.measureText(this.currentFont, this.currentFontSize, text);
-         		//set point to where it was one letter ago
-         		this.currentXPosition = this.currentXPosition - lastCharWidth;
-         		//draw a clear rectangle over the last letter
-         		_DrawingContext.clearRect(this.currentXPosition, (this.currentYPosition-this.currentFontSize), lastCharWidth, this.currentFontSize);
-         	}
-        }
+
       
     }
  }
