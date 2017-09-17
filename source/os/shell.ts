@@ -115,6 +115,12 @@ module TSOS {
                                   "<string> - Prints a message in the task bar.");
             this.commandList[this.commandList.length] = sc;
 
+            //bsod
+            sc = new ShellCommand(this.shellBSOD,
+                                  "bsod",
+                                  "- Blue Screen of Death.");
+            this.commandList[this.commandList.length] = sc;
+
             // test
             sc = new ShellCommand(this.shellTest,
                                   "test",
@@ -332,6 +338,10 @@ module TSOS {
                     case "status":
                         _StdOut.putText("Status relays a message to the user.");
                         break;
+                    //bsod
+                    case "bsod":
+                        _StdOut.putText("An error screen that stops the OS.");
+                        break;
                     //test
                     case "test":
                         _StdOut.putText("For the dev to try and add new stuff.");
@@ -387,7 +397,6 @@ module TSOS {
             }
         }
 
-        //NEW SHELL FUNCTION
         public shellGuess(args) {
             if (args.length == 1) 
             {
@@ -402,7 +411,6 @@ module TSOS {
                 _StdOut.putText("Invalid Input!");
         }
 
-        //NEW SHELL FUNCTION
         public shellRoll(args) {
             let numDice = args[0];
             let diceVals: number[] = [];
@@ -425,7 +433,6 @@ module TSOS {
             _StdOut.putText("TOTAL: " + diceSum);
         }
 
-        //NEW SHELL FUCNTION
         public shellDate(args) {
             let nowMinutesStr: string;
             let now:             Date = new Date();
@@ -448,12 +455,10 @@ module TSOS {
                 _StdOut.putText( String(nowHours)+':'+nowMinutesStr+"am   "+String(nowMonth)+"/"+String(nowDate)+"/"+String(nowYear) );
         }
 
-        //NEW SHELL FUNCTION
         public shellWhereAmI(args) {
             _StdOut.putText("[A better answer coming soon!]");
         }
 
-        //NEW SHELL FUNCTION
         public shellLoad(args) {
             var valid = [" ", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"];
             var input = (<HTMLInputElement>document.getElementById("taProgramInput"));
@@ -478,7 +483,11 @@ module TSOS {
             statusBox.value = statusMessage;
         }
 
-        //NEW SHELL FUNCTION
+        public shellBSOD(args) {
+            _StdOut.init();
+            _StdOut.putText("IT BROKE!");
+        }
+
         public shellTest(args) {
             
 

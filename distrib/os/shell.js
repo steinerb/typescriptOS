@@ -67,6 +67,9 @@ var TSOS;
             // status
             sc = new TSOS.ShellCommand(this.shellStatus, "status", "<string> - Prints a message in the task bar.");
             this.commandList[this.commandList.length] = sc;
+            //bsod
+            sc = new TSOS.ShellCommand(this.shellBSOD, "bsod", "- Blue Screen of Death.");
+            this.commandList[this.commandList.length] = sc;
             // test
             sc = new TSOS.ShellCommand(this.shellTest, "test", "- A shell command for the developer to experiment with new shell commands.");
             this.commandList[this.commandList.length] = sc;
@@ -269,6 +272,10 @@ var TSOS;
                     case "status":
                         _StdOut.putText("Status relays a message to the user.");
                         break;
+                    //bsod
+                    case "bsod":
+                        _StdOut.putText("An error screen that stops the OS.");
+                        break;
                     //test
                     case "test":
                         _StdOut.putText("For the dev to try and add new stuff.");
@@ -323,7 +330,6 @@ var TSOS;
                 _StdOut.putText("Usage: prompt <string>  Please supply a string.");
             }
         };
-        //NEW SHELL FUNCTION
         Shell.prototype.shellGuess = function (args) {
             if (args.length == 1) {
                 var guess = args[0];
@@ -336,7 +342,6 @@ var TSOS;
             else
                 _StdOut.putText("Invalid Input!");
         };
-        //NEW SHELL FUNCTION
         Shell.prototype.shellRoll = function (args) {
             var numDice = args[0];
             var diceVals = [];
@@ -356,7 +361,6 @@ var TSOS;
             //prints sum of dice
             _StdOut.putText("TOTAL: " + diceSum);
         };
-        //NEW SHELL FUCNTION
         Shell.prototype.shellDate = function (args) {
             var nowMinutesStr;
             var now = new Date();
@@ -376,11 +380,9 @@ var TSOS;
             else
                 _StdOut.putText(String(nowHours) + ':' + nowMinutesStr + "am   " + String(nowMonth) + "/" + String(nowDate) + "/" + String(nowYear));
         };
-        //NEW SHELL FUNCTION
         Shell.prototype.shellWhereAmI = function (args) {
             _StdOut.putText("[A better answer coming soon!]");
         };
-        //NEW SHELL FUNCTION
         Shell.prototype.shellLoad = function (args) {
             var valid = [" ", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"];
             var input = document.getElementById("taProgramInput");
@@ -400,7 +402,10 @@ var TSOS;
             var statusMessage = args.join(' ');
             statusBox.value = statusMessage;
         };
-        //NEW SHELL FUNCTION
+        Shell.prototype.shellBSOD = function (args) {
+            _StdOut.init();
+            _StdOut.putText("IT BROKE!");
+        };
         Shell.prototype.shellTest = function (args) {
             //TEST FOR BACKSPACE LOGIC
             //_StdOut.putText("abcdef");
