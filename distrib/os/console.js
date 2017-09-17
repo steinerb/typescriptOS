@@ -56,16 +56,35 @@ var TSOS;
                     this.buffer = "";
                 }
                 else if (chr === String.fromCharCode(9)) {
+                    var possibilities = [];
                     var current;
+                    //gather possible commands
                     for (var i = 0; i < COMMAND_NAMES.length; i++) {
                         current = COMMAND_NAMES[i];
-                        if (current.startsWith(this.buffer)) {
-                            this.advanceLine();
-                            this.currentXPosition = 0;
-                            this.buffer = current;
-                            this.putText(this.buffer);
-                        }
+                        if (current.startsWith(this.buffer))
+                            possibilities[possibilities.length] = current;
                     }
+                    if (possibilities.length === 1) {
+                        this.advanceLine();
+                        this.currentXPosition = 0;
+                        this.buffer = possibilities[0];
+                        this.putText(possibilities[0]);
+                    }
+                    //-----------------------------------------------
+                    /*
+                        var current;
+                        for (var i = 0; i < COMMAND_NAMES.length; i++)
+                        {
+                            current = COMMAND_NAMES[i];
+                            if (current.startsWith(this.buffer))
+                            {
+                                this.advanceLine();
+                                this.currentXPosition = 0;
+                                this.buffer = current;
+                                this.putText(this.buffer);
+                            }
+                        }
+                    */
                 }
                 else {
                     // This is a "normal" character, so ...
