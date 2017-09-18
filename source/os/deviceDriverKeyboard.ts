@@ -58,7 +58,9 @@ module TSOS
             else if (((keyCode >= 48) && (keyCode <= 57)) ||    // digits
                       (keyCode == 32)                     ||    // space
                       (keyCode == 8)					  ||	// backspace						
-                      (keyCode == 9)					  ||	// tab												
+                      (keyCode == 9)					  ||	// tab
+                      (keyCode == 38)					  ||	// up												
+                      (keyCode == 40)					  ||	// down												      												
                       (keyCode == 13))                          // enter
             {                       
                 chr = String.fromCharCode(keyCode);

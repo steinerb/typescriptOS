@@ -74,6 +74,9 @@ module TSOS
                 // Check to see if it's "special" (enter or ctrl-c) or "normal" (anything else that the keyboard device driver gave us).
                 if (chr === String.fromCharCode(13))			//enter
                 {
+                	//KERNAL BUFFERS HANDLING
+                	_KernelBuffersIndex = -1;
+                    _KernelBuffers.unshift(this.buffer);
                     // The enter key marks the end of a console command, so ...
                     // ... tell the shell ...
                     _OsShell.handleInput(this.buffer);
@@ -111,6 +114,19 @@ module TSOS
                         this.buffer = possibilities[0];
                         this.putText(possibilities[0]);
                 	}
+                }
+                else if (chr === String.fromCharCode(38))		//up 
+                {
+                    this.advanceLine();
+                    _KernelBuffersIndex += 1;
+                    this.putText(_KernelBuffers[_KernelBuffersIndex]);
+                    this.buffer = _KernelBuffers[_KernelBuffersIndex]; 
+                }
+                else if (chr === String.fromCharCode(40)) { //      Down
+                    this.advanceLine();
+                    _KernelBuffersIndex -= 1;
+                    this.putText(_KernelBuffers[_KernelBuffersIndex]);
+                    this.buffer = _KernelBuffers[_KernelBuffersIndex];  
                 } 
                 else 
                 {

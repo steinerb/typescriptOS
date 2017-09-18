@@ -43,6 +43,7 @@ var TSOS;
                 _DrawingContext.clearRect(this.currentXPosition, (this.currentYPosition - this.currentFontSize), lastCharWidth, this.currentFontSize);
             }
         };
+        //like clearChar, but for multiple characters
         Console.prototype.clearWord = function (text) {
             var currentLast;
             while (text.length > 0) {
@@ -57,6 +58,9 @@ var TSOS;
                 var chr = _KernelInputQueue.dequeue();
                 // Check to see if it's "special" (enter or ctrl-c) or "normal" (anything else that the keyboard device driver gave us).
                 if (chr === String.fromCharCode(13)) {
+                    //KERNAL BUFFERS HANDLING
+                    _KernelBuffersIndex = -1;
+                    _KernelBuffers.unshift(this.buffer);
                     // The enter key marks the end of a console command, so ...
                     // ... tell the shell ...
                     _OsShell.handleInput(this.buffer);
@@ -87,6 +91,18 @@ var TSOS;
                         this.buffer = possibilities[0];
                         this.putText(possibilities[0]);
                     }
+                }
+                else if (chr === String.fromCharCode(38)) {
+                    this.advanceLine();
+                    _KernelBuffersIndex += 1;
+                    this.putText(_KernelBuffers[_KernelBuffersIndex]);
+                    this.buffer = _KernelBuffers[_KernelBuffersIndex];
+                }
+                else if (chr === String.fromCharCode(40)) {
+                    this.advanceLine();
+                    _KernelBuffersIndex -= 1;
+                    this.putText(_KernelBuffers[_KernelBuffersIndex]);
+                    this.buffer = _KernelBuffers[_KernelBuffersIndex];
                 }
                 else {
                     // This is a "normal" character, so ...
