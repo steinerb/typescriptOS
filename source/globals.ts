@@ -62,7 +62,7 @@ var _Trace: boolean = true;  // Default the OS trace to be on.
 var _Kernel: TSOS.Kernel;
 var _KernelInterruptQueue;          // Initializing this to null (which I would normally do) would then require us to specify the 'any' type, as below.
 var _KernelInputQueue: any = null;  // Is this better? I don't like uninitialized variables. But I also don't like using the type specifier 'any'
-var _KernelBuffers: any[] = null;   // when clearly 'any' is not what we want. There is likely a better way, but what is it?
+var _KernelBuffers: string[] = null;   // when clearly 'any' is not what we want. There is likely a better way, but what is it?
 var _KernelBuffersIndex: number = -1; //keeps track of which buffer is next for UP/DOWN
 
 // Standard input and output

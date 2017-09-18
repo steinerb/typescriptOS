@@ -93,16 +93,20 @@ var TSOS;
                     }
                 }
                 else if (chr === String.fromCharCode(38)) {
-                    this.advanceLine();
-                    _KernelBuffersIndex += 1;
-                    this.putText(_KernelBuffers[_KernelBuffersIndex]);
-                    this.buffer = _KernelBuffers[_KernelBuffersIndex];
+                    if (_KernelBuffersIndex < _KernelBuffers.length - 1) {
+                        _Console.clearWord(this.buffer);
+                        _KernelBuffersIndex += 1;
+                        this.putText(_KernelBuffers[_KernelBuffersIndex]);
+                        this.buffer = _KernelBuffers[_KernelBuffersIndex];
+                    }
                 }
                 else if (chr === String.fromCharCode(40)) {
-                    this.advanceLine();
-                    _KernelBuffersIndex -= 1;
-                    this.putText(_KernelBuffers[_KernelBuffersIndex]);
-                    this.buffer = _KernelBuffers[_KernelBuffersIndex];
+                    if (_KernelBuffersIndex > 0) {
+                        _Console.clearWord(this.buffer);
+                        _KernelBuffersIndex -= 1;
+                        this.putText(_KernelBuffers[_KernelBuffersIndex]);
+                        this.buffer = _KernelBuffers[_KernelBuffersIndex];
+                    }
                 }
                 else {
                     // This is a "normal" character, so ...
