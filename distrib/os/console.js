@@ -138,14 +138,19 @@ var TSOS;
         Console.prototype.advanceLine = function () {
             this.currentXPosition = 0;
             /*
-             * Font size measures from the baseline to the highest point in the font.
-             * Font descent measures from the baseline to the lowest point in the font.
-             * Font height margin is extra spacing between the lines.
+             * Font size measures from the baseline to the highest point in the font.		DefaultFontSize
+             * Font descent measures from the baseline to the lowest point in the font.		_DrawingContext.fontDescent(this.currentFont, this.currentFontSize)
+             * Font height margin is extra spacing between the lines.						_FontHeightMargin;
+                                                                        the new y position
              */
             this.currentYPosition += _DefaultFontSize +
                 _DrawingContext.fontDescent(this.currentFont, this.currentFontSize) +
                 _FontHeightMargin;
             // TODO: Handle scrolling. (iProject 1)
+            var yPositionToBe = this.currentYPosition + _DefaultFontSize + _DrawingContext.fontDescent(this.currentFont, this.currentFontSize) + _FontHeightMargin;
+            if (this.currentYPosition > 500) {
+                _Console.init();
+            }
         };
         return Console;
     }());

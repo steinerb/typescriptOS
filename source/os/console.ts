@@ -49,7 +49,10 @@ module TSOS
          		//set point to where it was one letter ago
          		this.currentXPosition = this.currentXPosition - lastCharWidth;
          		//draw a clear rectangle over the last letter
-         		_DrawingContext.clearRect(this.currentXPosition, (this.currentYPosition-this.currentFontSize), lastCharWidth, this.currentFontSize);
+         		_DrawingContext.clearRect(
+         			this.currentXPosition, 
+         			(this.currentYPosition-this.currentFontSize), 
+         			lastCharWidth, this.currentFontSize);
          	}
         }
 
@@ -170,15 +173,22 @@ module TSOS
         {
             this.currentXPosition = 0;
             /*
-             * Font size measures from the baseline to the highest point in the font.
-             * Font descent measures from the baseline to the lowest point in the font.
-             * Font height margin is extra spacing between the lines.
+             * Font size measures from the baseline to the highest point in the font.		DefaultFontSize
+             * Font descent measures from the baseline to the lowest point in the font.		_DrawingContext.fontDescent(this.currentFont, this.currentFontSize)
+             * Font height margin is extra spacing between the lines.						_FontHeightMargin;
+             															the new y position
              */
+
+
+
             this.currentYPosition += _DefaultFontSize + 
                                      _DrawingContext.fontDescent(this.currentFont, this.currentFontSize) +
                                      _FontHeightMargin;
 
             // TODO: Handle scrolling. (iProject 1)
+            if (this.currentYPosition > 500)
+            	_Console.init();
+       
         }
          
 
