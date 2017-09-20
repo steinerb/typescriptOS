@@ -87,6 +87,41 @@ var TSOS;
                     chr = String.fromCharCode(47);
                 _KernelInputQueue.enqueue(chr);
             }
+            else if (keyCode == 219) {
+                if (isShifted)
+                    chr = String.fromCharCode(123);
+                else
+                    chr = String.fromCharCode(91);
+                _KernelInputQueue.enqueue(chr);
+            }
+            else if (keyCode == 221) {
+                if (isShifted)
+                    chr = String.fromCharCode(125);
+                else
+                    chr = String.fromCharCode(93);
+                _KernelInputQueue.enqueue(chr);
+            }
+            else if (keyCode == 220) {
+                if (isShifted)
+                    chr = String.fromCharCode(124);
+                else
+                    chr = String.fromCharCode(92);
+                _KernelInputQueue.enqueue(chr);
+            }
+            else if (keyCode == 186) {
+                if (isShifted)
+                    chr = String.fromCharCode(58);
+                else
+                    chr = String.fromCharCode(59);
+                _KernelInputQueue.enqueue(chr);
+            }
+            else if (keyCode == 192) {
+                if (isShifted)
+                    chr = String.fromCharCode(34);
+                else
+                    chr = String.fromCharCode(39);
+                _KernelInputQueue.enqueue(chr);
+            }
         };
         return DeviceDriverKeyboard;
     }(TSOS.DeviceDriver));
