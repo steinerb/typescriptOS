@@ -66,6 +66,12 @@ var TSOS;
                 chr = String.fromCharCode(keyCode);
                 _KernelInputQueue.enqueue(chr);
             }
+            else if (keyCode == 190) {
+                chr = String.fromCharCode(46);
+                _KernelInputQueue.enqueue(chr);
+            }
+            else
+                _Kernel.krnTrapError("Unexpected keycode detected: " + String(keyCode));
         };
         return DeviceDriverKeyboard;
     }(TSOS.DeviceDriver));

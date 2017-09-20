@@ -6,7 +6,7 @@
 
 module TSOS {
     export class DeviceDriver {
-        public version = '0.07';
+        public version = '0.03';
         public status = 'unloaded';
         public preemptable = false;
 
