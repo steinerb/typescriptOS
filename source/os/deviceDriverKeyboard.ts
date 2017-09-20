@@ -66,7 +66,15 @@ module TSOS
                 chr = String.fromCharCode(keyCode);
                 _KernelInputQueue.enqueue(chr);
             }
-            else if (keyCode == 190)							//. >
+            else if (keyCode == 188)							// , <
+            {
+            	if(isShifted)
+            		chr = String.fromCharCode(60);
+            	else
+            		chr = String.fromCharCode(44);
+                _KernelInputQueue.enqueue(chr);
+            }
+            else if (keyCode == 190)							// . >
             {
             	if(isShifted)
             		chr = String.fromCharCode(62);
@@ -74,6 +82,15 @@ module TSOS
             		chr = String.fromCharCode(46);
                 _KernelInputQueue.enqueue(chr);
             }
+            else if (keyCode == 191)							// / ?
+            {
+            	if(isShifted)
+            		chr = String.fromCharCode(63);
+            	else
+            		chr = String.fromCharCode(47);
+                _KernelInputQueue.enqueue(chr);
+            }
+            
         }
 
 
