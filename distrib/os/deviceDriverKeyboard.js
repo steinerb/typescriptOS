@@ -56,8 +56,77 @@ var TSOS;
                 // TODO: Check for caps-lock and handle as shifted if so.
                 _KernelInputQueue.enqueue(chr);
             }
-            else if (((keyCode >= 48) && (keyCode <= 57)) ||
-                (keyCode == 32) ||
+            else if (keyCode == 48) {
+                if (isShifted)
+                    chr = String.fromCharCode(41);
+                else
+                    chr = String.fromCharCode(48);
+                _KernelInputQueue.enqueue(chr);
+            }
+            else if (keyCode == 49) {
+                if (isShifted)
+                    chr = String.fromCharCode(33);
+                else
+                    chr = String.fromCharCode(49);
+                _KernelInputQueue.enqueue(chr);
+            }
+            else if (keyCode == 50) {
+                if (isShifted)
+                    chr = String.fromCharCode(40);
+                else
+                    chr = String.fromCharCode(50);
+                _KernelInputQueue.enqueue(chr);
+            }
+            else if (keyCode == 51) {
+                if (isShifted)
+                    chr = String.fromCharCode(35);
+                else
+                    chr = String.fromCharCode(51);
+                _KernelInputQueue.enqueue(chr);
+            }
+            else if (keyCode == 52) {
+                if (isShifted)
+                    chr = String.fromCharCode(36);
+                else
+                    chr = String.fromCharCode(52);
+                _KernelInputQueue.enqueue(chr);
+            }
+            else if (keyCode == 53) {
+                if (isShifted)
+                    chr = String.fromCharCode(37);
+                else
+                    chr = String.fromCharCode(53);
+                _KernelInputQueue.enqueue(chr);
+            }
+            else if (keyCode == 54) {
+                if (isShifted)
+                    chr = String.fromCharCode(94);
+                else
+                    chr = String.fromCharCode(54);
+                _KernelInputQueue.enqueue(chr);
+            }
+            else if (keyCode == 55) {
+                if (isShifted)
+                    chr = String.fromCharCode(38);
+                else
+                    chr = String.fromCharCode(55);
+                _KernelInputQueue.enqueue(chr);
+            }
+            else if (keyCode == 56) {
+                if (isShifted)
+                    chr = String.fromCharCode(42);
+                else
+                    chr = String.fromCharCode(56);
+                _KernelInputQueue.enqueue(chr);
+            }
+            else if (keyCode == 57) {
+                if (isShifted)
+                    chr = String.fromCharCode(40);
+                else
+                    chr = String.fromCharCode(57);
+                _KernelInputQueue.enqueue(chr);
+            }
+            else if ((keyCode == 32) ||
                 (keyCode == 8) ||
                 (keyCode == 9) ||
                 (keyCode == 38) ||
