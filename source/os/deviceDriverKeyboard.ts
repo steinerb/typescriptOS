@@ -66,13 +66,14 @@ module TSOS
                 chr = String.fromCharCode(keyCode);
                 _KernelInputQueue.enqueue(chr);
             }
-            else if (keyCode == 190)
+            else if (keyCode == 190)							//. >
             {
-            	chr = String.fromCharCode(46);
+            	if(isShifted)
+            		chr = String.fromCharCode(62);
+            	else
+            		chr = String.fromCharCode(46);
                 _KernelInputQueue.enqueue(chr);
             }
-            else
-            	_Kernel.krnTrapError("Unexpected keycode detected: "+String(keyCode));
         }
 
 
