@@ -44,7 +44,7 @@ const COMMAND_NAMES: string[] =
 // Global Variables
 // TODO: Make a global object and use that instead of the "_" naming convention in the global namespace.
 //
-var _Memory = [];
+var _Memory: number[] = [];
 
 var _CPU: TSOS.Cpu;  // Utilize TypeScript's type annotation system to ensure that _CPU is an instance of the Cpu class.
 
