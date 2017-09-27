@@ -70,6 +70,9 @@ var TSOS;
             //bsod
             sc = new TSOS.ShellCommand(this.shellBSOD, "bsod", "- Blue Screen of Death.");
             this.commandList[this.commandList.length] = sc;
+            //bsod
+            sc = new TSOS.ShellCommand(this.shellDump, "dump", "- Dumps all stored values to the screen.");
+            this.commandList[this.commandList.length] = sc;
             // test
             sc = new TSOS.ShellCommand(this.shellTest, "test", "- A shell command for the developer to experiment with new shell commands.");
             this.commandList[this.commandList.length] = sc;
@@ -276,6 +279,10 @@ var TSOS;
                     case "bsod":
                         _StdOut.putText("An error screen that stops the OS.");
                         break;
+                    //dump
+                    case "dump":
+                        _StdOut.putText("Dump displays everything in the CPU registers and memory.");
+                        break;
                     //test
                     case "test":
                         _StdOut.putText("For the dev to try and add new stuff.");
@@ -407,6 +414,23 @@ var TSOS;
         Shell.prototype.shellBSOD = function () {
             _StdOut.init();
             _StdOut.putText("IT BROKE!");
+        };
+        Shell.prototype.shellDump = function () {
+            _StdOut.putText("CPU Registers:");
+            _StdOut.advanceLine();
+            _StdOut.putText("      PC: " + String(_CPU.PC));
+            _StdOut.advanceLine();
+            _StdOut.putText("     Acc: " + String(_CPU.Xreg));
+            _StdOut.advanceLine();
+            _StdOut.putText("       X: " + String(_CPU.Xreg));
+            _StdOut.advanceLine();
+            _StdOut.putText("       Y: " + String(_CPU.Yreg));
+            _StdOut.advanceLine();
+            _StdOut.putText("   Zflag: " + String(_CPU.Xreg));
+            _StdOut.advanceLine();
+            _StdOut.advanceLine();
+            _StdOut.putText("Memory: [soon to come!]");
+            _StdOut.advanceLine();
         };
         Shell.prototype.shellTest = function (args) {
             _StdOut.putText("LDAc: Loading the constant 65 to accumulator...");

@@ -37,6 +37,7 @@ const COMMAND_NAMES: string[] =
 	"load",
 	"status",
 	"bsod",
+	"dump",
 	"test"
 ];
 
