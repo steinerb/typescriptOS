@@ -557,32 +557,31 @@ module TSOS
 
         public shellTest(args) 
         {
-            _StdOut.putText("Loading the constant 65 to accumulator...");
+            _StdOut.putText("LDAc: Loading the constant 65 to accumulator...");
             _StdOut.advanceLine();
             _CPU.ldaC(65);
             _StdOut.putText(String(_CPU.Acc));
             _StdOut.advanceLine();
 
-            _StdOut.putText("Storing accumulator to memory...");
+            _StdOut.putText("STA:  Storing accumulator to memory...");
             _StdOut.advanceLine();
             _CPU.sta();
 
-            _StdOut.putText("Loading the constant 76 to accumulator...");
+            _StdOut.putText("LDAc: Loading the constant 75 to accumulator...");
             _StdOut.advanceLine();
             _CPU.ldaC(75);
             _StdOut.putText(String(_CPU.Acc));
             _StdOut.advanceLine();
 
-            _StdOut.putText("Storing accumulator to memory...");
+            _StdOut.putText("STA:  Storing accumulator to memory...");
             _StdOut.advanceLine();
             _CPU.sta();
 
-            _StdOut.putText("Loading the first value in memory to accumulator...");
-            _StdOut.advanceLine();
-            _CPU.ldaM(0);
-            _StdOut.putText(String(_CPU.Acc));
-            _StdOut.advanceLine();
-            
+			_StdOut.putText("ADC:  Adding first value of memory to accumulator...");
+			_StdOut.advanceLine();
+			_CPU.adc(0);
+			_StdOut.putText(String(_CPU.Acc));
+			_StdOut.advanceLine();            
 
         }
 

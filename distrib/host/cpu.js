@@ -53,6 +53,10 @@ var TSOS;
         Cpu.prototype.sta = function () {
             _Memory[_Memory.length] = this.Acc;
         };
+        Cpu.prototype.adc = function (memLocation) {
+            if ((memLocation >= 0) && (memLocation < _Memory.length))
+                this.Acc += _Memory[memLocation];
+        };
         return Cpu;
     }());
     TSOS.Cpu = Cpu;

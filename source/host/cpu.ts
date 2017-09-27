@@ -65,6 +65,11 @@ module TSOS
             _Memory[_Memory.length] = this.Acc;
         }
 
+        public adc(memLocation): void
+        {
+            if ((memLocation >= 0) && (memLocation < _Memory.length))
+                this.Acc += _Memory[memLocation];
+        }
         
     }
 }
