@@ -559,20 +559,30 @@ module TSOS
         {
             _StdOut.putText("Loading the constant 65 to accumulator...");
             _StdOut.advanceLine();
-
             _CPU.ldaC(65);
-
             _StdOut.putText(String(_CPU.Acc));
             _StdOut.advanceLine();
 
+            _StdOut.putText("Storing accumulator to memory...");
+            _StdOut.advanceLine();
+            _CPU.sta();
+
+            _StdOut.putText("Loading the constant 76 to accumulator...");
+            _StdOut.advanceLine();
+            _CPU.ldaC(75);
+            _StdOut.putText(String(_CPU.Acc));
+            _StdOut.advanceLine();
+
+            _StdOut.putText("Storing accumulator to memory...");
+            _StdOut.advanceLine();
+            _CPU.sta();
 
             _StdOut.putText("Loading the first value in memory to accumulator...");
             _StdOut.advanceLine();
-
-            _Memory[0] = 95;
             _CPU.ldaM(0);
-
             _StdOut.putText(String(_CPU.Acc));
+            _StdOut.advanceLine();
+            
 
         }
 

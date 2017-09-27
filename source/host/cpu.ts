@@ -48,6 +48,7 @@ module TSOS
             // Do the real work here. Be sure to set this.isExecuting appropriately.
         }
 
+
         public ldaC(constant): void
         {
             this.Acc = constant;
@@ -58,5 +59,12 @@ module TSOS
             if ((memLocation >= 0) && (memLocation < _Memory.length))
                 this.Acc = _Memory[memLocation];
         }
+
+        public sta(): void
+        {
+            _Memory[_Memory.length] = this.Acc;
+        }
+
+        
     }
 }
