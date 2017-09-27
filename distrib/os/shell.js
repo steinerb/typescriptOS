@@ -387,13 +387,15 @@ var TSOS;
             var valid = [" ", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"];
             var input = document.getElementById("taProgramInput");
             var dataSTR = input.value.toLowerCase();
-            var dataLST = dataSTR.split("");
-            var current;
-            for (var i = 0; i < dataLST.length; i++) {
-                current = dataLST[i];
-                if (valid.indexOf(current) === -1) {
-                    _StdOut.putText("ERROR: Not all program input is valid!!!");
-                    break;
+            if (dataSTR.length > 0) {
+                var dataLST = dataSTR.split("");
+                var current;
+                for (var i = 0; i < dataLST.length; i++) {
+                    current = dataLST[i];
+                    if (valid.indexOf(current) === -1) {
+                        _StdOut.putText("ERROR: Not all program input is valid!!!");
+                        break;
+                    }
                 }
             }
         };
@@ -407,10 +409,16 @@ var TSOS;
             _StdOut.putText("IT BROKE!");
         };
         Shell.prototype.shellTest = function (args) {
-            //TEST FOR BACKSPACE LOGIC
-            _StdOut.putText("abcdef");
-            _StdOut.clearWord("def");
-            _StdOut.putText("g");
+            _StdOut.putText("Loading the constant 65 to accumulator...");
+            _StdOut.advanceLine();
+            _CPU.ldaC(65);
+            _StdOut.putText(String(_CPU.Acc));
+            _StdOut.advanceLine();
+            _StdOut.putText("Loading the first value in memory to accumulator...");
+            _StdOut.advanceLine();
+            _Memory[0] = 95;
+            _CPU.ldaM(0);
+            _StdOut.putText(String(_CPU.Acc));
         };
         return Shell;
     }());

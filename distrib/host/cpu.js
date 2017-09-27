@@ -43,6 +43,13 @@ var TSOS;
             // TODO: Accumulate CPU usage and profiling statistics here.
             // Do the real work here. Be sure to set this.isExecuting appropriately.
         };
+        Cpu.prototype.ldaC = function (constant) {
+            this.Acc = constant;
+        };
+        Cpu.prototype.ldaM = function (memLocation) {
+            if ((memLocation >= 0) && (memLocation < _Memory.length))
+                this.Acc = _Memory[memLocation];
+        };
         return Cpu;
     }());
     TSOS.Cpu = Cpu;
