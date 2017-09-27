@@ -125,7 +125,7 @@ module TSOS
                                   "- Blue Screen of Death.");
             this.commandList[this.commandList.length] = sc;
 
-            //bsod
+            //dump
             sc = new ShellCommand(this.shellDump,
                                   "dump",
                                   "- Dumps all stored values to the screen.");

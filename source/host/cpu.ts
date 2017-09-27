@@ -70,6 +70,32 @@ module TSOS
             if ((memLocation >= 0) && (memLocation < _Memory.length))
                 this.Acc += _Memory[memLocation];
         }
+
+        public ldxC(constant): void
+        {
+            this.Xreg = constant;
+        }
+
+        public ldxM(memLocation): void
+        {
+            if ((memLocation >= 0) && (memLocation < _Memory.length))
+                this.Xreg = _Memory[memLocation];
+        }
+
+        public ldyC(constant): void
+        {
+            this.Yreg = constant;
+        }
+
+        public ldyM(memLocation): void
+        {
+            if ((memLocation >= 0) && (memLocation < _Memory.length))
+                this.Yreg = _Memory[memLocation];
+        }
+
+        
+
+
         
     }
 }
