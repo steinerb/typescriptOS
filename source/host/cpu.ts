@@ -93,9 +93,25 @@ module TSOS
                 this.Yreg = _Memory[memLocation];
         }
 
-        
+        //     nop?
 
+        //     brk?
 
+        /*public cpx(memLocation): void
+        {
+            if ((memLocation >= 0) && (memLocation < _Memory.length))
+            {
+
+            }    
+        }*/
+
+        //     bne?
+
+        public inc(memLocation): void
+        {
+            if ((memLocation >= 0) && (memLocation < _Memory.length))
+                _Memory[memLocation] += 1;
+        }
         
     }
 }
