@@ -86,6 +86,11 @@ var TSOS;
             if ((memLocation >= 0) && (memLocation < _Memory.length))
                 _Memory[memLocation] += 1;
         };
+        //INCOMPLETE: NEED TO ADD PRINT STRINGS FOR XREG BEING 2
+        Cpu.prototype.sys = function () {
+            if (this.Xreg == 1)
+                _StdOut.putText(String(this.Yreg));
+        };
         return Cpu;
     }());
     TSOS.Cpu = Cpu;

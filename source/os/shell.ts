@@ -618,6 +618,18 @@ module TSOS
 			_StdOut.putText(String(_Memory[0]));
 			_StdOut.advanceLine();
 
+			_StdOut.putText("LDY: Loading the first value of memory to Y register...");
+			_StdOut.advanceLine();
+			_CPU.ldyM(0);
+
+			_StdOut.putText("LDX: Loading the constant 1 to X register...");
+			_StdOut.advanceLine();
+			_CPU.ldxC(1);
+
+			_StdOut.putText("SYS: running system call now...");
+			_StdOut.advanceLine();
+			_CPU.sys();
+
 
 
         }

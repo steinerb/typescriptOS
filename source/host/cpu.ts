@@ -117,10 +117,11 @@ module TSOS
         }
 
         //INCOMPLETE: NEED TO ADD PRINT STRINGS FOR XREG BEING 2
-        /*public sys(): void
+        public sys(): void
         {
             if (this.Xreg == 1)
-        }*/
+                _StdOut.putText(String(this.Yreg));
+        }
         
     }
 }
