@@ -588,7 +588,7 @@ module TSOS
         {
             _StdOut.putText("LDAc: Loading the constant 65 to accumulator...");
             _StdOut.advanceLine();
-            _CPU.ldaC(65);
+            _CPU.ldaC(0x41);
             _StdOut.putText(String(_CPU.Acc));
             _StdOut.advanceLine();
 
@@ -598,7 +598,7 @@ module TSOS
 
             _StdOut.putText("LDAc: Loading the constant 75 to accumulator...");
             _StdOut.advanceLine();
-            _CPU.ldaC(75);
+            _CPU.ldaC(0x4B);
             _StdOut.putText(String(_CPU.Acc));
             _StdOut.advanceLine();
 
@@ -610,7 +610,15 @@ module TSOS
 			_StdOut.advanceLine();
 			_CPU.adc(0);
 			_StdOut.putText(String(_CPU.Acc));
-			_StdOut.advanceLine();            
+			_StdOut.advanceLine();
+
+			_StdOut.putText("INC: Incrementing the first value of memory...");
+			_StdOut.advanceLine();
+			_CPU.inc(0);
+			_StdOut.putText(String(_Memory[0]));
+			_StdOut.advanceLine();
+
+
 
         }
 

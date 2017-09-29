@@ -57,6 +57,35 @@ var TSOS;
             if ((memLocation >= 0) && (memLocation < _Memory.length))
                 this.Acc += _Memory[memLocation];
         };
+        Cpu.prototype.ldxC = function (constant) {
+            this.Xreg = constant;
+        };
+        Cpu.prototype.ldxM = function (memLocation) {
+            if ((memLocation >= 0) && (memLocation < _Memory.length))
+                this.Xreg = _Memory[memLocation];
+        };
+        Cpu.prototype.ldyC = function (constant) {
+            this.Yreg = constant;
+        };
+        Cpu.prototype.ldyM = function (memLocation) {
+            if ((memLocation >= 0) && (memLocation < _Memory.length))
+                this.Yreg = _Memory[memLocation];
+        };
+        //     nop?
+        //     brk?
+        Cpu.prototype.cpx = function (memLocation) {
+            if ((memLocation >= 0) && (memLocation < _Memory.length)) {
+                if (_Memory[memLocation] == this.Xreg)
+                    this.Zflag = 1;
+                else
+                    this.Zflag = 0;
+            }
+        };
+        //     bne?
+        Cpu.prototype.inc = function (memLocation) {
+            if ((memLocation >= 0) && (memLocation < _Memory.length))
+                _Memory[memLocation] += 1;
+        };
         return Cpu;
     }());
     TSOS.Cpu = Cpu;

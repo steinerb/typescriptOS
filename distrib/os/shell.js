@@ -70,7 +70,7 @@ var TSOS;
             //bsod
             sc = new TSOS.ShellCommand(this.shellBSOD, "bsod", "- Blue Screen of Death.");
             this.commandList[this.commandList.length] = sc;
-            //bsod
+            //dump
             sc = new TSOS.ShellCommand(this.shellDump, "dump", "- Dumps all stored values to the screen.");
             this.commandList[this.commandList.length] = sc;
             // test
@@ -435,7 +435,7 @@ var TSOS;
         Shell.prototype.shellTest = function (args) {
             _StdOut.putText("LDAc: Loading the constant 65 to accumulator...");
             _StdOut.advanceLine();
-            _CPU.ldaC(65);
+            _CPU.ldaC(0x41);
             _StdOut.putText(String(_CPU.Acc));
             _StdOut.advanceLine();
             _StdOut.putText("STA:  Storing accumulator to memory...");
@@ -443,7 +443,7 @@ var TSOS;
             _CPU.sta();
             _StdOut.putText("LDAc: Loading the constant 75 to accumulator...");
             _StdOut.advanceLine();
-            _CPU.ldaC(75);
+            _CPU.ldaC(0x4B);
             _StdOut.putText(String(_CPU.Acc));
             _StdOut.advanceLine();
             _StdOut.putText("STA:  Storing accumulator to memory...");
@@ -453,6 +453,11 @@ var TSOS;
             _StdOut.advanceLine();
             _CPU.adc(0);
             _StdOut.putText(String(_CPU.Acc));
+            _StdOut.advanceLine();
+            _StdOut.putText("INC: Incrementing the first value of memory...");
+            _StdOut.advanceLine();
+            _CPU.inc(0);
+            _StdOut.putText(String(_Memory[0]));
             _StdOut.advanceLine();
         };
         return Shell;

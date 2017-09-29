@@ -97,13 +97,16 @@ module TSOS
 
         //     brk?
 
-        /*public cpx(memLocation): void
+        public cpx(memLocation): void
         {
             if ((memLocation >= 0) && (memLocation < _Memory.length))
             {
-
+                if (_Memory[memLocation] == this.Xreg)
+                    this.Zflag = 1;
+                else
+                    this.Zflag = 0;
             }    
-        }*/
+        }
 
         //     bne?
 
@@ -112,6 +115,12 @@ module TSOS
             if ((memLocation >= 0) && (memLocation < _Memory.length))
                 _Memory[memLocation] += 1;
         }
+
+        //INCOMPLETE: NEED TO ADD PRINT STRINGS FOR XREG BEING 2
+        /*public sys(): void
+        {
+            if (this.Xreg == 1)
+        }*/
         
     }
 }
