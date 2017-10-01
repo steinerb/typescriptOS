@@ -44,36 +44,45 @@ var TSOS;
             // Do the real work here. Be sure to set this.isExecuting appropriately.
         };
         Cpu.prototype.ldaC = function (constant) {
+            this.PC += 2;
             this.Acc = constant;
         };
         Cpu.prototype.ldaM = function (memLocation) {
+            this.PC += 3;
             if ((memLocation >= 0) && (memLocation < _Memory.length))
                 this.Acc = _Memory[memLocation];
         };
         Cpu.prototype.sta = function () {
+            this.PC += 3;
             _Memory[_Memory.length] = this.Acc;
         };
         Cpu.prototype.adc = function (memLocation) {
+            this.PC += 3;
             if ((memLocation >= 0) && (memLocation < _Memory.length))
                 this.Acc += _Memory[memLocation];
         };
         Cpu.prototype.ldxC = function (constant) {
+            this.PC += 2;
             this.Xreg = constant;
         };
         Cpu.prototype.ldxM = function (memLocation) {
+            this.PC += 3;
             if ((memLocation >= 0) && (memLocation < _Memory.length))
                 this.Xreg = _Memory[memLocation];
         };
         Cpu.prototype.ldyC = function (constant) {
+            this.PC += 2;
             this.Yreg = constant;
         };
         Cpu.prototype.ldyM = function (memLocation) {
+            this.PC += 3;
             if ((memLocation >= 0) && (memLocation < _Memory.length))
                 this.Yreg = _Memory[memLocation];
         };
         //     nop?
         //     brk?
         Cpu.prototype.cpx = function (memLocation) {
+            this.PC += 3;
             if ((memLocation >= 0) && (memLocation < _Memory.length)) {
                 if (_Memory[memLocation] == this.Xreg)
                     this.Zflag = 1;
@@ -83,11 +92,13 @@ var TSOS;
         };
         //     bne?
         Cpu.prototype.inc = function (memLocation) {
+            this.PC += 3;
             if ((memLocation >= 0) && (memLocation < _Memory.length))
                 _Memory[memLocation] += 1;
         };
         //INCOMPLETE: NEED TO ADD PRINT STRINGS FOR XREG BEING 2
         Cpu.prototype.sys = function () {
+            this.PC += 1;
             if (this.Xreg == 1)
                 _StdOut.putText(String(this.Yreg));
             //else if (this.Xreg == 2)
