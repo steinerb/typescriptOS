@@ -90,6 +90,7 @@ var TSOS;
         Cpu.prototype.sys = function () {
             if (this.Xreg == 1)
                 _StdOut.putText(String(this.Yreg));
+            //else if (this.Xreg == 2)
         };
         return Cpu;
     }());

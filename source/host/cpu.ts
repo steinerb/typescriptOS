@@ -51,44 +51,52 @@ module TSOS
 
         public ldaC(constant): void
         {
+            this.PC += 2;
             this.Acc = constant;
         }
 
         public ldaM(memLocation): void
         {
+            this.PC += 3;
             if ((memLocation >= 0) && (memLocation < _Memory.length))
                 this.Acc = _Memory[memLocation];
         }
 
         public sta(): void
         {
+            this.PC += 3;
             _Memory[_Memory.length] = this.Acc;
         }
 
         public adc(memLocation): void
         {
+            this.PC += 3;
             if ((memLocation >= 0) && (memLocation < _Memory.length))
                 this.Acc += _Memory[memLocation];
         }
 
         public ldxC(constant): void
         {
+            this.PC += 2;
             this.Xreg = constant;
         }
 
         public ldxM(memLocation): void
         {
+            this.PC += 3;
             if ((memLocation >= 0) && (memLocation < _Memory.length))
                 this.Xreg = _Memory[memLocation];
         }
 
         public ldyC(constant): void
         {
+            this.PC += 2;
             this.Yreg = constant;
         }
 
         public ldyM(memLocation): void
         {
+            this.PC += 3;
             if ((memLocation >= 0) && (memLocation < _Memory.length))
                 this.Yreg = _Memory[memLocation];
         }
@@ -99,6 +107,7 @@ module TSOS
 
         public cpx(memLocation): void
         {
+            this.PC += 3;
             if ((memLocation >= 0) && (memLocation < _Memory.length))
             {
                 if (_Memory[memLocation] == this.Xreg)
@@ -112,6 +121,7 @@ module TSOS
 
         public inc(memLocation): void
         {
+            this.PC += 3;
             if ((memLocation >= 0) && (memLocation < _Memory.length))
                 _Memory[memLocation] += 1;
         }
@@ -119,8 +129,10 @@ module TSOS
         //INCOMPLETE: NEED TO ADD PRINT STRINGS FOR XREG BEING 2
         public sys(): void
         {
+            this.PC += 1;
             if (this.Xreg == 1)
                 _StdOut.putText(String(this.Yreg));
+            //else if (this.Xreg == 2)
         }
         
     }

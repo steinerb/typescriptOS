@@ -580,8 +580,14 @@ module TSOS
         	_StdOut.putText("   Zflag: "+String(_CPU.Xreg));
         	_StdOut.advanceLine();
         	_StdOut.advanceLine();
-        	_StdOut.putText("Memory: [soon to come!]");
+        	_StdOut.putText("Memory:");
         	_StdOut.advanceLine();
+
+        	for(let i = 0; i < _Memory.length; i++)
+        	{
+        		_StdOut.putText("   "+String(i)+": "+String(_Memory[i]));
+        		_StdOut.advanceLine();
+        	}
         }
 
         public shellTest(args) 
