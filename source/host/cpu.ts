@@ -60,6 +60,8 @@ module TSOS
             this.PC += 3;
             if ((memLocation >= 0) && (memLocation < _Memory.length))
                 this.Acc = _Memory[memLocation];
+            else
+                _Kernel.krnTrapError("Memory location: "+String(memLocation)+" is out of bounds!");
         }
 
         public sta(): void
@@ -73,6 +75,8 @@ module TSOS
             this.PC += 3;
             if ((memLocation >= 0) && (memLocation < _Memory.length))
                 this.Acc += _Memory[memLocation];
+            else
+                _Kernel.krnTrapError("Memory location: "+String(memLocation)+" is out of bounds!");
         }
 
         public ldxC(constant): void
@@ -86,6 +90,8 @@ module TSOS
             this.PC += 3;
             if ((memLocation >= 0) && (memLocation < _Memory.length))
                 this.Xreg = _Memory[memLocation];
+            else
+                _Kernel.krnTrapError("Memory location: "+String(memLocation)+" is out of bounds!");
         }
 
         public ldyC(constant): void
@@ -99,11 +105,19 @@ module TSOS
             this.PC += 3;
             if ((memLocation >= 0) && (memLocation < _Memory.length))
                 this.Yreg = _Memory[memLocation];
+            else
+                _Kernel.krnTrapError("Memory location: "+String(memLocation)+" is out of bounds!");
         }
 
-        //     nop?
+        public nop(): void
+        {
+            this.PC += 1;
+        }
 
-        //     brk?
+        public brk(): void
+        {
+            this.isExecuting = false;
+        }
 
         public cpx(memLocation): void
         {
@@ -114,7 +128,9 @@ module TSOS
                     this.Zflag = 1;
                 else
                     this.Zflag = 0;
-            }    
+            }
+            else
+                _Kernel.krnTrapError("Memory location: "+String(memLocation)+" is out of bounds!");    
         }
 
         //     bne?
@@ -124,6 +140,8 @@ module TSOS
             this.PC += 3;
             if ((memLocation >= 0) && (memLocation < _Memory.length))
                 _Memory[memLocation] += 1;
+            else
+                _Kernel.krnTrapError("Memory location: "+String(memLocation)+" is out of bounds!");
         }
 
         //INCOMPLETE: NEED TO ADD PRINT STRINGS FOR XREG BEING 2

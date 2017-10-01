@@ -51,6 +51,8 @@ var TSOS;
             this.PC += 3;
             if ((memLocation >= 0) && (memLocation < _Memory.length))
                 this.Acc = _Memory[memLocation];
+            else
+                _Kernel.krnTrapError("Memory location: " + String(memLocation) + " is out of bounds!");
         };
         Cpu.prototype.sta = function () {
             this.PC += 3;
@@ -60,6 +62,8 @@ var TSOS;
             this.PC += 3;
             if ((memLocation >= 0) && (memLocation < _Memory.length))
                 this.Acc += _Memory[memLocation];
+            else
+                _Kernel.krnTrapError("Memory location: " + String(memLocation) + " is out of bounds!");
         };
         Cpu.prototype.ldxC = function (constant) {
             this.PC += 2;
@@ -69,6 +73,8 @@ var TSOS;
             this.PC += 3;
             if ((memLocation >= 0) && (memLocation < _Memory.length))
                 this.Xreg = _Memory[memLocation];
+            else
+                _Kernel.krnTrapError("Memory location: " + String(memLocation) + " is out of bounds!");
         };
         Cpu.prototype.ldyC = function (constant) {
             this.PC += 2;
@@ -78,9 +84,15 @@ var TSOS;
             this.PC += 3;
             if ((memLocation >= 0) && (memLocation < _Memory.length))
                 this.Yreg = _Memory[memLocation];
+            else
+                _Kernel.krnTrapError("Memory location: " + String(memLocation) + " is out of bounds!");
         };
-        //     nop?
-        //     brk?
+        Cpu.prototype.nop = function () {
+            this.PC += 1;
+        };
+        Cpu.prototype.brk = function () {
+            this.isExecuting = false;
+        };
         Cpu.prototype.cpx = function (memLocation) {
             this.PC += 3;
             if ((memLocation >= 0) && (memLocation < _Memory.length)) {
@@ -89,12 +101,16 @@ var TSOS;
                 else
                     this.Zflag = 0;
             }
+            else
+                _Kernel.krnTrapError("Memory location: " + String(memLocation) + " is out of bounds!");
         };
         //     bne?
         Cpu.prototype.inc = function (memLocation) {
             this.PC += 3;
             if ((memLocation >= 0) && (memLocation < _Memory.length))
                 _Memory[memLocation] += 1;
+            else
+                _Kernel.krnTrapError("Memory location: " + String(memLocation) + " is out of bounds!");
         };
         //INCOMPLETE: NEED TO ADD PRINT STRINGS FOR XREG BEING 2
         Cpu.prototype.sys = function () {
