@@ -91,6 +91,7 @@ var TSOS;
             this.PC += 1;
         };
         Cpu.prototype.brk = function () {
+            this.PC += 1;
             this.isExecuting = false;
         };
         Cpu.prototype.cpx = function (memLocation) {
@@ -104,7 +105,12 @@ var TSOS;
             else
                 _Kernel.krnTrapError("Memory location: " + String(memLocation) + " is out of bounds!");
         };
-        //     bne?
+        Cpu.prototype.bne = function (numBytesToBranch) {
+            if (this.Zflag == 0)
+                this.PC += numBytesToBranch;
+            else
+                this.PC += 2;
+        };
         Cpu.prototype.inc = function (memLocation) {
             this.PC += 3;
             if ((memLocation >= 0) && (memLocation < _Memory.length))

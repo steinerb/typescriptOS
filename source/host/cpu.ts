@@ -116,6 +116,7 @@ module TSOS
 
         public brk(): void
         {
+            this.PC += 1;
             this.isExecuting = false;
         }
 
@@ -133,7 +134,13 @@ module TSOS
                 _Kernel.krnTrapError("Memory location: "+String(memLocation)+" is out of bounds!");    
         }
 
-        //     bne?
+        public bne(numBytesToBranch): void
+        {
+            if(this.Zflag == 0)
+                this.PC += numBytesToBranch;
+            else
+                this.PC += 2;
+        }
 
         public inc(memLocation): void
         {
@@ -151,6 +158,9 @@ module TSOS
             if (this.Xreg == 1)
                 _StdOut.putText(String(this.Yreg));
             //else if (this.Xreg == 2)
+            
+
+
         }
         
     }
