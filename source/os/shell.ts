@@ -534,10 +534,13 @@ module TSOS
         {
             var input = (<HTMLInputElement>document.getElementById("taProgramInput"));
             var dataSTR = input.value.toLowerCase();
-            if (Utils.isValidHex(dataSTR))
-            	_StdOut.putText("valid input");
-            else
+            if (!Utils.isValidHexString(dataSTR))
             	_StdOut.putText("invalid input!!!");
+            else
+            {
+            	_StdOut.putText("valid input");
+            	var opCodesToLoad = [];
+            }
             _StdOut.advanceLine();
         }
 

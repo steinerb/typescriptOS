@@ -393,10 +393,12 @@ var TSOS;
         Shell.prototype.shellLoad = function (args) {
             var input = document.getElementById("taProgramInput");
             var dataSTR = input.value.toLowerCase();
-            if (TSOS.Utils.isValidHex(dataSTR))
-                _StdOut.putText("valid input");
-            else
+            if (!TSOS.Utils.isValidHexString(dataSTR))
                 _StdOut.putText("invalid input!!!");
+            else {
+                _StdOut.putText("valid input");
+                var opCodesToLoad = [];
+            }
             _StdOut.advanceLine();
         };
         Shell.prototype.shellStatus = function (args) {

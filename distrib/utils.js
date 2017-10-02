@@ -45,7 +45,7 @@ var TSOS;
             return retVal;
         };
         //makes sure a string of hex is good to go. returns true if so, false if not.
-        Utils.isValidHex = function (str) {
+        Utils.isValidHexString = function (str) {
             var valid = [" ", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"];
             var data = str.toLowerCase();
             if (data.length > 0) {
@@ -53,6 +53,10 @@ var TSOS;
                 var current;
                 for (var i = 0; i < dataLST.length; i++) {
                     current = dataLST[i];
+                    //checks to make sure every 3rd char is a space.
+                    if ((i % 3 == 2) && (current != " "))
+                        return false;
+                    //checks to make sure every character is a valid hex 
                     if (valid.indexOf(current) === -1)
                         return false;
                 }
