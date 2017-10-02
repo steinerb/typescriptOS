@@ -84,14 +84,15 @@ var _krnKeyboardDriver; //  = null;
 
 var _hardwareClockID: number = null;
 
+
+//the pointer to the instruction before the program counter [may not be needed!]
+//var _CurrentOP;
+
+
 // For testing (and enrichment)...
 var Glados: any = null;  // This is the function Glados() in glados.js on Labouseur.com.
 var _GLaDOS: any = null; // If the above is linked in, this is the instantiated instance of Glados.
 
-// For Saving lines. Will help with scrolling and other things.
-//**IMPLEMENT WHEN SIMPLER VERSION WORKS!**//
-//var _ConsoleLines: string[] = [];
-//var _ConsoleLines = [];
 
 var onDocumentLoad = function() {
 	TSOS.Control.hostInit();

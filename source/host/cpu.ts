@@ -27,9 +27,7 @@ module TSOS
                     public Yreg: number = 0,
                     public Zflag: number = 0,
                     public isExecuting: boolean = false) 
-        {
-
-        }
+        {/*leave this empty*/}
 
         public init(): void 
         {
@@ -41,11 +39,18 @@ module TSOS
             this.isExecuting = false;
         }
 
+
         public cycle(): void 
         {
             _Kernel.krnTrace('CPU cycle');
             // TODO: Accumulate CPU usage and profiling statistics here.
             // Do the real work here. Be sure to set this.isExecuting appropriately.
+
+            /***COMPLETE LOAD SHELL COMMAND FIRST!!!***/
+            //switch(_Memory[this.PC])
+                
+
+
         }
 
 

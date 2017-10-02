@@ -4,11 +4,14 @@
    Utility functions.
    -------- */
 
-module TSOS {
+module TSOS 
+{
 
-    export class Utils {
+    export class Utils 
+    {
 
-        public static trim(str): string {
+        public static trim(str): string 
+        {
             // Use a regular expression to remove leading and trailing spaces.
             return str.replace(/^\s+ | \s+$/g, "");
             /*
@@ -21,7 +24,8 @@ module TSOS {
             */
         }
 
-        public static rot13(str: string): string {
+        public static rot13(str: string): string 
+        {
             /*
                This is an easy-to understand implementation of the famous and common Rot13 obfuscator.
                You can do this in three lines with a complex regular expression, but I'd have
@@ -43,5 +47,26 @@ module TSOS {
             }
             return retVal;
         }
+
+        //makes sure a string of hex is good to go. returns true if so, false if not.
+        public static isValidHex(str: string): boolean
+        {
+            var valid = [" ", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"];
+            var data = str.toLowerCase();
+            if(data.length > 0)
+            {
+                var dataLST = data.split("");
+                var current;
+                for (var i = 0; i < dataLST.length; i++)
+                {
+                    current = dataLST[i];
+                    if(valid.indexOf(current) === -1)
+                        return false;
+                }
+                return true;
+            }
+            return false;
+        }
+
     }
 }

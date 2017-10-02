@@ -532,23 +532,13 @@ module TSOS
 
         public shellLoad(args) 
         {
-            var valid = [" ", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"];
             var input = (<HTMLInputElement>document.getElementById("taProgramInput"));
             var dataSTR = input.value.toLowerCase();
-            if(dataSTR.length > 0)
-            {
-	            var dataLST = dataSTR.split("");
-	            var current;
-	            for (var i = 0; i < dataLST.length; i++)
-	            {
-	                current = dataLST[i];
-	                if(valid.indexOf(current) === -1)
-	                {
-	                    _StdOut.putText("ERROR: Not all program input is valid!!!");
-	                    break;
-	                }
-	            }
-	        }
+            if (Utils.isValidHex(dataSTR))
+            	_StdOut.putText("valid input");
+            else
+            	_StdOut.putText("invalid input!!!");
+            _StdOut.advanceLine();
         }
 
         public shellStatus(args) 

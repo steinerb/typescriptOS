@@ -44,6 +44,22 @@ var TSOS;
             }
             return retVal;
         };
+        //makes sure a string of hex is good to go. returns true if so, false if not.
+        Utils.isValidHex = function (str) {
+            var valid = [" ", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"];
+            var data = str.toLowerCase();
+            if (data.length > 0) {
+                var dataLST = data.split("");
+                var current;
+                for (var i = 0; i < dataLST.length; i++) {
+                    current = dataLST[i];
+                    if (valid.indexOf(current) === -1)
+                        return false;
+                }
+                return true;
+            }
+            return false;
+        };
         return Utils;
     }());
     TSOS.Utils = Utils;
