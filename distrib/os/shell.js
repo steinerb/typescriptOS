@@ -397,7 +397,14 @@ var TSOS;
                 _StdOut.putText("invalid input!!!");
             else {
                 _StdOut.putText("valid input");
-                var opCodesToLoad = [];
+                //now load to memory...
+                var toLoad = input.value.toLowerCase().split(" ");
+                var current;
+                for (var i = 0; i < toLoad.length; i++) {
+                    current = Number(("0x" + toLoad[i]));
+                    _Memory[_Memory.length] = current;
+                }
+                //now save Program ID for later calling...
             }
             _StdOut.advanceLine();
         };
@@ -427,7 +434,7 @@ var TSOS;
             _StdOut.putText("Memory:");
             _StdOut.advanceLine();
             for (var i = 0; i < _Memory.length; i++) {
-                _StdOut.putText("   " + String(i) + ": " + String(_Memory[i]));
+                _StdOut.putText("   " + String(i) + ": " + _Memory[i].toString(16).toUpperCase());
                 _StdOut.advanceLine();
             }
         };

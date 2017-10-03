@@ -45,6 +45,12 @@ const COMMAND_NAMES: string[] =
 // Global Variables
 // TODO: Make a global object and use that instead of the "_" naming convention in the global namespace.
 //
+
+//list of indexes for first elements of programs, paired with ids, in 2 element lists.
+						//ex:	[PID, indexInMemory]
+var _ProgramIDs = [];
+
+//list of numbers that translate to hex values, representing op codes.
 var _Memory: number[] = [];
 
 var _CPU: TSOS.Cpu;  // Utilize TypeScript's type annotation system to ensure that _CPU is an instance of the Cpu class.
@@ -83,10 +89,6 @@ var _SarcasticMode: boolean = false;
 var _krnKeyboardDriver; //  = null;
 
 var _hardwareClockID: number = null;
-
-
-//the pointer to the instruction before the program counter [may not be needed!]
-//var _CurrentOP;
 
 
 // For testing (and enrichment)...

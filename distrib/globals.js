@@ -39,6 +39,10 @@ var COMMAND_NAMES = [
 // Global Variables
 // TODO: Make a global object and use that instead of the "_" naming convention in the global namespace.
 //
+//list of indexes for first elements of programs, paired with ids, in 2 element lists.
+//ex:	[PID, indexInMemory]
+var _ProgramIDs = [];
+//list of numbers that translate to hex values, representing op codes.
 var _Memory = [];
 var _CPU; // Utilize TypeScript's type annotation system to ensure that _CPU is an instance of the Cpu class.
 var _OSclock = 0; // Page 23.
@@ -66,8 +70,6 @@ var _SarcasticMode = false;
 // Global Device Driver Objects - page 12
 var _krnKeyboardDriver; //  = null;
 var _hardwareClockID = null;
-//the pointer to the instruction before the program counter [may not be needed!]
-//var _CurrentOP;
 // For testing (and enrichment)...
 var Glados = null; // This is the function Glados() in glados.js on Labouseur.com.
 var _GLaDOS = null; // If the above is linked in, this is the instantiated instance of Glados.
