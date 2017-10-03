@@ -129,14 +129,13 @@ var TSOS;
             if (this.Xreg == 1)
                 _StdOut.putText(String(this.Yreg));
             else if (this.Xreg == 2) {
-                var toReturn;
+                var toReturn = "";
                 var stringIndex = this.Yreg;
                 while (_Memory[stringIndex] != 0x00) {
                     toReturn += String.fromCharCode(_Memory[stringIndex]);
                     stringIndex++;
                 }
-                //MAY NEED TO FIX! the string starts with the substring "undefined", so the first 9 characters are removed
-                _StdOut.putText(toReturn.slice("undefined".length));
+                _StdOut.putText(toReturn);
             }
         };
         return Cpu;
