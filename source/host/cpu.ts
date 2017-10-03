@@ -47,7 +47,13 @@ module TSOS
             // Do the real work here. Be sure to set this.isExecuting appropriately.
 
             /***COMPLETE LOAD SHELL COMMAND FIRST!!!***/
-            //switch(_Memory[this.PC])
+
+            /*if(this.isExecuting)
+            {
+                //switch(_Memory[this.PC])
+
+            }*/
+            
                 
 
 
@@ -121,7 +127,6 @@ module TSOS
 
         public brk(): void
         {
-            this.PC += 1;
             this.isExecuting = false;
         }
 
@@ -162,10 +167,17 @@ module TSOS
             this.PC += 1;
             if (this.Xreg == 1)
                 _StdOut.putText(String(this.Yreg));
-            //else if (this.Xreg == 2)
-            
-
-
+            else if (this.Xreg == 2)
+            {
+                var toReturn: string;
+                var stringIndex: number = this.Yreg;
+                while(_Memory[stringIndex] != 0x00)
+                {
+                    toReturn += String.fromCharCode(_Memory[stringIndex]);
+                    stringIndex++;
+                }
+                _StdOut.putText(toReturn);
+            }
         }
         
     }

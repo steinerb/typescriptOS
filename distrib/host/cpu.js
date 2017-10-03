@@ -43,7 +43,11 @@ var TSOS;
             // TODO: Accumulate CPU usage and profiling statistics here.
             // Do the real work here. Be sure to set this.isExecuting appropriately.
             /***COMPLETE LOAD SHELL COMMAND FIRST!!!***/
-            //switch(_Memory[this.PC])
+            /*if(this.isExecuting)
+            {
+                //switch(_Memory[this.PC])
+
+            }*/
         };
         Cpu.prototype.ldaC = function (constant) {
             this.PC += 2;
@@ -93,7 +97,6 @@ var TSOS;
             this.PC += 1;
         };
         Cpu.prototype.brk = function () {
-            this.PC += 1;
             this.isExecuting = false;
         };
         Cpu.prototype.cpx = function (memLocation) {
@@ -125,7 +128,15 @@ var TSOS;
             this.PC += 1;
             if (this.Xreg == 1)
                 _StdOut.putText(String(this.Yreg));
-            //else if (this.Xreg == 2)
+            else if (this.Xreg == 2) {
+                var toReturn;
+                var stringIndex = this.Yreg;
+                while (_Memory[stringIndex] != 0x00) {
+                    toReturn += String.fromCharCode(_Memory[stringIndex]);
+                    stringIndex++;
+                }
+                _StdOut.putText(toReturn);
+            }
         };
         return Cpu;
     }());

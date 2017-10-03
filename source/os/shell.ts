@@ -577,41 +577,72 @@ module TSOS
 
         public shellDump()
         {
-        	_StdOut.putText("CPU Registers:");
-        	_StdOut.advanceLine();
-        	_StdOut.putText("      PC: "+String(_CPU.PC));
-        	_StdOut.advanceLine();
-        	_StdOut.putText("     Acc: "+String(_CPU.Xreg));
-        	_StdOut.advanceLine();
-        	_StdOut.putText("       X: "+String(_CPU.Xreg));
-        	_StdOut.advanceLine();
-        	_StdOut.putText("       Y: "+String(_CPU.Yreg));
-        	_StdOut.advanceLine();
-        	_StdOut.putText("   Zflag: "+String(_CPU.Xreg));
-        	_StdOut.advanceLine();
-        	_StdOut.advanceLine();
-        	_StdOut.putText("Memory:");
-        	_StdOut.advanceLine();
-
-        	for(let i = 0; i < _Memory.length; i++)
+        	//if changed, print CPU values
+        	if( (_CPU.PC != 0) && (_CPU.Acc != 0) && (_CPU.Xreg != 0) && (_CPU.Yreg != 0) && (_CPU.Zflag != 0) )
         	{
-        		_StdOut.putText("   "+String(i)+": "+_Memory[i].toString(16).toUpperCase());
-        		_StdOut.advanceLine();
+	        	_StdOut.putText("CPU Registers:");
+	        	_StdOut.advanceLine();
+	        	_StdOut.putText("      PC: "+String(_CPU.PC));
+	        	_StdOut.advanceLine();
+	        	_StdOut.putText("     Acc: "+String(_CPU.Acc));
+	        	_StdOut.advanceLine();
+	        	_StdOut.putText("       X: "+String(_CPU.Xreg));
+	        	_StdOut.advanceLine();
+	        	_StdOut.putText("       Y: "+String(_CPU.Yreg));
+	        	_StdOut.advanceLine();
+	        	_StdOut.putText("   Zflag: "+String(_CPU.Zflag));
+	        	_StdOut.advanceLine();
+	        	_StdOut.advanceLine();
+	        	
+        	}
+        	//if not empty, print memory locations
+        	if(_Memory.length > 0)
+        	{
+	        	_StdOut.putText("Memory:");
+		       	_StdOut.advanceLine();
+
+	        	for(let i = 0; i < _Memory.length; i++)
+	        	{
+	        		_StdOut.putText("   "+String(i)+": "+_Memory[i].toString(16).toUpperCase());
+	        		_StdOut.advanceLine();
+	        	}
+	        	_StdOut.advanceLine();
+        	}
+        	//if not empty, print program ids
+        	if(_ProgramIDs.length > 0)
+        	{
+        		_StdOut.putText("Program ID registry:");
+            	_StdOut.advanceLine();
+            	var currentPair;
+            	for (var i = 0; i < _ProgramIDs.length; i++)
+            	{
+            		currentPair = _ProgramIDs[i];
+            		_StdOut.putText("PID "+String(currentPair[0])+" starts at "+String(currentPair[1]));
+            		_StdOut.advanceLine();
+            	}
         	}
         }
 
         public shellTest(args) 
         {
-    		_StdOut.putText("Showing Program ID registry:");
+            _StdOut.putText("Setting the first four spots in memory to string for ABC...");
             _StdOut.advanceLine();
+            _Memory[0] = 0x41;
+            _Memory[1] = 0x42;
+            _Memory[2] = 0x43;
+            _Memory[3] = 0x00;
+            _StdOut.putText("Setting the X register to 2 for printing strings...");
+            _StdOut.advanceLine();
+            _CPU.ldxC(2);
+            _StdOut.putText("Setting the Y register for 0, indicating the start of a string at 0...");
             _StdOut.advanceLine()
-            var currentPair;
-            for (var i = 0; i < _ProgramIDs.length; i++)
-            {
-            	currentPair = _ProgramIDs[i];
-            	_StdOut.putText("PID "+String(currentPair[0])+" starts at "+String(currentPair[1]));
-            	_StdOut.advanceLine();
-            }
+            _CPU.ldyC(0);
+
+            
+
+            _StdOut.putText("Running system call...");
+            _StdOut.advanceLine();
+            _CPU.sys();
 
         }
 
