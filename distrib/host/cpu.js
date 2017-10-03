@@ -135,7 +135,8 @@ var TSOS;
                     toReturn += String.fromCharCode(_Memory[stringIndex]);
                     stringIndex++;
                 }
-                _StdOut.putText(toReturn);
+                //MAY NEED TO FIX! the string starts with the substring "undefined", so the first 9 characters are removed
+                _StdOut.putText(toReturn.slice("undefined".length));
             }
         };
         return Cpu;
