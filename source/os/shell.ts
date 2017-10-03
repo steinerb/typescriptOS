@@ -534,14 +534,19 @@ module TSOS
         {
             var input = (<HTMLInputElement>document.getElementById("taProgramInput"));
             var dataSTR = input.value.toLowerCase();
+            //test to make sure characters are valid and spacing is proper
             if (!Utils.isValidHexString(dataSTR))
-            	_StdOut.putText("invalid input!!!");
+            	_StdOut.putText("Invalid input; failed to load program.");
             else
             {
-            	_StdOut.putText("valid input");
+            	_StdOut.putText("Program "+String(_NextAvailablePID)+" loaded successfully.");
             	
 
-            	//now load to memory...
+            	//now save Program ID for later calling
+            	_ProgramIDs[_ProgramIDs.length] = [_NextAvailablePID, _Memory.length];
+            	_NextAvailablePID++;
+
+            	//now load to memory
             	var toLoad: string[] = input.value.toLowerCase().split(" ");
             	var current: number;
             	for(var i = 0; i < toLoad.length; i++)
@@ -550,7 +555,7 @@ module TSOS
             		_Memory[_Memory.length] = current;
             	}
 
-            	//now save Program ID for later calling...
+
 
             }
             _StdOut.advanceLine();
@@ -597,7 +602,16 @@ module TSOS
 
         public shellTest(args) 
         {
-            
+    		_StdOut.putText("Showing Program ID registry:");
+            _StdOut.advanceLine();
+            _StdOut.advanceLine()
+            var currentPair;
+            for (var i = 0; i < _ProgramIDs.length; i++)
+            {
+            	currentPair = _ProgramIDs[i];
+            	_StdOut.putText("PID "+String(currentPair[0])+" starts at "+String(currentPair[1]));
+            	_StdOut.advanceLine();
+            }
 
         }
 

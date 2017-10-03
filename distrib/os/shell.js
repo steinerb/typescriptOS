@@ -393,18 +393,21 @@ var TSOS;
         Shell.prototype.shellLoad = function (args) {
             var input = document.getElementById("taProgramInput");
             var dataSTR = input.value.toLowerCase();
+            //test to make sure characters are valid and spacing is proper
             if (!TSOS.Utils.isValidHexString(dataSTR))
-                _StdOut.putText("invalid input!!!");
+                _StdOut.putText("Invalid input; failed to load program.");
             else {
-                _StdOut.putText("valid input");
-                //now load to memory...
+                _StdOut.putText("Program " + String(_NextAvailablePID) + " loaded successfully.");
+                //now save Program ID for later calling
+                _ProgramIDs[_ProgramIDs.length] = [_NextAvailablePID, _Memory.length];
+                _NextAvailablePID++;
+                //now load to memory
                 var toLoad = input.value.toLowerCase().split(" ");
                 var current;
                 for (var i = 0; i < toLoad.length; i++) {
                     current = Number(("0x" + toLoad[i]));
                     _Memory[_Memory.length] = current;
                 }
-                //now save Program ID for later calling...
             }
             _StdOut.advanceLine();
         };
@@ -439,41 +442,15 @@ var TSOS;
             }
         };
         Shell.prototype.shellTest = function (args) {
-            _StdOut.putText("LDAc: Loading the constant 65 to accumulator...");
+            _StdOut.putText("Showing Program ID registry:");
             _StdOut.advanceLine();
-            _CPU.ldaC(0x41);
-            _StdOut.putText(String(_CPU.Acc));
             _StdOut.advanceLine();
-            _StdOut.putText("STA:  Storing accumulator to memory...");
-            _StdOut.advanceLine();
-            _CPU.sta();
-            _StdOut.putText("LDAc: Loading the constant 75 to accumulator...");
-            _StdOut.advanceLine();
-            _CPU.ldaC(0x4B);
-            _StdOut.putText(String(_CPU.Acc));
-            _StdOut.advanceLine();
-            _StdOut.putText("STA:  Storing accumulator to memory...");
-            _StdOut.advanceLine();
-            _CPU.sta();
-            _StdOut.putText("ADC:  Adding first value of memory to accumulator...");
-            _StdOut.advanceLine();
-            _CPU.adc(0);
-            _StdOut.putText(String(_CPU.Acc));
-            _StdOut.advanceLine();
-            _StdOut.putText("INC: Incrementing the first value of memory...");
-            _StdOut.advanceLine();
-            _CPU.inc(0);
-            _StdOut.putText(String(_Memory[0]));
-            _StdOut.advanceLine();
-            _StdOut.putText("LDY: Loading the first value of memory to Y register...");
-            _StdOut.advanceLine();
-            _CPU.ldyM(0);
-            _StdOut.putText("LDX: Loading the constant 1 to X register...");
-            _StdOut.advanceLine();
-            _CPU.ldxC(1);
-            _StdOut.putText("SYS: running system call now...");
-            _StdOut.advanceLine();
-            _CPU.sys();
+            var currentPair;
+            for (var i = 0; i < _ProgramIDs.length; i++) {
+                currentPair = _ProgramIDs[i];
+                _StdOut.putText("PID " + String(currentPair[0]) + " starts at " + String(currentPair[1]));
+                _StdOut.advanceLine();
+            }
         };
         return Shell;
     }());

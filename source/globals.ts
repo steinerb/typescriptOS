@@ -49,6 +49,7 @@ const COMMAND_NAMES: string[] =
 //list of indexes for first elements of programs, paired with ids, in 2 element lists.
 						//ex:	[PID, indexInMemory]
 var _ProgramIDs = [];
+var _NextAvailablePID = 1;
 
 //list of numbers that translate to hex values, representing op codes.
 var _Memory: number[] = [];

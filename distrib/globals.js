@@ -42,6 +42,7 @@ var COMMAND_NAMES = [
 //list of indexes for first elements of programs, paired with ids, in 2 element lists.
 //ex:	[PID, indexInMemory]
 var _ProgramIDs = [];
+var _NextAvailablePID = 1;
 //list of numbers that translate to hex values, representing op codes.
 var _Memory = [];
 var _CPU; // Utilize TypeScript's type annotation system to ensure that _CPU is an instance of the Cpu class.
