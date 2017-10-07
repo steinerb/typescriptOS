@@ -42,7 +42,7 @@ var TSOS;
             _Kernel.krnTrace('CPU cycle');
             // TODO: Accumulate CPU usage and profiling statistics here.
             // Do the real work here. Be sure to set this.isExecuting appropriately.
-            /***COMPLETE LOAD SHELL COMMAND FIRST!!!***/
+            /***A continuation of run shell command***/
             /*if(this.isExecuting)
             {
                 //switch(_Memory[this.PC])
@@ -123,7 +123,6 @@ var TSOS;
             else
                 _Kernel.krnTrapError("Memory location: " + String(memLocation) + " is out of bounds!");
         };
-        //INCOMPLETE: NEED TO ADD PRINT STRINGS FOR XREG BEING 2
         Cpu.prototype.sys = function () {
             this.PC += 1;
             if (this.Xreg == 1)

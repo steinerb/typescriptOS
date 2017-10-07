@@ -35,6 +35,7 @@ const COMMAND_NAMES: string[] =
 	"date",
 	"whereami",
 	"load",
+	"run",
 	"status",
 	"bsod",
 	"dump",
@@ -46,12 +47,15 @@ const COMMAND_NAMES: string[] =
 // TODO: Make a global object and use that instead of the "_" naming convention in the global namespace.
 //
 
+//var residentQueue: 	TSOS.Queue = new Queue();
+//var readyQueue:		TSOS.Queue = new Queue();
+
 //list of indexes for first elements of programs, paired with ids, in 2 element lists.
 						//ex:	[PID, indexInMemory]
 var _ProgramIDs = [];
 var _NextAvailablePID = 1;
 
-//list of numbers that translate to hex values, representing op codes.
+//list of numbers that translate to hex values using von Neumann architecture.
 var _Memory: number[] = [];
 
 var _CPU: TSOS.Cpu;  // Utilize TypeScript's type annotation system to ensure that _CPU is an instance of the Cpu class.

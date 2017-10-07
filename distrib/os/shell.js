@@ -2,6 +2,7 @@
 ///<reference path="../utils.ts" />
 ///<reference path="shellCommand.ts" />
 ///<reference path="userCommand.ts" />
+///<reference path="pcb.ts" />
 /* ------------
    Shell.ts
 
@@ -63,6 +64,9 @@ var TSOS;
             this.commandList[this.commandList.length] = sc;
             // load
             sc = new TSOS.ShellCommand(this.shellLoad, "load", "- Validates the program input.");
+            this.commandList[this.commandList.length] = sc;
+            // run
+            sc = new TSOS.ShellCommand(this.shellRun, "run", "<int> - Runs a program in memory with an id.");
             this.commandList[this.commandList.length] = sc;
             // status
             sc = new TSOS.ShellCommand(this.shellStatus, "status", "<string> - Prints a message in the task bar.");
@@ -271,6 +275,10 @@ var TSOS;
                     case "load":
                         _StdOut.putText("Loads a program from User Program Input.");
                         break;
+                    //run
+                    case "run":
+                        _StdOut.putText("desc of run");
+                        break;
                     //status
                     case "status":
                         _StdOut.putText("Status relays a message to the user.");
@@ -411,6 +419,9 @@ var TSOS;
             }
             _StdOut.advanceLine();
         };
+        Shell.prototype.shellRun = function (args) {
+            _StdOut.putText("Run shell command was reached.");
+        };
         Shell.prototype.shellStatus = function (args) {
             var statusBox = document.getElementById("status");
             var statusMessage = args.join(' ');
@@ -460,6 +471,8 @@ var TSOS;
             }
         };
         Shell.prototype.shellTest = function (args) {
+            /*Prints ABC using only cpu operations*
+
             _StdOut.putText("Setting the first four spots in memory to string for ABC...");
             _StdOut.advanceLine();
             _Memory[0] = 0x41;
@@ -470,11 +483,18 @@ var TSOS;
             _StdOut.advanceLine();
             _CPU.ldxC(2);
             _StdOut.putText("Setting the Y register for 0, indicating the start of a string at 0...");
-            _StdOut.advanceLine();
+            _StdOut.advanceLine()
             _CPU.ldyC(0);
+
+            
+
             _StdOut.putText("Running system call...");
             _StdOut.advanceLine();
             _CPU.sys();
+
+            */
+            var x = new TSOS.Pcb();
+            x.helloWorld();
         };
         return Shell;
     }());

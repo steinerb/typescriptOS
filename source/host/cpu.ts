@@ -46,7 +46,7 @@ module TSOS
             // TODO: Accumulate CPU usage and profiling statistics here.
             // Do the real work here. Be sure to set this.isExecuting appropriately.
 
-            /***COMPLETE LOAD SHELL COMMAND FIRST!!!***/
+            /***A continuation of run shell command***/
 
             /*if(this.isExecuting)
             {
@@ -161,7 +161,6 @@ module TSOS
                 _Kernel.krnTrapError("Memory location: "+String(memLocation)+" is out of bounds!");
         }
 
-        //INCOMPLETE: NEED TO ADD PRINT STRINGS FOR XREG BEING 2
         public sys(): void
         {
             this.PC += 1;
