@@ -665,8 +665,9 @@ module TSOS
 
             */
 
-            var x = new Pcb();
-            x.helloWorld();
+            var x = new Pcb("new", 0, 0, 0, 0, 0, 0);
+
+            _StdOut.putText(String(x.state));
 
 
         }

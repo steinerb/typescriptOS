@@ -2,12 +2,24 @@
 var TSOS;
 (function (TSOS) {
     var Pcb = (function () {
-        function Pcb(message) {
-            if (message === void 0) { message = "hello world"; }
-            this.message = message;
+        //most flexible constructor
+        function Pcb(state, pid, PC, Acc, Xreg, Yreg, Zflag) {
+            this.state = state;
+            this.pid = pid;
+            this.PC = PC;
+            this.Acc = Acc;
+            this.Xreg = Xreg;
+            this.Yreg = Yreg;
+            this.Zflag = Zflag;
+            this.pid = pid;
+            this.PC = PC;
+            this.Acc = Acc;
+            this.Xreg = Xreg;
+            this.Yreg = Yreg;
+            this.Zflag = Zflag;
         }
         Pcb.prototype.helloWorld = function () {
-            _StdOut.putText(this.message);
+            _StdOut.putText("Hello World! Love, a pcb");
         };
         return Pcb;
     }());

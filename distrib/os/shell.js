@@ -493,8 +493,8 @@ var TSOS;
             _CPU.sys();
 
             */
-            var x = new TSOS.Pcb();
-            x.helloWorld();
+            var x = new TSOS.Pcb("new", 0, 0, 0, 0, 0, 0);
+            _StdOut.putText(String(x.state));
         };
         return Shell;
     }());
