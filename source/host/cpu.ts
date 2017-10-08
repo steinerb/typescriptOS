@@ -48,12 +48,13 @@ module TSOS
 
             /***A continuation of run shell command***/
 
-            /*if(this.isExecuting)
+            if (this.isExecuting == true)
             {
-                //switch(_Memory[this.PC])
-
-            }*/
+               _StdOut.putText("CPU cycle reached!!!");
+               this.isExecuting = false;
+            }
             
+
                 
 
 

@@ -43,11 +43,10 @@ var TSOS;
             // TODO: Accumulate CPU usage and profiling statistics here.
             // Do the real work here. Be sure to set this.isExecuting appropriately.
             /***A continuation of run shell command***/
-            /*if(this.isExecuting)
-            {
-                //switch(_Memory[this.PC])
-
-            }*/
+            if (this.isExecuting == true) {
+                _StdOut.putText("CPU cycle reached!!!");
+                this.isExecuting = false;
+            }
         };
         Cpu.prototype.ldaC = function (constant) {
             this.PC += 2;

@@ -15,6 +15,7 @@ module TSOS
                     public Zflag: number
 				   )
 		{
+			this.state = state;
 			this.pid = pid;
 			this.PC = PC;
 			this.Acc = Acc;

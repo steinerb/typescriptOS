@@ -576,6 +576,17 @@ module TSOS
         public shellRun(args)
         {
         	_StdOut.putText("Run shell command was reached.");
+        	_StdOut.advanceLine();
+
+        	var programIndex;
+        	for (var i = 0; i < _ProgramIDs.length; i++)
+        		if(_ProgramIDs[i][0] == args[0])
+        			programIndex = _ProgramIDs[i][1];
+
+        	_StdOut.putText("Op code at program index: "+_Memory[programIndex].toString(16).toUpperCase());
+
+        	_CPU.isExecuting = true; 
+
         }
 
         public shellStatus(args) 
