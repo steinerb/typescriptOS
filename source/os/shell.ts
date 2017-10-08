@@ -118,7 +118,7 @@ module TSOS
             // run
             sc = new ShellCommand(this.shellRun,
                                   "run",
-                                  "<int> - Runs a program in memory with an id.");
+                                  "<pid> - Runs a program in memory with an id.");
             this.commandList[this.commandList.length] = sc;
 
             // status
@@ -586,7 +586,6 @@ module TSOS
         		_StdOut.putText("No program with that PID found.");
         	else
         	{
-        		_StdOut.putText("Op code at program index: "+_Memory[programIndex].toString(16).toUpperCase());
         		_IndexOfProgramToRun = programIndex;
 				_CPU.isExecuting = true;
         	}

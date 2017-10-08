@@ -66,7 +66,7 @@ var TSOS;
             sc = new TSOS.ShellCommand(this.shellLoad, "load", "- Validates the program input.");
             this.commandList[this.commandList.length] = sc;
             // run
-            sc = new TSOS.ShellCommand(this.shellRun, "run", "<int> - Runs a program in memory with an id.");
+            sc = new TSOS.ShellCommand(this.shellRun, "run", "<pid> - Runs a program in memory with an id.");
             this.commandList[this.commandList.length] = sc;
             // status
             sc = new TSOS.ShellCommand(this.shellStatus, "status", "<string> - Prints a message in the task bar.");
@@ -420,8 +420,6 @@ var TSOS;
             _StdOut.advanceLine();
         };
         Shell.prototype.shellRun = function (args) {
-            _StdOut.putText("Run shell command was reached.");
-            _StdOut.advanceLine();
             //get index of first op code of the program
             var programIndex = -1;
             for (var i = 0; i < _ProgramIDs.length; i++)
@@ -431,7 +429,6 @@ var TSOS;
             if (programIndex == -1)
                 _StdOut.putText("No program with that PID found.");
             else {
-                _StdOut.putText("Op code at program index: " + _Memory[programIndex].toString(16).toUpperCase());
                 _IndexOfProgramToRun = programIndex;
                 _CPU.isExecuting = true;
             }

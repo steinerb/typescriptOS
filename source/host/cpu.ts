@@ -48,15 +48,44 @@ module TSOS
 
             /***A continuation of run shell command***/
 
+            
+            //var paramForLocation: number;
+
             if (this.isExecuting == true)
             {
-               _StdOut.putText("CPU cycle reached!!!");
-               this.isExecuting = false;
+
+               var currentOp:number = _Memory[_IndexOfProgramToRun+this.PC];
+               var paramForConstant: number = _Memory[_IndexOfProgramToRun+this.PC+1];
+
+               switch(currentOp)
+               {
+                   case 0xA9:
+                       this.ldaC(paramForConstant);
+                       break;
+
+                   case 0xA2:
+                       this.ldxC(paramForConstant);
+                       break;
+
+                   case 0xA0:
+                       this.ldyC(paramForConstant);
+                       break;
+
+                   case 0xFF:
+                       this.sys();
+                       break;
+
+                   case 0x00:
+                       this.init();
+                       break;
+
+                      //error: op code not recognized
+                   default:
+                       _Kernel.krnTrapError("Invalid op code: "+currentOp.toString(16).toUpperCase());
+               }
+               _OSclock++;
             }
             
-
-                
-
 
         }
 
