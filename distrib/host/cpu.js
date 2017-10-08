@@ -62,6 +62,8 @@ var TSOS;
                         break;
                     case 0x00:
                         this.init();
+                        _StdOut.advanceLine();
+                        _OsShell.putPrompt();
                         break;
                     //error: op code not recognized
                     default:
