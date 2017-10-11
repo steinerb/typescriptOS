@@ -54,11 +54,12 @@ const COMMAND_NAMES: string[] =
 						//ex:	[PID, indexInMemory]
 var _ProgramIDs = [];
 var _NextAvailablePID: number = 1;
+var _NextAvailableIndex: number = 0;
 
 var _IndexOfProgramToRun: number;
 
 //list of numbers that translate to hex values using von Neumann architecture.
-var _Memory: number[] = [];
+var _Memory: number[] = new Array(768);
 
 var _CPU: TSOS.Cpu;  // Utilize TypeScript's type annotation system to ensure that _CPU is an instance of the Cpu class.
 

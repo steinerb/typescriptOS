@@ -47,15 +47,28 @@ var TSOS;
             if (this.isExecuting == true) {
                 var currentOp = _Memory[_IndexOfProgramToRun + this.PC];
                 var paramForConstant = _Memory[_IndexOfProgramToRun + this.PC + 1];
+                var paramForLocation = _Memory[(_IndexOfProgramToRun +
+                    Number("0x" + (this.PC + 1).toString(16) + (this.PC + 2).toString(16)))];
                 switch (currentOp) {
                     case 0xA9:
                         this.ldaC(paramForConstant);
                         break;
+                    //NOT TESTED
+                    case 0xAD:
+                        this.ldaM(paramForLocation);
+                        break;
+                    //NOT TESTED
+                    case 0x8D:
+                        this.sta(paramForLocation);
                     case 0xA2:
                         this.ldxC(paramForConstant);
                         break;
                     case 0xA0:
                         this.ldyC(paramForConstant);
+                        break;
+                    //NOT TESTED
+                    case 0xAC:
+                        this.ldyM(paramForLocation);
                         break;
                     case 0xFF:
                         this.sys();
@@ -83,9 +96,9 @@ var TSOS;
             else
                 _Kernel.krnTrapError("Memory location: " + String(memLocation) + " is out of bounds!");
         };
-        Cpu.prototype.sta = function () {
+        Cpu.prototype.sta = function (memLocation) {
             this.PC += 3;
-            _Memory[_Memory.length] = this.Acc;
+            _Memory[memLocation] = this.Acc;
         };
         Cpu.prototype.adc = function (memLocation) {
             this.PC += 3;

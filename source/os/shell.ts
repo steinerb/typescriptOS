@@ -555,8 +555,9 @@ module TSOS
             	
 
             	//now save Program ID for later calling
-            	_ProgramIDs[_ProgramIDs.length] = [_NextAvailablePID, _Memory.length];
+            	_ProgramIDs[_ProgramIDs.length] = [_NextAvailablePID, _NextAvailableIndex];
             	_NextAvailablePID++;
+
 
             	//now load to memory
             	var toLoad: string[] = input.value.toLowerCase().split(" ");
@@ -564,7 +565,8 @@ module TSOS
             	for(var i = 0; i < toLoad.length; i++)
             	{
             		current = Number( ("0x"+toLoad[i]) );
-            		_Memory[_Memory.length] = current;
+            		_Memory[_NextAvailableIndex] = current;
+            		_NextAvailableIndex++;
             	}
 
 
@@ -658,14 +660,22 @@ module TSOS
 
         public shellTest(args) 
         {
-        	/*Prints ABC using only cpu operations*
+        	//Prints ABC using only cpu operations*
 
             _StdOut.putText("Setting the first four spots in memory to string for ABC...");
             _StdOut.advanceLine();
-            _Memory[0] = 0x41;
-            _Memory[1] = 0x42;
-            _Memory[2] = 0x43;
-            _Memory[3] = 0x00;
+            _CPU.ldaC(0x41);
+            _CPU.sta(0x00);
+
+            _CPU.ldaC(0x42);
+            _CPU.sta(1);
+
+            _CPU.ldaC(0x43);
+            _CPU.sta(2);
+
+            _CPU.ldaC(0x00);
+            _CPU.sta(3);
+
             _StdOut.putText("Setting the X register to 2 for printing strings...");
             _StdOut.advanceLine();
             _CPU.ldxC(2);
@@ -679,11 +689,11 @@ module TSOS
             _StdOut.advanceLine();
             _CPU.sys();
 
-            */
+            
 
-            var x = new Pcb("new", 0, 0, 0, 0, 0, 0);
+            //var x = new Pcb("new", 0, 0, 0, 0, 0, 0);
 
-            _StdOut.putText(String(x.state));
+            //_StdOut.putText(String(x.state));
 
 
         }

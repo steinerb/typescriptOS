@@ -407,14 +407,15 @@ var TSOS;
             else {
                 _StdOut.putText("Program " + String(_NextAvailablePID) + " loaded successfully.");
                 //now save Program ID for later calling
-                _ProgramIDs[_ProgramIDs.length] = [_NextAvailablePID, _Memory.length];
+                _ProgramIDs[_ProgramIDs.length] = [_NextAvailablePID, _NextAvailableIndex];
                 _NextAvailablePID++;
                 //now load to memory
                 var toLoad = input.value.toLowerCase().split(" ");
                 var current;
                 for (var i = 0; i < toLoad.length; i++) {
                     current = Number(("0x" + toLoad[i]));
-                    _Memory[_Memory.length] = current;
+                    _Memory[_NextAvailableIndex] = current;
+                    _NextAvailableIndex++;
                 }
             }
             _StdOut.advanceLine();
@@ -482,30 +483,28 @@ var TSOS;
             }
         };
         Shell.prototype.shellTest = function (args) {
-            /*Prints ABC using only cpu operations*
-
+            //Prints ABC using only cpu operations*
             _StdOut.putText("Setting the first four spots in memory to string for ABC...");
             _StdOut.advanceLine();
-            _Memory[0] = 0x41;
-            _Memory[1] = 0x42;
-            _Memory[2] = 0x43;
-            _Memory[3] = 0x00;
+            _CPU.ldaC(0x41);
+            _CPU.sta(0x00);
+            _CPU.ldaC(0x42);
+            _CPU.sta(1);
+            _CPU.ldaC(0x43);
+            _CPU.sta(2);
+            _CPU.ldaC(0x00);
+            _CPU.sta(3);
             _StdOut.putText("Setting the X register to 2 for printing strings...");
             _StdOut.advanceLine();
             _CPU.ldxC(2);
             _StdOut.putText("Setting the Y register for 0, indicating the start of a string at 0...");
-            _StdOut.advanceLine()
+            _StdOut.advanceLine();
             _CPU.ldyC(0);
-
-            
-
             _StdOut.putText("Running system call...");
             _StdOut.advanceLine();
             _CPU.sys();
-
-            */
-            var x = new TSOS.Pcb("new", 0, 0, 0, 0, 0, 0);
-            _StdOut.putText(String(x.state));
+            //var x = new Pcb("new", 0, 0, 0, 0, 0, 0);
+            //_StdOut.putText(String(x.state));
         };
         return Shell;
     }());
