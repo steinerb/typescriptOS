@@ -460,16 +460,14 @@ var TSOS;
                 _StdOut.advanceLine();
                 _StdOut.advanceLine();
             }
-            //if not empty, print memory locations
-            if (_Memory.length > 0) {
-                _StdOut.putText("Memory:");
-                _StdOut.advanceLine();
-                for (var i_1 = 0; i_1 < _Memory.length; i_1++) {
+            //show filled locations in memory
+            for (var i_1 = 0; i_1 < _Memory.length; i_1++) {
+                if (typeof _Memory[i_1] != 'undefined') {
                     _StdOut.putText("   " + String(i_1) + ": " + _Memory[i_1].toString(16).toUpperCase());
                     _StdOut.advanceLine();
                 }
-                _StdOut.advanceLine();
             }
+            _StdOut.advanceLine();
             //if not empty, print program ids
             if (_ProgramIDs.length > 0) {
                 _StdOut.putText("Program ID registry:");
@@ -482,27 +480,32 @@ var TSOS;
                 }
             }
         };
-        Shell.prototype.shellTest = function (args) {
+        Shell.prototype.shellTest = function () {
             //Prints ABC using only cpu operations*
-            _StdOut.putText("Setting the first four spots in memory to string for ABC...");
+            _StdOut.putText("Setting spots 15-19 as string for ABC...");
             _StdOut.advanceLine();
             _CPU.ldaC(0x41);
-            _CPU.sta(0x00);
+            _CPU.sta(0x0F);
             _CPU.ldaC(0x42);
-            _CPU.sta(1);
+            _CPU.sta(0x10);
             _CPU.ldaC(0x43);
-            _CPU.sta(2);
+            _CPU.sta(0x11);
             _CPU.ldaC(0x00);
-            _CPU.sta(3);
-            _StdOut.putText("Setting the X register to 2 for printing strings...");
-            _StdOut.advanceLine();
-            _CPU.ldxC(2);
-            _StdOut.putText("Setting the Y register for 0, indicating the start of a string at 0...");
-            _StdOut.advanceLine();
-            _CPU.ldyC(0);
-            _StdOut.putText("Running system call...");
-            _StdOut.advanceLine();
-            _CPU.sys();
+            _CPU.sta(0x12);
+            /*
+        _StdOut.putText("Setting the X register to 2 for printing strings...");
+        _StdOut.advanceLine();
+        _CPU.ldxC(2);
+        _StdOut.putText("Setting the Y register to 15, indicating the start of a string at 15...");
+        _StdOut.advanceLine()
+        _CPU.ldyM(0x0F);
+
+        
+
+        _StdOut.putText("Running system call...");
+        _StdOut.advanceLine();
+        _CPU.sys();
+            */
             //var x = new Pcb("new", 0, 0, 0, 0, 0, 0);
             //_StdOut.putText(String(x.state));
         };
