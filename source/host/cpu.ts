@@ -64,11 +64,9 @@ module TSOS
                                                        _IndexOfProgramToRun +
                                                        Number ( "0x"+(this.PC+1).toString(16)+(this.PC+2).toString(16) )
                                                      )];*/
-
                var paramForLocation: number = Number("0x"+_Memory[indexTwoOps]+_Memory[indexNextOp]);
 
                
-
                switch(currentOp)
                {
 
@@ -76,37 +74,58 @@ module TSOS
                        this.ldaC(paramForConstant);
                        break;
 
-                   //NOT TESTED
                    case 0xAD:
                        this.ldaM(paramForLocation);
                        break;
 
-                   //NOT TESTED
                    case 0x8D:
                        this.sta(paramForLocation);
                        break;
 
+                   case 0x6D:
+                       this.adc(paramForLocation);
+                       break
+
                    case 0xA2:
                        this.ldxC(paramForConstant);
+                       break;
+
+                   case 0xAE:
+                       this.ldxM(paramForLocation);
                        break;
 
                    case 0xA0:
                        this.ldyC(paramForConstant);
                        break;
 
-                   //NOT TESTED
                    case 0xAC:
                        this.ldyM(paramForLocation);
                        break;
 
-                   case 0xFF:
-                       this.sys();
+                   case 0xEA:
+                       this.nop();
                        break;
 
                    case 0x00:
                        this.init();
                        _StdOut.advanceLine();
                        _OsShell.putPrompt();
+                       break;
+
+                   case 0xEC:
+                       this.cpx(paramForLocation);
+                       break;
+
+                   //case 0xD0:
+                   //    this.bne()
+                   //    break;
+
+                   case 0xEE:
+                       this.inc(paramForLocation);
+                       break;
+
+                   case 0xFF:
+                       this.sys();
                        break;
 
                       //error: op code not recognized

@@ -661,7 +661,17 @@ module TSOS
         {
         	var loadBox = <HTMLInputElement>document.getElementById("taProgramInput");
             
+            //stores and prints ABC
         	loadBox.value = "A9 41 8D 85 00 A9 42 8D 86 00 A9 43 8D 87 00 A9 00 8D 88 00 A2 02 A0 85 FF 00";
+            
+        	//test program #1
+        	//loadBox.value = "A9 03 8D 00 00 A9 04 6D 00 00 8D 01 00 A2 01 AC 01 00 FF 00";
+
+        	//test program #2
+        	//loadBox.value = "A9 03 8D 18 00 A9 04 6D 18 00 8D 19 00 A2 01 AC 19 00 FF 00";
+
+            
+
             //var x = new Pcb("new", 0, 0, 0, 0, 0, 0);
 
             //_StdOut.putText(String(x.state));
