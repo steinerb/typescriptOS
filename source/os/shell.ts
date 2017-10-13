@@ -659,38 +659,9 @@ module TSOS
 
         public shellTest() 
         {
-        	//Prints ABC using only cpu operations*
-
-            _StdOut.putText("Setting spots 15-19 as string for ABC...");
-            _StdOut.advanceLine();
-            _CPU.ldaC(0x41);
-            _CPU.sta(0x0F);
-
-            _CPU.ldaC(0x42);
-            _CPU.sta(0x10);
-
-            _CPU.ldaC(0x43);
-            _CPU.sta(0x11);
-
-            _CPU.ldaC(0x00);
-            _CPU.sta(0x12);
-
-            	/*
-            _StdOut.putText("Setting the X register to 2 for printing strings...");
-            _StdOut.advanceLine();
-            _CPU.ldxC(2);
-            _StdOut.putText("Setting the Y register to 15, indicating the start of a string at 15...");
-            _StdOut.advanceLine()
-            _CPU.ldyM(0x0F);
-
+        	var loadBox = <HTMLInputElement>document.getElementById("taProgramInput");
             
-
-            _StdOut.putText("Running system call...");
-            _StdOut.advanceLine();
-            _CPU.sys();
-            	*/
-            
-
+        	loadBox.value = "A9 41 8D 85 00 A9 42 8D 86 00 A9 43 8D 87 00 A9 00 8D 88 00 A2 02 A0 85 FF 00";
             //var x = new Pcb("new", 0, 0, 0, 0, 0, 0);
 
             //_StdOut.putText(String(x.state));

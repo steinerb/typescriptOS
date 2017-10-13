@@ -54,12 +54,20 @@ module TSOS
             if (this.isExecuting == true)
             {
 
-               var currentOp:number = _Memory[_IndexOfProgramToRun+this.PC];
-               var paramForConstant: number = _Memory[_IndexOfProgramToRun+this.PC+1];
-               var paramForLocation: number = _Memory[( 
+               var indexNextOp: number = _IndexOfProgramToRun+this.PC+1;
+               var indexTwoOps: number = _IndexOfProgramToRun+this.PC+2;
+
+               var currentOp: number = _Memory[_IndexOfProgramToRun+this.PC];
+
+               var paramForConstant: number = _Memory[indexNextOp];
+               /*var paramForLocation: number = _Memory[( 
                                                        _IndexOfProgramToRun +
                                                        Number ( "0x"+(this.PC+1).toString(16)+(this.PC+2).toString(16) )
-                                                     )];
+                                                     )];*/
+
+               var paramForLocation: number = Number("0x"+_Memory[indexTwoOps]+_Memory[indexNextOp]);
+
+               
 
                switch(currentOp)
                {
@@ -76,6 +84,7 @@ module TSOS
                    //NOT TESTED
                    case 0x8D:
                        this.sta(paramForLocation);
+                       break;
 
                    case 0xA2:
                        this.ldxC(paramForConstant);

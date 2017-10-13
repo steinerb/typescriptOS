@@ -45,10 +45,15 @@ var TSOS;
             /***A continuation of run shell command***/
             //var paramForLocation: number;
             if (this.isExecuting == true) {
+                var indexNextOp = _IndexOfProgramToRun + this.PC + 1;
+                var indexTwoOps = _IndexOfProgramToRun + this.PC + 2;
                 var currentOp = _Memory[_IndexOfProgramToRun + this.PC];
-                var paramForConstant = _Memory[_IndexOfProgramToRun + this.PC + 1];
-                var paramForLocation = _Memory[(_IndexOfProgramToRun +
-                    Number("0x" + (this.PC + 1).toString(16) + (this.PC + 2).toString(16)))];
+                var paramForConstant = _Memory[indexNextOp];
+                /*var paramForLocation: number = _Memory[(
+                                                        _IndexOfProgramToRun +
+                                                        Number ( "0x"+(this.PC+1).toString(16)+(this.PC+2).toString(16) )
+                                                      )];*/
+                var paramForLocation = Number("0x" + _Memory[indexTwoOps] + _Memory[indexNextOp]);
                 switch (currentOp) {
                     case 0xA9:
                         this.ldaC(paramForConstant);
@@ -60,6 +65,7 @@ var TSOS;
                     //NOT TESTED
                     case 0x8D:
                         this.sta(paramForLocation);
+                        break;
                     case 0xA2:
                         this.ldxC(paramForConstant);
                         break;
