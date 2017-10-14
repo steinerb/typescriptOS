@@ -46,10 +46,14 @@ module TSOS
             // TODO: Accumulate CPU usage and profiling statistics here.
             // Do the real work here. Be sure to set this.isExecuting appropriately.
 
-            /***A continuation of run shell command***/
+            var pcBox    = <HTMLInputElement>document.getElementById("pc");
+            var accBox   = <HTMLInputElement>document.getElementById("acc");
+            var xRegBox  = <HTMLInputElement>document.getElementById("xReg");
+            var yRegBox  = <HTMLInputElement>document.getElementById("yReg");
+            var zFlagBox = <HTMLInputElement>document.getElementById("zFlag");
+
 
             
-            //var paramForLocation: number;
 
             if (this.isExecuting == true)
             {
@@ -132,6 +136,13 @@ module TSOS
                    default:
                        _Kernel.krnTrapError("Invalid op code: "+currentOp.toString(16).toUpperCase());
                }
+
+               pcBox.value    = String(this.PC)
+               accBox.value   = String(this.Acc);
+               xRegBox.value  = String(this.Xreg);
+               yRegBox.value  = String(this.Yreg);
+               zFlagBox.value = String(this.Zflag);
+
                _OSclock++;
             }
             

@@ -42,8 +42,11 @@ var TSOS;
             _Kernel.krnTrace('CPU cycle');
             // TODO: Accumulate CPU usage and profiling statistics here.
             // Do the real work here. Be sure to set this.isExecuting appropriately.
-            /***A continuation of run shell command***/
-            //var paramForLocation: number;
+            var pcBox = document.getElementById("pc");
+            var accBox = document.getElementById("acc");
+            var xRegBox = document.getElementById("xReg");
+            var yRegBox = document.getElementById("yReg");
+            var zFlagBox = document.getElementById("zFlag");
             if (this.isExecuting == true) {
                 var indexNextOp = _IndexOfProgramToRun + this.PC + 1;
                 var indexTwoOps = _IndexOfProgramToRun + this.PC + 2;
@@ -103,6 +106,11 @@ var TSOS;
                     default:
                         _Kernel.krnTrapError("Invalid op code: " + currentOp.toString(16).toUpperCase());
                 }
+                pcBox.value = String(this.PC);
+                accBox.value = String(this.Acc);
+                xRegBox.value = String(this.Xreg);
+                yRegBox.value = String(this.Yreg);
+                zFlagBox.value = String(this.Zflag);
                 _OSclock++;
             }
         };
