@@ -111,7 +111,6 @@ var TSOS;
                 xRegBox.value = String(this.Xreg);
                 yRegBox.value = String(this.Yreg);
                 zFlagBox.value = String(this.Zflag);
-                _OSclock++;
             }
         };
         Cpu.prototype.ldaC = function (constant) {

@@ -143,7 +143,6 @@ module TSOS
                yRegBox.value  = String(this.Yreg);
                zFlagBox.value = String(this.Zflag);
 
-               _OSclock++;
             }
             
 
