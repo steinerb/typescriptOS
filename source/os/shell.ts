@@ -660,7 +660,8 @@ module TSOS
         public shellTest() 
         {
         	var loadBox = <HTMLInputElement>document.getElementById("taProgramInput");
-            
+            var memoryBox = <HTMLInputElement>document.getElementById("memory");
+
             //stores and prints ABC
         	loadBox.value = "A9 41 8D 85 00 A9 42 8D 86 00 A9 43 8D 87 00 A9 00 8D 88 00 A2 02 A0 85 FF 00";
             
@@ -671,6 +672,8 @@ module TSOS
         	//loadBox.value = "A9 03 8D 18 00 A9 04 6D 18 00 8D 19 00 A2 01 AC 19 00 FF 00";
 
             
+        	memoryBox.value = "A9 41 8D 85 00 A9 42 8D 86 00 A9 43 8D 87 00 A9 00 8D 88 00 A2 02 A0 85 FF 00 A9 41 8D 85 00 A9 42 8D 86 00 A9 43 8D 87 00 A9 00 8D 88 00 A2 02 A0 85 FF 00 A9 41 8D 85 00 A9 42 8D 86 00 A9 43 8D 87 00 A9 00 8D 88 00 A2 02 A0 85 FF 00 A9 41 8D 85 00 A9 42 8D 86 00 A9 43 8D 87 00 A9 00 8D 88 00 A2 02 A0 85 FF 00";
+
 
             //var x = new Pcb("new", 0, 0, 0, 0, 0, 0);
 
