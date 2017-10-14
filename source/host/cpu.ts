@@ -137,7 +137,7 @@ module TSOS
                        _Kernel.krnTrapError("Invalid op code: "+currentOp.toString(16).toUpperCase());
                }
 
-               pcBox.value    = String(this.PC)
+               pcBox.value    = String(this.PC);
                accBox.value   = String(this.Acc);
                xRegBox.value  = String(this.Xreg);
                yRegBox.value  = String(this.Yreg);
