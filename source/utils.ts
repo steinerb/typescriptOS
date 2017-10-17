@@ -83,7 +83,7 @@ module TSOS
                 if(i%10==0)
                 {
                     memString += "0x";
-                    
+
                     if (i < 0x0010)
                         memString += "000";
                     else if (i < 0x0100)
@@ -108,6 +108,7 @@ module TSOS
 
             memoryBox.value = memString;
         }
+
 
     }
 }

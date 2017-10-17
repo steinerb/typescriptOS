@@ -1,4 +1,6 @@
 ///<reference path="../globals.ts" />
+///<reference path="../utils.ts" />
+
 ///<reference path="queue.ts" />
 
 /* ------------
@@ -45,7 +47,13 @@ module TSOS {
             // ... more?
             //
 
-            
+            (<HTMLInputElement>document.getElementById("pc")).value = "0";
+            (<HTMLInputElement>document.getElementById("acc")).value = "00";
+            (<HTMLInputElement>document.getElementById("xReg")).value = "00";
+            (<HTMLInputElement>document.getElementById("yReg")).value = "00";
+            (<HTMLInputElement>document.getElementById("zFlag")).value = "0";
+
+            Utils.updateMemory();
 
             // Enable the OS Interrupts.  (Not the CPU clock interrupt, as that is done in the hardware sim.)
             this.krnTrace("Enabling the interrupts.");

@@ -1,4 +1,5 @@
 ///<reference path="../globals.ts" />
+///<reference path="../utils.ts" />
 ///<reference path="queue.ts" />
 /* ------------
      Kernel.ts
@@ -39,6 +40,12 @@ var TSOS;
             //
             // ... more?
             //
+            document.getElementById("pc").value = "0";
+            document.getElementById("acc").value = "00";
+            document.getElementById("xReg").value = "00";
+            document.getElementById("yReg").value = "00";
+            document.getElementById("zFlag").value = "0";
+            TSOS.Utils.updateMemory();
             // Enable the OS Interrupts.  (Not the CPU clock interrupt, as that is done in the hardware sim.)
             this.krnTrace("Enabling the interrupts.");
             this.krnEnableInterrupts();

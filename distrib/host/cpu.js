@@ -108,13 +108,22 @@ var TSOS;
                     default:
                         _Kernel.krnTrapError("Invalid op code: " + currentOp.toString(16).toUpperCase());
                 }
-                TSOS.Utils.updateMemory();
                 //set cpu and memory displays
                 pcBox.value = String(this.PC);
-                accBox.value = this.Acc.toString(16).toUpperCase();
-                xRegBox.value = this.Xreg.toString(16).toUpperCase();
-                yRegBox.value = this.Yreg.toString(16).toUpperCase();
-                zFlagBox.value = this.Zflag.toString(16).toUpperCase();
+                if (this.Acc <= 15)
+                    accBox.value = " " + this.Acc.toString(16).toUpperCase();
+                else
+                    accBox.value = this.Acc.toString(16).toUpperCase();
+                if (this.Xreg <= 15)
+                    xRegBox.value = " " + this.Xreg.toString(16).toUpperCase();
+                else
+                    xRegBox.value = this.Xreg.toString(16).toUpperCase();
+                if (this.Yreg <= 15)
+                    yRegBox.value = " " + this.Yreg.toString(16).toUpperCase();
+                else
+                    yRegBox.value = this.Yreg.toString(16).toUpperCase();
+                zFlagBox.value = String(this.Zflag);
+                TSOS.Utils.updateMemory();
             }
         };
         Cpu.prototype.ldaC = function (constant) {
