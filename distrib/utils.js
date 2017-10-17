@@ -64,6 +64,33 @@ var TSOS;
             }
             return false;
         };
+        Utils.updateMemory = function () {
+            var memoryBox = document.getElementById("memory");
+            var memString = "";
+            var current;
+            for (var i = 0; i < _Memory.length; i++) {
+                if (i % 10 == 0) {
+                    memString += "0x";
+                    if (i < 0x0010)
+                        memString += "000";
+                    else if (i < 0x0100)
+                        memString += "00";
+                    else if (i < 0x1000)
+                        memString += "0";
+                    memString += (i.toString(16).toUpperCase() + ": ");
+                }
+                current = _Memory[i];
+                if (typeof current != "undefined") {
+                    if (current <= 15)
+                        memString += ("0" + _Memory[i].toString(16).toUpperCase() + " ");
+                    else
+                        memString += (_Memory[i].toString(16).toUpperCase() + " ");
+                }
+                else
+                    memString += "00 ";
+            }
+            memoryBox.value = memString;
+        };
         return Utils;
     }());
     TSOS.Utils = Utils;

@@ -1,4 +1,5 @@
 ///<reference path="../globals.ts" />
+///<reference path="../utils.ts" />
 
 /* ------------
      CPU.ts
@@ -136,14 +137,16 @@ module TSOS
                        _Kernel.krnTrapError("Invalid op code: "+currentOp.toString(16).toUpperCase());
                }
 
+               Utils.updateMemory();
 
-
-               pcBox.value    = String(this.PC);
-               accBox.value   = String(this.Acc);
-               xRegBox.value  = String(this.Xreg);
-               yRegBox.value  = String(this.Yreg);
-               zFlagBox.value = String(this.Zflag);
-
+               //set cpu and memory displays
+               pcBox.value     = String(this.PC);
+               accBox.value    = this.Acc.toString(16).toUpperCase();
+               xRegBox.value   = this.Xreg.toString(16).toUpperCase();
+               yRegBox.value   = this.Yreg.toString(16).toUpperCase();
+               zFlagBox.value  = this.Zflag.toString(16).toUpperCase();
+               
+               
 
             }
             

@@ -1,4 +1,5 @@
 ///<reference path="../globals.ts" />
+///<reference path="../utils.ts" />
 /* ------------
      CPU.ts
 
@@ -47,6 +48,7 @@ var TSOS;
             var xRegBox = document.getElementById("xReg");
             var yRegBox = document.getElementById("yReg");
             var zFlagBox = document.getElementById("zFlag");
+            var memoryBox = document.getElementById("memory");
             if (this.isExecuting == true) {
                 var indexNextOp = _IndexOfProgramToRun + this.PC + 1;
                 var indexTwoOps = _IndexOfProgramToRun + this.PC + 2;
@@ -106,11 +108,13 @@ var TSOS;
                     default:
                         _Kernel.krnTrapError("Invalid op code: " + currentOp.toString(16).toUpperCase());
                 }
+                TSOS.Utils.updateMemory();
+                //set cpu and memory displays
                 pcBox.value = String(this.PC);
-                accBox.value = String(this.Acc);
-                xRegBox.value = String(this.Xreg);
-                yRegBox.value = String(this.Yreg);
-                zFlagBox.value = String(this.Zflag);
+                accBox.value = this.Acc.toString(16).toUpperCase();
+                xRegBox.value = this.Xreg.toString(16).toUpperCase();
+                yRegBox.value = this.Yreg.toString(16).toUpperCase();
+                zFlagBox.value = this.Zflag.toString(16).toUpperCase();
             }
         };
         Cpu.prototype.ldaC = function (constant) {
