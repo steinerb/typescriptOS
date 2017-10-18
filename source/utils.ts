@@ -80,7 +80,7 @@ module TSOS
             var current: number;
             for(var i = 0; i < _Memory.length; i++)
             {
-                if(i%10==0)
+                if(i%8==0)
                 {
                     memString += "0x";
 

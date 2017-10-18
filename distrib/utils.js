@@ -69,7 +69,7 @@ var TSOS;
             var memString = "";
             var current;
             for (var i = 0; i < _Memory.length; i++) {
-                if (i % 10 == 0) {
+                if (i % 8 == 0) {
                     memString += "0x";
                     if (i < 0x0010)
                         memString += "000";
