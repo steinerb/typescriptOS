@@ -128,10 +128,29 @@ var TSOS;
             // UPDATE: Even though we are now working in TypeScript, char and string remain undistinguished.
             //         Consider fixing that.
             if (text !== "") {
+                //width of > is 24 if that isn't included in the offset
+                var offset = _DrawingContext.measureText(this.currentFont, this.currentFontSize, text);
+                /*
+                if(offset > 500)
+                {
+                    var currentText: string;
+                    var currentOffset: number;
+                    var newLineIndex = 0;
+                    for(var i = 0; i < text.length; i++)
+                    {
+                        currentText = text.substring(newLineIndex,i+1);
+                        currentOffset = _DrawingContext.measureText(this.currentFont, this.currentFontSize, currentText);
+                        if(currentOffset > 500)
+                        {
+                            _DrawingContext.drawText(this.currentFont, this.currentFontSize, this.currentXPosition, this.currentYPosition, currentText);
+                            this.currentXPosition = this.currentXPosition + currentOffset;
+                        }
+                    }
+                }
+                */
                 // Draw the text at the current X and Y coordinates.
                 _DrawingContext.drawText(this.currentFont, this.currentFontSize, this.currentXPosition, this.currentYPosition, text);
                 // Move the current X position.
-                var offset = _DrawingContext.measureText(this.currentFont, this.currentFontSize, text);
                 this.currentXPosition = this.currentXPosition + offset;
             }
         };
@@ -146,6 +165,7 @@ var TSOS;
             this.currentYPosition += _DefaultFontSize +
                 _DrawingContext.fontDescent(this.currentFont, this.currentFontSize) +
                 _FontHeightMargin;
+            //handles scrolling
             if (this.currentYPosition > 500)
                 _Console.init();
         };
