@@ -89,8 +89,7 @@ var TSOS;
                         break;
                     case 0x00:
                         this.init();
-                        _StdOut.advanceLine();
-                        _OsShell.putPrompt();
+                        this.brk();
                         break;
                     case 0xEC:
                         this.cpx(paramForLocation);
