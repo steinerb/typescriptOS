@@ -33,7 +33,6 @@ var COMMAND_NAMES = [
     "run",
     "status",
     "bsod",
-    "dump",
     "test"
 ];
 //

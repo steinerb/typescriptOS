@@ -38,7 +38,6 @@ const COMMAND_NAMES: string[] =
 	"run",
 	"status",
 	"bsod",
-	"dump",
 	"test"
 ];
 
@@ -97,6 +96,8 @@ var _SarcasticMode: boolean = false;
 var _krnKeyboardDriver; //  = null;
 
 var _hardwareClockID: number = null;
+
+
 
 
 // For testing (and enrichment)...

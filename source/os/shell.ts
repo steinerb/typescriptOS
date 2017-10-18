@@ -133,12 +133,6 @@ module TSOS
                                   "- Blue Screen of Death.");
             this.commandList[this.commandList.length] = sc;
 
-            //dump
-            sc = new ShellCommand(this.shellDump,
-                                  "dump",
-                                  "- Dumps all stored values to the screen.");
-            this.commandList[this.commandList.length] = sc;
-
             // test
             sc = new ShellCommand(this.shellTest,
                                   "test",
@@ -307,6 +301,7 @@ module TSOS
 
         public shellHelp(args) 
         {
+        	_StdOut.init();
             _StdOut.putText("Commands:");
             for (var i in _OsShell.commandList) 
             {
@@ -400,10 +395,6 @@ module TSOS
                     case "bsod":
                         _StdOut.putText("An error screen that stops the OS.");
                         break;
-                    //dump
-                    case "dump":
-                    	_StdOut.putText("Dump displays everything in the CPU registers and memory.");
-                    	break;
                     //test
                     case "test":
                         _StdOut.putText("For the dev to try and add new stuff.");
@@ -609,55 +600,13 @@ module TSOS
             _StdOut.putText("IT BROKE!");
         }
 
-        public shellDump()
-        {
-        	//if changed, print CPU values
-        	if( (_CPU.PC != 0) && (_CPU.Acc != 0) && (_CPU.Xreg != 0) && (_CPU.Yreg != 0) && (_CPU.Zflag != 0) )
-        	{
-	        	_StdOut.putText("CPU Registers:");
-	        	_StdOut.advanceLine();
-	        	_StdOut.putText("      PC: "+String(_CPU.PC));
-	        	_StdOut.advanceLine();
-	        	_StdOut.putText("     Acc: "+String(_CPU.Acc));
-	        	_StdOut.advanceLine();
-	        	_StdOut.putText("       X: "+String(_CPU.Xreg));
-	        	_StdOut.advanceLine();
-	        	_StdOut.putText("       Y: "+String(_CPU.Yreg));
-	        	_StdOut.advanceLine();
-	        	_StdOut.putText("   Zflag: "+String(_CPU.Zflag));
-	        	_StdOut.advanceLine();
-	        	_StdOut.advanceLine();
-	        	
-        	}
-        	
-        	//show filled locations in memory
-        	for(let i = 0; i < _Memory.length; i++)
-        	{
-        		if (typeof _Memory[i] != 'undefined')
-        		{
-        			_StdOut.putText("   "+String(i)+": "+_Memory[i].toString(16).toUpperCase());
-        			_StdOut.advanceLine();
-        		}
-        	}
-        	_StdOut.advanceLine();
-        	
-        	//if not empty, print program ids
-        	if(_ProgramIDs.length > 0)
-        	{
-        		_StdOut.putText("Program ID registry:");
-            	_StdOut.advanceLine();
-            	var currentPair;
-            	for (var i = 0; i < _ProgramIDs.length; i++)
-            	{
-            		currentPair = _ProgramIDs[i];
-            		_StdOut.putText("PID "+String(currentPair[0])+" starts at "+String(currentPair[1]));
-            		_StdOut.advanceLine();
-            	}
-        	}
-        }
+        
 
         public shellTest() 
         {
+        	_StdOut.putText("When in the Course of human events it becomes necessary for one people to dissolve the political bands which have connected them with another and to assume among the powers of the earth, the separate and equal station to which the Laws of Nature and of Nature's God entitle them, a decent respect to the opinions of mankind requires that they should declare the causes which impel them to the separation.");
+
+
         	var loadBox = <HTMLInputElement>document.getElementById("taProgramInput");
             var memoryBox = <HTMLInputElement>document.getElementById("memory");
 
@@ -675,6 +624,7 @@ module TSOS
 
         	//test program #3: 1 2 DONE
         	loadBox.value = "A9 03 8D 41 00 A9 01 8D 40 00 AC 40 00 A2 01 FF EE 40 00 AE 40 00 EC 41 00 D0 EF A9 44 8D 42 00 A9 4F 8D 43 00 A9 4E 8D 44 00 A9 45 8D 45 00 A9 00 8D 46 00 A2 02 A0 42 FF 00";
+
 
         	//test program 
 

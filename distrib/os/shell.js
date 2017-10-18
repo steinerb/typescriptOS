@@ -74,9 +74,6 @@ var TSOS;
             //bsod
             sc = new TSOS.ShellCommand(this.shellBSOD, "bsod", "- Blue Screen of Death.");
             this.commandList[this.commandList.length] = sc;
-            //dump
-            sc = new TSOS.ShellCommand(this.shellDump, "dump", "- Dumps all stored values to the screen.");
-            this.commandList[this.commandList.length] = sc;
             // test
             sc = new TSOS.ShellCommand(this.shellTest, "test", "- A shell command for the developer to experiment with new shell commands.");
             this.commandList[this.commandList.length] = sc;
@@ -203,6 +200,7 @@ var TSOS;
             _StdOut.putText(APP_NAME + " version " + APP_VERSION);
         };
         Shell.prototype.shellHelp = function (args) {
+            _StdOut.init();
             _StdOut.putText("Commands:");
             for (var i in _OsShell.commandList) {
                 _StdOut.advanceLine();
@@ -286,10 +284,6 @@ var TSOS;
                     //bsod
                     case "bsod":
                         _StdOut.putText("An error screen that stops the OS.");
-                        break;
-                    //dump
-                    case "dump":
-                        _StdOut.putText("Dump displays everything in the CPU registers and memory.");
                         break;
                     //test
                     case "test":
@@ -444,44 +438,8 @@ var TSOS;
             _StdOut.init();
             _StdOut.putText("IT BROKE!");
         };
-        Shell.prototype.shellDump = function () {
-            //if changed, print CPU values
-            if ((_CPU.PC != 0) && (_CPU.Acc != 0) && (_CPU.Xreg != 0) && (_CPU.Yreg != 0) && (_CPU.Zflag != 0)) {
-                _StdOut.putText("CPU Registers:");
-                _StdOut.advanceLine();
-                _StdOut.putText("      PC: " + String(_CPU.PC));
-                _StdOut.advanceLine();
-                _StdOut.putText("     Acc: " + String(_CPU.Acc));
-                _StdOut.advanceLine();
-                _StdOut.putText("       X: " + String(_CPU.Xreg));
-                _StdOut.advanceLine();
-                _StdOut.putText("       Y: " + String(_CPU.Yreg));
-                _StdOut.advanceLine();
-                _StdOut.putText("   Zflag: " + String(_CPU.Zflag));
-                _StdOut.advanceLine();
-                _StdOut.advanceLine();
-            }
-            //show filled locations in memory
-            for (var i_1 = 0; i_1 < _Memory.length; i_1++) {
-                if (typeof _Memory[i_1] != 'undefined') {
-                    _StdOut.putText("   " + String(i_1) + ": " + _Memory[i_1].toString(16).toUpperCase());
-                    _StdOut.advanceLine();
-                }
-            }
-            _StdOut.advanceLine();
-            //if not empty, print program ids
-            if (_ProgramIDs.length > 0) {
-                _StdOut.putText("Program ID registry:");
-                _StdOut.advanceLine();
-                var currentPair;
-                for (var i = 0; i < _ProgramIDs.length; i++) {
-                    currentPair = _ProgramIDs[i];
-                    _StdOut.putText("PID " + String(currentPair[0]) + " starts at " + String(currentPair[1]));
-                    _StdOut.advanceLine();
-                }
-            }
-        };
         Shell.prototype.shellTest = function () {
+            _StdOut.putText("When in the Course of human events it becomes necessary for one people to dissolve the political bands which have connected them with another and to assume among the powers of the earth, the separate and equal station to which the Laws of Nature and of Nature's God entitle them, a decent respect to the opinions of mankind requires that they should declare the causes which impel them to the separation.");
             var loadBox = document.getElementById("taProgramInput");
             var memoryBox = document.getElementById("memory");
             //stores and prints ABC
@@ -492,7 +450,7 @@ var TSOS;
             //loadBox.value = "A9 03 8D 18 00 A9 04 6D 18 00 8D 19 00 A2 01 AC 19 00 FF 00";
             //test program #2.5: lots of loops
             //loadBox.value = "A9 00 8D EC 00 A9 00 8D EC 00 A9 00 8D ED 00 A9 00 8D ED 00 A9 00 8D EE 00 A9 00 8D EF 00 AD ED 00 8D FF 00 AE FF 00 A9 00 8D FF 00 EC FF 00 D0 BA AD EC 00 8D FF 00 A9 01 6D FF 00 8D EC 00 AD EC 00 8D FF 00 AE FF 00 A9 03 8D FF 00 EC FF 00 D0 05 A9 01 8D ED 00 A9 00 8D EE 00 A9 00 8D EF 00 AD EF 00 8D FF 00 AE FF 00 A9 00 8D FF 00 EC FF 00 D0 49 AD EE 00 8D FF 00 A9 01 6D FF 00 8D EE 00 AD EE 00 8D FF 00 AE FF 00 A9 02 8D FF 00 EC FF 00 D0 05 A9 01 8D EF 00 A9 F8 8D FF 00 A2 02 AC FF 00 FF AD EE 00 A2 01 8D FF 00 AC FF 00 FF A9 00 8D FF 00 A2 01 EC FF 00 D0 A4 A9 F1 8D FF 00 A2 02 AC FF 00 FF AD EC 00 A2 01 8D FF 00 AC FF 00 FF A9 EE 8D FF 00 A2 02 AC FF 00 FF A9 00 8D FF 00 A2 01 EC FF 00 D0 33 00 00 00 20 20 00 20 6F 75 74 65 72 00 20 69 6E 6E 65 72 00 00";
-            //test program #3: 1 2 3 DONE
+            //test program #3: 1 2 DONE
             loadBox.value = "A9 03 8D 41 00 A9 01 8D 40 00 AC 40 00 A2 01 FF EE 40 00 AE 40 00 EC 41 00 D0 EF A9 44 8D 42 00 A9 4F 8D 43 00 A9 4E 8D 44 00 A9 45 8D 45 00 A9 00 8D 46 00 A2 02 A0 42 FF 00";
             //test program 
             //PCB test
