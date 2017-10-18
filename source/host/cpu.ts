@@ -120,9 +120,9 @@ module TSOS
                        this.cpx(paramForLocation);
                        break;
 
-                   //case 0xD0:
-                   //    this.bne()
-                   //    break;
+                   case 0xD0:
+                       this.bne(paramForConstant);
+                       break;
 
                    case 0xEE:
                        this.inc(paramForLocation);
@@ -139,7 +139,7 @@ module TSOS
 
                
                //set cpu and memory displays
-               pcBox.value     = String(this.PC);
+               pcBox.value = String(this.PC);
 
                if(this.Acc <= 15)
                    accBox.value = " "+this.Acc.toString(16).toUpperCase();
@@ -254,7 +254,12 @@ module TSOS
         public bne(numBytesToBranch): void
         {
             if(this.Zflag == 0)
-                this.PC += numBytesToBranch;
+            {
+                if ((2 + this.PC + numBytesToBranch) > 255)
+                    this.PC = (2 + this.PC + numBytesToBranch - 256);
+                else
+                    this.PC += (2 + numBytesToBranch);
+            }
             else
                 this.PC += 2;
         }

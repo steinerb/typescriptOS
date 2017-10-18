@@ -95,9 +95,9 @@ var TSOS;
                     case 0xEC:
                         this.cpx(paramForLocation);
                         break;
-                    //case 0xD0:
-                    //    this.bne()
-                    //    break;
+                    case 0xD0:
+                        this.bne(paramForConstant);
+                        break;
                     case 0xEE:
                         this.inc(paramForLocation);
                         break;
@@ -188,8 +188,12 @@ var TSOS;
                 _Kernel.krnTrapError("Memory location: " + String(memLocation) + " is out of bounds!");
         };
         Cpu.prototype.bne = function (numBytesToBranch) {
-            if (this.Zflag == 0)
-                this.PC += numBytesToBranch;
+            if (this.Zflag == 0) {
+                if ((2 + this.PC + numBytesToBranch) > 255)
+                    this.PC = (2 + this.PC + numBytesToBranch - 256);
+                else
+                    this.PC += (2 + numBytesToBranch);
+            }
             else
                 this.PC += 2;
         };
