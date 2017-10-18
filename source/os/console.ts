@@ -171,6 +171,7 @@ module TSOS
             		var currentText: string;
             		var currentOffset: number;
             		var newLineIndex = 0;
+            		//print the lines that would go off the screen
             		for(var i = 0; i < text.length; i++)
             		{
             			currentText = text.substring(newLineIndex,i+1);
@@ -182,7 +183,7 @@ module TSOS
             				this.advanceLine();
             			}
             		}
-
+            		//print the remaining text
             		_DrawingContext.drawText(this.currentFont, this.currentFontSize, this.currentXPosition, this.currentYPosition, currentText);
 	                this.currentXPosition = this.currentXPosition + currentOffset;
             	}

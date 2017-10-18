@@ -135,6 +135,7 @@ var TSOS;
                     var currentText;
                     var currentOffset;
                     var newLineIndex = 0;
+                    //print the lines that would go off the screen
                     for (var i = 0; i < text.length; i++) {
                         currentText = text.substring(newLineIndex, i + 1);
                         currentOffset = _DrawingContext.measureText(this.currentFont, this.currentFontSize, currentText);
@@ -144,6 +145,7 @@ var TSOS;
                             this.advanceLine();
                         }
                     }
+                    //print the remaining text
                     _DrawingContext.drawText(this.currentFont, this.currentFontSize, this.currentXPosition, this.currentYPosition, currentText);
                     this.currentXPosition = this.currentXPosition + currentOffset;
                 }
