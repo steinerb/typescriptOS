@@ -1,6 +1,8 @@
 ///<reference path="../globals.ts" />
 ///<reference path="../os/canvastext.ts" />
 /* ------------
+    ****ADDED A LINE SO GULP COULD COMPILE FOR THE NEW BRANCH 5:21 Oct 26****
+
      Control.ts
 
      Requires globals.ts.
