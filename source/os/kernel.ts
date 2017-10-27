@@ -29,6 +29,9 @@ module TSOS {
             _KernelBuffers = new Array();         // Buffers... for the kernel.
             _KernelInputQueue = new Queue();      // Where device input lands before being processed out somewhere.
 
+            _ResidentQueue = new Queue();		  // Where programs go when loaded
+            _ReadyQueue = new Queue();			  // Where programs go when ran
+
             // Initialize the console.
             _Console = new Console();          // The command line interface / console I/O device.
             _Console.init();
@@ -36,6 +39,9 @@ module TSOS {
             // Initialize standard input and output to the _Console.
             _StdIn  = _Console;
             _StdOut = _Console;
+
+            
+            
 
             // Load the Keyboard Device Driver
             this.krnTrace("Loading the keyboard device driver.");

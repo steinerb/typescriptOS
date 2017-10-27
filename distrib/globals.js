@@ -39,8 +39,8 @@ var COMMAND_NAMES = [
 // Global Variables
 // TODO: Make a global object and use that instead of the "_" naming convention in the global namespace.
 //
-//var residentQueue: 	TSOS.Queue = new Queue();
-//var readyQueue:		TSOS.Queue = new Queue();
+var _ResidentQueue;
+var _ReadyQueue;
 //list of indexes for first elements of programs, paired with ids, in 2 element lists.
 //ex:	[PID, indexInMemory]
 var _ProgramIDs = [];
