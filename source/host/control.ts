@@ -85,9 +85,9 @@ module TSOS {
 
             //make sure minutes value is 2 digits long
             if (nowMinutes < 10)
-                nowMinutesStr = '0'+String(nowMinutes)
+                nowMinutesStr = '0'+String(nowMinutes);
             else
-                nowMinutesStr = String(nowMinutes)
+                nowMinutesStr = String(nowMinutes);
 
             // Update the log console.
             

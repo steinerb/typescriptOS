@@ -31,6 +31,7 @@ module TSOS {
 
             _ResidentQueue = new Queue();		  // Where programs go when loaded
             _ReadyQueue = new Queue();			  // Where programs go when ran
+            
 
             // Initialize the console.
             _Console = new Console();          // The command line interface / console I/O device.
