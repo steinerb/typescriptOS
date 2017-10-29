@@ -22,6 +22,9 @@ var TSOS;
         Pcb.prototype.helloWorld = function () {
             _StdOut.putText("Hello World! Love, a pcb");
         };
+        Pcb.prototype.toString = function () {
+            return ("/" + this.state + "|" + this.pid + "|" + this.PC + "|" + this.Acc + "|" + this.Xreg + "|" + this.Yreg + "|" + this.Zflag + "\\");
+        };
         return Pcb;
     }());
     TSOS.Pcb = Pcb;

@@ -29,5 +29,10 @@ module TSOS
 			_StdOut.putText("Hello World! Love, a pcb");
 		}
 
+		public toString(): string
+		{
+			return ("/"+this.state+"|"+this.pid+"|"+this.PC+"|"+this.Acc+"|"+this.Xreg+"|"+this.Yreg+"|"+this.Zflag+"\\");
+		}
+
 	}
 }
