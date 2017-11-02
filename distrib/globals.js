@@ -25,7 +25,6 @@ var COMMAND_NAMES = [
     "trace",
     "rot13",
     "prompt",
-    "guess",
     "roll",
     "date",
     "whereami",
@@ -39,8 +38,6 @@ var COMMAND_NAMES = [
 // Global Variables
 // TODO: Make a global object and use that instead of the "_" naming convention in the global namespace.
 //
-var _ResidentQueue;
-var _ReadyQueue;
 //list of indexes for first elements of programs, paired with ids, in 2 element lists.
 //ex:	[PID, indexInMemory]
 var _ProgramIDs = [];
@@ -49,6 +46,8 @@ var _NextAvailableIndex = 0;
 var _IndexOfProgramToRun;
 //list of numbers that translate to hex values using von Neumann architecture.
 var _Memory = new Array(768);
+var _memTest;
+//var _Memory: TSOS.Memory;
 var _CPU; // Utilize TypeScript's type annotation system to ensure that _CPU is an instance of the Cpu class.
 var _OSclock = 0; // Page 23.
 var _Mode = 0; // (currently unused)  0 = Kernel Mode, 1 = User Mode.  See page 21.

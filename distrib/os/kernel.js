@@ -1,6 +1,7 @@
 ///<reference path="../globals.ts" />
 ///<reference path="../utils.ts" />
 ///<reference path="queue.ts" />
+///<reference path="memory.ts" />
 /* ------------
      Kernel.ts
 
@@ -26,8 +27,9 @@ var TSOS;
             _KernelInterruptQueue = new TSOS.Queue(); // A (currently) non-priority queue for interrupt requests (IRQs).
             _KernelBuffers = new Array(); // Buffers... for the kernel.
             _KernelInputQueue = new TSOS.Queue(); // Where device input lands before being processed out somewhere.
-            _ResidentQueue = new TSOS.Queue(); // Where programs go when loaded
-            _ReadyQueue = new TSOS.Queue(); // Where programs go when ran
+            //_ResidentQueue = new Queue();		  // Where programs go when loaded
+            //_ReadyQueue = new Queue();			  // Where programs go when ran
+            _memTest = new TSOS.Memory();
             // Initialize the console.
             _Console = new TSOS.Console(); // The command line interface / console I/O device.
             _Console.init();

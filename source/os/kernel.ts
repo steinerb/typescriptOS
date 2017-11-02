@@ -2,6 +2,7 @@
 ///<reference path="../utils.ts" />
 
 ///<reference path="queue.ts" />
+///<reference path="memory.ts" />
 
 /* ------------
      Kernel.ts
@@ -29,9 +30,10 @@ module TSOS {
             _KernelBuffers = new Array();         // Buffers... for the kernel.
             _KernelInputQueue = new Queue();      // Where device input lands before being processed out somewhere.
 
-            _ResidentQueue = new Queue();		  // Where programs go when loaded
-            _ReadyQueue = new Queue();			  // Where programs go when ran
-            
+            //_ResidentQueue = new Queue();		  // Where programs go when loaded
+            //_ReadyQueue = new Queue();			  // Where programs go when ran
+
+            _memTest = new Memory();
 
             // Initialize the console.
             _Console = new Console();          // The command line interface / console I/O device.

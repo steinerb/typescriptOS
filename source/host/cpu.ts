@@ -55,6 +55,7 @@ module TSOS
             var memoryBox = <HTMLInputElement>document.getElementById("memory");
 
 
+
             if (this.isExecuting == true)
             {
 
