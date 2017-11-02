@@ -1,6 +1,7 @@
 ///<reference path="../globals.ts" />
 ///<reference path="../os/canvastext.ts" />
 ///<reference path="../os/queue.ts" />
+///<reference path="memory.ts" />
 
 /* ------------
      Control.ts
@@ -32,6 +33,9 @@ module TSOS {
             // This is called from index.html's onLoad event via the onDocumentLoad function pointer.
 
             
+
+            //Initialize Memory
+            _memTest = new Memory();            
 
             // Get a global reference to the canvas.  TODO: Should we move this stuff into a Display Device Driver?
             _Canvas = <HTMLCanvasElement>document.getElementById('display');

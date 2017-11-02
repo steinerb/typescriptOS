@@ -2,7 +2,6 @@
 ///<reference path="../utils.ts" />
 
 ///<reference path="queue.ts" />
-///<reference path="memory.ts" />
 
 /* ------------
      Kernel.ts
@@ -33,7 +32,6 @@ module TSOS {
             //_ResidentQueue = new Queue();		  // Where programs go when loaded
             //_ReadyQueue = new Queue();			  // Where programs go when ran
 
-            _memTest = new Memory();
 
             // Initialize the console.
             _Console = new Console();          // The command line interface / console I/O device.
