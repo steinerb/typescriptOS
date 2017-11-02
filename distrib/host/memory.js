@@ -5,19 +5,30 @@ var TSOS;
             if (registers === void 0) { registers = new Array(768); }
             this.registers = registers;
         }
-        /*public getSize(): number
-        {
+        Memory.prototype.getSize = function () {
             return this.registers.length;
-        }
-
-        public storeValueAt(address, value): void
-        {
+        };
+        Memory.prototype.isEmpty = function () {
+            for (var i = 0; i < this.getSize(); i++)
+                if (typeof this.registers[i] != 'undefined')
+                    return false;
+            return true;
+        };
+        //TO ADD: properly convert logical to physical addresses
+        Memory.prototype.storeValueAt = function (address, partition, value) {
             this.registers[address] = value;
-        }
-
-        public clear()*/
+        };
+        Memory.prototype.wipe = function () {
+            this.registers = new Array(768);
+        };
         Memory.prototype.toString = function () {
-            return "***MEMORY toString REACHED***";
+            var toReturn = "[";
+            var current;
+            for (var i = 0; i < this.getSize() - 1; i++) {
+                current = this.registers[i];
+                toReturn += (String(current) + ",");
+            }
+            toReturn += (String(this.registers[this.getSize() - 1]) + "]");
         };
         return Memory;
     }());

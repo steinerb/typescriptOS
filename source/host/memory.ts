@@ -2,25 +2,44 @@ module TSOS
 {
 	export class Memory 
 	{
-		constructor(public registers = new Array(768))
+		constructor(public registers: number[] = new Array(768))
 		{
 		}
 
-		/*public getSize(): number
+		public getSize(): number
 		{
             return this.registers.length;
         }
 
-        public storeValueAt(address, value): void
+        public isEmpty(): boolean
+        {
+            for(let i = 0; i < this.getSize(); i++)
+                if(typeof this.registers[i] != 'undefined')
+                    return false;
+            return true;
+        }
+
+        //TO ADD: properly convert logical to physical addresses
+        public storeValueAt(address, partition, value): void
         {
         	this.registers[address] = value;
         }
 
-        public clear()*/
+        public wipe()
+        {
+            this.registers = new Array(768);
+        }
 
         public toString()
         {
-        	return "***MEMORY toString REACHED***";
+            var toReturn: string = "[";
+            var current: number;
+        	for(var i = 0; i < this.getSize()-1; i++)
+            {
+                current = this.registers[i];
+                toReturn += (String(current)+",");
+            }
+            toReturn += (String(this.registers[this.getSize()-1])+"]");
         }
 	}
 }
