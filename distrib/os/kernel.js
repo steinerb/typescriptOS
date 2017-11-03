@@ -1,6 +1,7 @@
 ///<reference path="../globals.ts" />
 ///<reference path="../utils.ts" />
 ///<reference path="queue.ts" />
+///<reference path="memoryManager.ts" />
 /* ------------
      Kernel.ts
 
@@ -28,6 +29,8 @@ var TSOS;
             _KernelInputQueue = new TSOS.Queue(); // Where device input lands before being processed out somewhere.
             //_ResidentQueue = new Queue();		  // Where programs go when loaded
             //_ReadyQueue = new Queue();			  // Where programs go when ran
+            //Initialize Memory Manager
+            _MemoryManager = new TSOS.MemoryManager();
             // Initialize the console.
             _Console = new TSOS.Console(); // The command line interface / console I/O device.
             _Console.init();

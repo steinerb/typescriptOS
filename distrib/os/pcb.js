@@ -1,4 +1,3 @@
-///<reference path="../globals.ts" />
 var TSOS;
 (function (TSOS) {
     var Pcb = (function () {

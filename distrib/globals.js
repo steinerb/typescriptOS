@@ -47,6 +47,7 @@ var _IndexOfProgramToRun;
 //list of numbers that translate to hex values using von Neumann architecture.
 var _Memory;
 var _memTest;
+var _MemoryManager;
 //var _Memory: TSOS.Memory;
 var _CPU; // Utilize TypeScript's type annotation system to ensure that _CPU is an instance of the Cpu class.
 var _OSclock = 0; // Page 23.
