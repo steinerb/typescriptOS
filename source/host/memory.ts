@@ -40,6 +40,7 @@ module TSOS
                 toReturn += (String(current)+",");
             }
             toReturn += (String(this.registers[this.getSize()-1])+"]");
+            return toReturn;
         }
 	}
 }
