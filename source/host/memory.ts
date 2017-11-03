@@ -19,10 +19,15 @@ module TSOS
             return true;
         }
 
-        //TO ADD: properly convert logical to physical addresses
+        
         public storeValueAt(address, partition, value): void
         {
-        	this.registers[address] = value;
+            //if zero, logical address is physical address
+            if(partition == 0)
+        	    this.registers[address] = value;
+            //if valid partition, convert logical to physical address
+            else if ((partition >= 1) && (partition <= 3))
+                this.registers[(address+(256*(partition-1)))] = value;
         }
 
         public wipe()

@@ -14,9 +14,12 @@ var TSOS;
                     return false;
             return true;
         };
-        //TO ADD: properly convert logical to physical addresses
         Memory.prototype.storeValueAt = function (address, partition, value) {
-            this.registers[address] = value;
+            //if zero, logical address is physical address
+            if (partition == 0)
+                this.registers[address] = value;
+            else if ((partition >= 1) && (partition <= 3))
+                this.registers[(address + (256 * (partition - 1)))] = value;
         };
         Memory.prototype.wipe = function () {
             this.registers = new Array(768);
