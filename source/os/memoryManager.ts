@@ -4,7 +4,7 @@ module TSOS
 {
 	export class MemoryManager
 	{
-		constructor()
+		constructor(public partitions = new Array(3))
 		{
 		}
 

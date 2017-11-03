@@ -21,7 +21,7 @@ module TSOS
         
         public storeValueAt(address, partition, value): void
         {
-            //if zero, logical address is physical address
+            //if partition is zero, logical address is physical address
             if(partition == 0)
         	    this.registers[address] = value;
             //if valid partition, convert logical to physical address
@@ -41,9 +41,15 @@ module TSOS
         	for(var i = 0; i < this.getSize()-1; i++)
             {
                 current = this.registers[i];
-                toReturn += (String(current)+",");
+                if(typeof current != 'undefined')
+                    toReturn += (String(current)+",");
+                else
+                    toReturn += ("0,");
             }
-            toReturn += (String(this.registers[this.getSize()-1])+"]");
+            if(typeof current != 'undefined')
+                toReturn += (String(this.registers[this.getSize()-1])+"]");
+            else
+                toReturn += ("0]");
             return toReturn;
         }
 	}
