@@ -59,7 +59,7 @@ var _IndexOfProgramToRun: number;
 var _Memory: TSOS.Memory;
 var _memTest: TSOS.Memory;
 
-var _MemoryManager: TSOS.MemoryManager;
+var _MemoryManager : TSOS.MemoryManager;
 
 //var _Memory: TSOS.Memory;
 
