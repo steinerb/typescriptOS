@@ -3,7 +3,8 @@ module TSOS
 	export class MemoryManager
 	{
 
-		constructor(public partitions: number[][] = new Array(3),
+		constructor(public PIDs: number[] = new Array(3),
+					public parLength: number = 256,
 					public par1Base:  number = 0,
 					public par1Limit: number = 255,
 					public par2Base:  number = 256,
@@ -16,19 +17,33 @@ module TSOS
 
 		public numPartitions(): number
 		{
-			return this.partitions.length;
+			return this.PIDs.length;
 		}
 
 		public indexOfProgram(pid: number): number
 		{
-			/*var current;
+			var current;
 			for (var i = 0; i < this.numPartitions(); i++)
 			{
-				current = this.partitions[i];
-				if (current[0] == pid)
-					return _Memory
+				current = this.PIDs[i];
+				if (current == pid)
+					return (current-1)*this.parLength;
+			}
 
-			}*/
+			return -1;
+		}
+
+		public programAtIndex(index: number): number
+		{
+			var current;
+			var currentPID;
+			for (var i = 0; i < this.numPartitions(); i++)
+			{
+				currentPID = i+1;
+				current = i*this.parLength;
+				if(current == index)
+					return currentPID;
+			}
 
 			return -1;
 		}
