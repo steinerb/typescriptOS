@@ -35,7 +35,8 @@ module TSOS {
             
 
             //Initialize Memory
-            _memTest = new Memory();            
+            _memTest = new Memory();
+            _Memory = new Memory();            
 
             // Get a global reference to the canvas.  TODO: Should we move this stuff into a Display Device Driver?
             _Canvas = <HTMLCanvasElement>document.getElementById('display');

@@ -62,14 +62,14 @@ module TSOS
                var indexNextOp: number = _IndexOfProgramToRun+this.PC+1;
                var indexTwoOps: number = _IndexOfProgramToRun+this.PC+2;
 
-               var currentOp: number = _Memory[_IndexOfProgramToRun+this.PC];
+               var currentOp: number = _Memory.registers[_IndexOfProgramToRun+this.PC];
 
-               var paramForConstant: number = _Memory[indexNextOp];
+               var paramForConstant: number = _Memory.registers[indexNextOp];
                /*var paramForLocation: number = _Memory[( 
                                                        _IndexOfProgramToRun +
                                                        Number ( "0x"+(this.PC+1).toString(16)+(this.PC+2).toString(16) )
                                                      )];*/
-               var paramForLocation: number = Number("0x"+_Memory[indexTwoOps]+_Memory[indexNextOp]);
+               var paramForLocation: number = Number("0x"+_Memory.registers[indexTwoOps]+_Memory.registers[indexNextOp]);
 
                
                switch(currentOp)
@@ -176,23 +176,25 @@ module TSOS
         public ldaM(memLocation): void
         {
             this.PC += 3;
-            if ((memLocation >= 0) && (memLocation < _Memory.length))
-                this.Acc = _Memory[memLocation];
+            if ((memLocation >= 0) && (memLocation < _Memory.getSize()))
+                this.Acc = _Memory.registers[memLocation];
             else
                 _Kernel.krnTrapError("Memory location: "+String(memLocation)+" is out of bounds!");
         }
 
+        //NOT FINISHED: account for logical and physical addresses!!!
         public sta(memLocation): void
         {
             this.PC += 3;
-            _Memory[memLocation] = this.Acc;
+            //OLD:  _Memory[memLocation] = this.Acc;
+            _Memory.storeValueAt(memLocation, 0, this.Acc);
         }
 
         public adc(memLocation): void
         {
             this.PC += 3;
-            if ((memLocation >= 0) && (memLocation < _Memory.length))
-                this.Acc += _Memory[memLocation];
+            if ((memLocation >= 0) && (memLocation < _Memory.getSize()))
+                this.Acc += _Memory.registers[memLocation];
             else
                 _Kernel.krnTrapError("Memory location: "+String(memLocation)+" is out of bounds!");
         }
@@ -206,8 +208,8 @@ module TSOS
         public ldxM(memLocation): void
         {
             this.PC += 3;
-            if ((memLocation >= 0) && (memLocation < _Memory.length))
-                this.Xreg = _Memory[memLocation];
+            if ((memLocation >= 0) && (memLocation < _Memory.getSize()))
+                this.Xreg = _Memory.registers[memLocation];
             else
                 _Kernel.krnTrapError("Memory location: "+String(memLocation)+" is out of bounds!");
         }
@@ -221,8 +223,8 @@ module TSOS
         public ldyM(memLocation): void
         {
             this.PC += 3;
-            if ((memLocation >= 0) && (memLocation < _Memory.length))
-                this.Yreg = _Memory[memLocation];
+            if ((memLocation >= 0) && (memLocation < _Memory.getSize()))
+                this.Yreg = _Memory.registers[memLocation];
             else
                 _Kernel.krnTrapError("Memory location: "+String(memLocation)+" is out of bounds!");
         }
@@ -240,9 +242,9 @@ module TSOS
         public cpx(memLocation): void
         {
             this.PC += 3;
-            if ((memLocation >= 0) && (memLocation < _Memory.length))
+            if ((memLocation >= 0) && (memLocation < _Memory.getSize()))
             {
-                if (_Memory[memLocation] == this.Xreg)
+                if (_Memory.registers[memLocation] == this.Xreg)
                     this.Zflag = 1;
                 else
                     this.Zflag = 0;
@@ -263,12 +265,14 @@ module TSOS
             else
                 this.PC += 2;
         }
-
+        
+        //NOT FINISHED: account for logical and physical addresses!!!
         public inc(memLocation): void
         {
             this.PC += 3;
-            if ((memLocation >= 0) && (memLocation < _Memory.length))
-                _Memory[memLocation] += 1;
+            if ((memLocation >= 0) && (memLocation < _Memory.getSize()))
+                //_Memory[memLocation] += 1;
+                _Memory.storeValueAt(memLocation, 0, (_Memory.registers[memLocation]+1))
             else
                 _Kernel.krnTrapError("Memory location: "+String(memLocation)+" is out of bounds!");
         }
@@ -283,9 +287,9 @@ module TSOS
                 var toReturn: string = "";
                 var stringIndex: number = this.Yreg;
                 
-                while(_Memory[stringIndex] != 0x00)
+                while(_Memory.registers[stringIndex] != 0x00)
                 {
-                    toReturn += String.fromCharCode(_Memory[stringIndex]);
+                    toReturn += String.fromCharCode(_Memory.registers[stringIndex]);
                     stringIndex++;
                 }
                 _StdOut.putText(toReturn);

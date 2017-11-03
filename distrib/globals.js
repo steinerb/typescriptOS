@@ -45,7 +45,7 @@ var _NextAvailablePID = 1;
 var _NextAvailableIndex = 0;
 var _IndexOfProgramToRun;
 //list of numbers that translate to hex values using von Neumann architecture.
-var _Memory = new Array(768);
+var _Memory;
 var _memTest;
 //var _Memory: TSOS.Memory;
 var _CPU; // Utilize TypeScript's type annotation system to ensure that _CPU is an instance of the Cpu class.

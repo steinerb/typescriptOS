@@ -52,13 +52,13 @@ var TSOS;
             if (this.isExecuting == true) {
                 var indexNextOp = _IndexOfProgramToRun + this.PC + 1;
                 var indexTwoOps = _IndexOfProgramToRun + this.PC + 2;
-                var currentOp = _Memory[_IndexOfProgramToRun + this.PC];
-                var paramForConstant = _Memory[indexNextOp];
+                var currentOp = _Memory.registers[_IndexOfProgramToRun + this.PC];
+                var paramForConstant = _Memory.registers[indexNextOp];
                 /*var paramForLocation: number = _Memory[(
                                                         _IndexOfProgramToRun +
                                                         Number ( "0x"+(this.PC+1).toString(16)+(this.PC+2).toString(16) )
                                                       )];*/
-                var paramForLocation = Number("0x" + _Memory[indexTwoOps] + _Memory[indexNextOp]);
+                var paramForLocation = Number("0x" + _Memory.registers[indexTwoOps] + _Memory.registers[indexNextOp]);
                 switch (currentOp) {
                     case 0xA9:
                         this.ldaC(paramForConstant);
@@ -131,19 +131,21 @@ var TSOS;
         };
         Cpu.prototype.ldaM = function (memLocation) {
             this.PC += 3;
-            if ((memLocation >= 0) && (memLocation < _Memory.length))
-                this.Acc = _Memory[memLocation];
+            if ((memLocation >= 0) && (memLocation < _Memory.getSize()))
+                this.Acc = _Memory.registers[memLocation];
             else
                 _Kernel.krnTrapError("Memory location: " + String(memLocation) + " is out of bounds!");
         };
+        //NOT FINISHED: account for logical and physical addresses!!!
         Cpu.prototype.sta = function (memLocation) {
             this.PC += 3;
-            _Memory[memLocation] = this.Acc;
+            //OLD:  _Memory[memLocation] = this.Acc;
+            _Memory.storeValueAt(memLocation, 0, this.Acc);
         };
         Cpu.prototype.adc = function (memLocation) {
             this.PC += 3;
-            if ((memLocation >= 0) && (memLocation < _Memory.length))
-                this.Acc += _Memory[memLocation];
+            if ((memLocation >= 0) && (memLocation < _Memory.getSize()))
+                this.Acc += _Memory.registers[memLocation];
             else
                 _Kernel.krnTrapError("Memory location: " + String(memLocation) + " is out of bounds!");
         };
@@ -153,8 +155,8 @@ var TSOS;
         };
         Cpu.prototype.ldxM = function (memLocation) {
             this.PC += 3;
-            if ((memLocation >= 0) && (memLocation < _Memory.length))
-                this.Xreg = _Memory[memLocation];
+            if ((memLocation >= 0) && (memLocation < _Memory.getSize()))
+                this.Xreg = _Memory.registers[memLocation];
             else
                 _Kernel.krnTrapError("Memory location: " + String(memLocation) + " is out of bounds!");
         };
@@ -164,8 +166,8 @@ var TSOS;
         };
         Cpu.prototype.ldyM = function (memLocation) {
             this.PC += 3;
-            if ((memLocation >= 0) && (memLocation < _Memory.length))
-                this.Yreg = _Memory[memLocation];
+            if ((memLocation >= 0) && (memLocation < _Memory.getSize()))
+                this.Yreg = _Memory.registers[memLocation];
             else
                 _Kernel.krnTrapError("Memory location: " + String(memLocation) + " is out of bounds!");
         };
@@ -177,8 +179,8 @@ var TSOS;
         };
         Cpu.prototype.cpx = function (memLocation) {
             this.PC += 3;
-            if ((memLocation >= 0) && (memLocation < _Memory.length)) {
-                if (_Memory[memLocation] == this.Xreg)
+            if ((memLocation >= 0) && (memLocation < _Memory.getSize())) {
+                if (_Memory.registers[memLocation] == this.Xreg)
                     this.Zflag = 1;
                 else
                     this.Zflag = 0;
@@ -196,10 +198,12 @@ var TSOS;
             else
                 this.PC += 2;
         };
+        //NOT FINISHED: account for logical and physical addresses!!!
         Cpu.prototype.inc = function (memLocation) {
             this.PC += 3;
-            if ((memLocation >= 0) && (memLocation < _Memory.length))
-                _Memory[memLocation] += 1;
+            if ((memLocation >= 0) && (memLocation < _Memory.getSize()))
+                //_Memory[memLocation] += 1;
+                _Memory.storeValueAt(memLocation, 0, (_Memory.registers[memLocation] + 1));
             else
                 _Kernel.krnTrapError("Memory location: " + String(memLocation) + " is out of bounds!");
         };
@@ -210,8 +214,8 @@ var TSOS;
             else if (this.Xreg == 2) {
                 var toReturn = "";
                 var stringIndex = this.Yreg;
-                while (_Memory[stringIndex] != 0x00) {
-                    toReturn += String.fromCharCode(_Memory[stringIndex]);
+                while (_Memory.registers[stringIndex] != 0x00) {
+                    toReturn += String.fromCharCode(_Memory.registers[stringIndex]);
                     stringIndex++;
                 }
                 _StdOut.putText(toReturn);

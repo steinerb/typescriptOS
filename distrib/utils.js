@@ -68,7 +68,7 @@ var TSOS;
             var memoryBox = document.getElementById("memory");
             var memString = "";
             var current;
-            for (var i = 0; i < _Memory.length; i++) {
+            for (var i = 0; i < _Memory.getSize(); i++) {
                 if (i % 8 == 0) {
                     memString += "0x";
                     if (i < 0x0010)
@@ -79,12 +79,12 @@ var TSOS;
                         memString += "0";
                     memString += (i.toString(16).toUpperCase() + ": ");
                 }
-                current = _Memory[i];
+                current = _Memory.registers[i];
                 if (typeof current != "undefined") {
                     if (current <= 15)
-                        memString += ("0" + _Memory[i].toString(16).toUpperCase() + " ");
+                        memString += ("0" + _Memory.registers[i].toString(16).toUpperCase() + " ");
                     else
-                        memString += (_Memory[i].toString(16).toUpperCase() + " ");
+                        memString += (_Memory.registers[i].toString(16).toUpperCase() + " ");
                 }
                 else
                     memString += "00 ";

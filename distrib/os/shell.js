@@ -389,7 +389,8 @@ var TSOS;
                 var current;
                 for (var i = 0; i < toLoad.length; i++) {
                     current = Number(("0x" + toLoad[i]));
-                    _Memory[_NextAvailableIndex] = current;
+                    //_Memory[_NextAvailableIndex] = current;
+                    _Memory.storeValueAt(_NextAvailableIndex, 0, current);
                     _NextAvailableIndex++;
                 }
                 TSOS.Utils.updateMemory();
@@ -445,7 +446,6 @@ var TSOS;
             _StdOut.advanceLine();
             _StdOut.putText("is memtest empty: " + String(_memTest.isEmpty()));
             _StdOut.advanceLine();
-            TSOS.Utils.updateMemory();
             //PCB test
             //var x = new Pcb("new", 0, 0, 0, 0, 0, 0);
             //_StdOut.putText(String(x.state));

@@ -532,7 +532,8 @@ module TSOS
             	for(var i = 0; i < toLoad.length; i++)
             	{
             		current = Number( ("0x"+toLoad[i]) );
-            		_Memory[_NextAvailableIndex] = current;
+            		//_Memory[_NextAvailableIndex] = current;
+            		_Memory.storeValueAt(_NextAvailableIndex, 0, current);
             		_NextAvailableIndex++;
             	}
 

@@ -18,7 +18,6 @@ module TSOS
                     return false;
             return true;
         }
-
         
         public storeValueAt(address, partition, value): void
         {
@@ -30,7 +29,7 @@ module TSOS
                 this.registers[(address+(256*(partition-1)))] = value;
         }
 
-        public wipe()
+        public wipe(): void
         {
             this.registers = new Array(768);
         }

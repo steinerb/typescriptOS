@@ -56,7 +56,7 @@ var _NextAvailableIndex: number = 0;
 var _IndexOfProgramToRun: number;
 
 //list of numbers that translate to hex values using von Neumann architecture.
-var _Memory: number[] = new Array(768);
+var _Memory: TSOS.Memory;
 var _memTest: TSOS.Memory;
 
 //var _Memory: TSOS.Memory;

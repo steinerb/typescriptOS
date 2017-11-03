@@ -78,7 +78,7 @@ module TSOS
 
             var memString: string = "";
             var current: number;
-            for(var i = 0; i < _Memory.length; i++)
+            for(var i = 0; i < _Memory.getSize(); i++)
             {
                 if(i%8==0)
                 {
@@ -94,13 +94,13 @@ module TSOS
                     memString += (i.toString(16).toUpperCase()+": ");
                 }
 
-                current = _Memory[i];
+                current = _Memory.registers[i];
                 if(typeof current != "undefined")
                 {
                     if(current <= 15)
-                        memString += ("0"+_Memory[i].toString(16).toUpperCase()+" ");
+                        memString += ("0"+_Memory.registers[i].toString(16).toUpperCase()+" ");
                     else
-                        memString += (_Memory[i].toString(16).toUpperCase()+" ");
+                        memString += (_Memory.registers[i].toString(16).toUpperCase()+" ");
                 }
                 else
                     memString += "00 ";
