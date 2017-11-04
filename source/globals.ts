@@ -49,10 +49,7 @@ const COMMAND_NAMES: string[] =
 
 //list of indexes for first elements of programs, paired with ids, in 2 element lists.
 						//ex:	[PID, indexInMemory]
-var _ProgramIDs = [];
-var _NextAvailablePID: number = 0;
 var _NextAvailableIndex: number = 0;
-
 var _IndexOfProgramToRun: number;
 
 //list of numbers that translate to hex values using von Neumann architecture.

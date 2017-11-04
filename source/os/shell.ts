@@ -516,26 +516,17 @@ module TSOS
             //test to make sure characters are valid and spacing is proper
             if (!Utils.isValidHexString(dataSTR))
             	_StdOut.putText("Invalid input; failed to load program.");
+            //test if input is too long
+            //else if (dataSTR)
             else
             {
-            	/*
-            	_StdOut.putText("Program "+String(_NextAvailablePID)+" loaded successfully.");
             	
-
-            	//now save Program ID for later calling
-            	_ProgramIDs[_ProgramIDs.length] = [_NextAvailablePID, _NextAvailableIndex];
-            	_NextAvailablePID++;
-				*/
-
-
-
+            	//test if any partitions are empty
 				if(_MemoryManager.hasSpace())
 				{
 					
 	            	_StdOut.putText("Program "+String(_MemoryManager.nextAvailablePID())+" loaded successfully.");
             	
-            		
-
 	            	//now load to memory
 	            	var toLoad: string[] = input.value.toLowerCase().split(" ");
 	            	var current: number;
@@ -566,11 +557,6 @@ module TSOS
         {
         	//get index of first op code of the program
         	var programIndex: number = -1;
-        	/*
-        	for (var i = 0; i < _ProgramIDs.length; i++)
-        		if(_ProgramIDs[i][0] == args[0])
-        			programIndex = _ProgramIDs[i][1];
-        	*/
         	if(_MemoryManager.indexOfProgram(args[0]) != -1)
         		programIndex = _MemoryManager.indexOfProgram(args[0]);
 

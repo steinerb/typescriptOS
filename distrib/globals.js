@@ -40,8 +40,6 @@ var COMMAND_NAMES = [
 //
 //list of indexes for first elements of programs, paired with ids, in 2 element lists.
 //ex:	[PID, indexInMemory]
-var _ProgramIDs = [];
-var _NextAvailablePID = 0;
 var _NextAvailableIndex = 0;
 var _IndexOfProgramToRun;
 //list of numbers that translate to hex values using von Neumann architecture.

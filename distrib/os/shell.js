@@ -380,15 +380,7 @@ var TSOS;
             if (!TSOS.Utils.isValidHexString(dataSTR))
                 _StdOut.putText("Invalid input; failed to load program.");
             else {
-                /*
-                _StdOut.putText("Program "+String(_NextAvailablePID)+" loaded successfully.");
-                
-
-                //now save Program ID for later calling
-                _ProgramIDs[_ProgramIDs.length] = [_NextAvailablePID, _NextAvailableIndex];
-                _NextAvailablePID++;
-                */
-                //PUT IN THE hasSpace IF CONDITION!!!
+                //test if any partitions are empty
                 if (_MemoryManager.hasSpace()) {
                     _StdOut.putText("Program " + String(_MemoryManager.nextAvailablePID()) + " loaded successfully.");
                     //now load to memory
@@ -414,11 +406,6 @@ var TSOS;
         Shell.prototype.shellRun = function (args) {
             //get index of first op code of the program
             var programIndex = -1;
-            /*
-            for (var i = 0; i < _ProgramIDs.length; i++)
-                if(_ProgramIDs[i][0] == args[0])
-                    programIndex = _ProgramIDs[i][1];
-            */
             if (_MemoryManager.indexOfProgram(args[0]) != -1)
                 programIndex = _MemoryManager.indexOfProgram(args[0]);
             //check if it exists and make use of the cpu cycles if so.
