@@ -41,7 +41,7 @@ module TSOS
 			{
 				currentPID = i+1;
 				current = i*this.parLength;
-				if(current == index)
+				if((current == index) && ((typeof this.pidPartitions[i]) != 'undefined'))
 					return currentPID;
 			}
 

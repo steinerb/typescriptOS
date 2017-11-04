@@ -37,7 +37,7 @@ var TSOS;
             for (var i = 0; i < this.numPartitions(); i++) {
                 currentPID = i + 1;
                 current = i * this.parLength;
-                if (current == index)
+                if ((current == index) && ((typeof this.pidPartitions[i]) != 'undefined'))
                     return currentPID;
             }
             return -1;
