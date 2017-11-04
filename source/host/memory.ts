@@ -2,7 +2,14 @@ module TSOS
 {
 	export class Memory 
 	{
-		constructor(public registers: number[] = new Array(768))
+		constructor(public registers: number[] = new Array(768),
+                    public par1Base:  number = 0,
+                    public par1Limit: number = 255,
+                    public par2Base:  number = 256,
+                    public par2Limit: number = 511,
+                    public par3Base:  number = 512,
+                    public par3Limit: number = 767
+                    )
 		{
 		}
 

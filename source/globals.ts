@@ -46,19 +46,21 @@ const COMMAND_NAMES: string[] =
 // TODO: Make a global object and use that instead of the "_" naming convention in the global namespace.
 //
 
+// A list for all idle programs
+var _ResidentList: TSOS.Pcb[];
+var _ReadyQueue: TSOS.Queue;
 
-
-//linking variables between shell and cpu for running programs
+// linking variables between shell and cpu for running programs
 var _NextAvailableIndex: number = 0;
 var _IndexOfProgramToRun: number;
 
-//list of numbers that translate to hex values using von Neumann architecture.
+// list of numbers that translate to hex values using von Neumann architecture.
 var _Memory: TSOS.Memory;
 var _memTest: TSOS.Memory;
 
+// self explanatory
 var _MemoryManager : TSOS.MemoryManager;
 
-//var _Memory: TSOS.Memory;
 
 var _CPU: TSOS.Cpu;  // Utilize TypeScript's type annotation system to ensure that _CPU is an instance of the Cpu class.
 

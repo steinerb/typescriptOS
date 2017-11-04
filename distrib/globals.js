@@ -39,15 +39,17 @@ var COMMAND_NAMES = [
 // Global Variables
 // TODO: Make a global object and use that instead of the "_" naming convention in the global namespace.
 //
-//list of indexes for first elements of programs, paired with ids, in 2 element lists.
-//ex:	[PID, indexInMemory]
+// A list for all idle programs
+var _ResidentList;
+var _ReadyQueue;
+// linking variables between shell and cpu for running programs
 var _NextAvailableIndex = 0;
 var _IndexOfProgramToRun;
-//list of numbers that translate to hex values using von Neumann architecture.
+// list of numbers that translate to hex values using von Neumann architecture.
 var _Memory;
 var _memTest;
+// self explanatory
 var _MemoryManager;
-//var _Memory: TSOS.Memory;
 var _CPU; // Utilize TypeScript's type annotation system to ensure that _CPU is an instance of the Cpu class.
 var _OSclock = 0; // Page 23.
 var _Mode = 0; // (currently unused)  0 = Kernel Mode, 1 = User Mode.  See page 21.
