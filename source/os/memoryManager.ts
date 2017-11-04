@@ -20,6 +20,41 @@ module TSOS
 			return this.pidPartitions.length;
 		}
 
+		public hasSpace(): boolean
+		{
+			for(var i = 0; i < this.numPartitions(); i++)
+			{
+				if ((typeof this.pidPartitions[i]) == 'undefined')
+					return true;
+			}
+			return false;
+		}
+
+		public nextAvailablePID(): number
+		{
+			for(var i = 0; i < this.numPartitions(); i++)
+			{
+				if ((typeof this.pidPartitions[i]) == 'undefined')
+					return i;
+			}
+			return -1;
+		}
+
+		public nextAvailableIndex(): number
+		{
+			for(var i = 0; i < this.numPartitions(); i++)
+			{
+				if ((typeof this.pidPartitions[i]) == 'undefined')
+					return i*this.parLength;
+			}
+			return -1;
+		}
+
+		public fillPartition(): void
+		{
+			this.pidPartitions[this.nextAvailablePID()] = this.nextAvailablePID();
+		}
+
 		public indexOfProgram(pid: number): number
 		{
 			var current;
@@ -27,7 +62,7 @@ module TSOS
 			{
 				current = this.pidPartitions[i];
 				if (current == pid)
-					return (current-1)*this.parLength;
+					return current*this.parLength;
 			}
 
 			return -1;
@@ -36,12 +71,10 @@ module TSOS
 		public programAtIndex(index: number): number
 		{
 			var current;
-			var currentPID;
-			for (var i = 0; i < this.numPartitions(); i++)
+			for (var currentPID = 0; currentPID < this.numPartitions(); currentPID++)
 			{
-				currentPID = i+1;
-				current = i*this.parLength;
-				if((current == index) && ((typeof this.pidPartitions[i]) != 'undefined'))
+				current = currentPID*this.parLength;
+				if((current == index) && ((typeof this.pidPartitions[currentPID]) != 'undefined'))
 					return currentPID;
 			}
 

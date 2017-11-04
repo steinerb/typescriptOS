@@ -380,19 +380,33 @@ var TSOS;
             if (!TSOS.Utils.isValidHexString(dataSTR))
                 _StdOut.putText("Invalid input; failed to load program.");
             else {
-                _StdOut.putText("Program " + String(_NextAvailablePID) + " loaded successfully.");
+                /*
+                _StdOut.putText("Program "+String(_NextAvailablePID)+" loaded successfully.");
+                
+
                 //now save Program ID for later calling
                 _ProgramIDs[_ProgramIDs.length] = [_NextAvailablePID, _NextAvailableIndex];
                 _NextAvailablePID++;
-                //now load to memory
-                var toLoad = input.value.toLowerCase().split(" ");
-                var current;
-                for (var i = 0; i < toLoad.length; i++) {
-                    current = Number(("0x" + toLoad[i]));
-                    //_Memory[_NextAvailableIndex] = current;
-                    _Memory.storeValueAt(_NextAvailableIndex, 0, current);
-                    _NextAvailableIndex++;
+                */
+                //PUT IN THE hasSpace IF CONDITION!!!
+                if (_MemoryManager.hasSpace()) {
+                    _StdOut.putText("Program " + String(_MemoryManager.nextAvailablePID()) + " loaded successfully.");
+                    //now load to memory
+                    var toLoad = input.value.toLowerCase().split(" ");
+                    var current;
+                    for (var i = 0; i < toLoad.length; i++) {
+                        current = Number(("0x" + toLoad[i]));
+                        //_Memory[_NextAvailableIndex] = current;
+                        _Memory.storeValueAt(_NextAvailableIndex, _MemoryManager.nextAvailablePID(), current);
+                        _NextAvailableIndex++;
+                    }
+                    //reset index for loading to memory
+                    _NextAvailableIndex = 0;
+                    //now save Program ID for later calling
+                    _MemoryManager.fillPartition();
                 }
+                else
+                    _StdOut.putText("Memory full; failed to load program.");
                 TSOS.Utils.updateMemory();
             }
             _StdOut.advanceLine();
@@ -400,9 +414,13 @@ var TSOS;
         Shell.prototype.shellRun = function (args) {
             //get index of first op code of the program
             var programIndex = -1;
+            /*
             for (var i = 0; i < _ProgramIDs.length; i++)
-                if (_ProgramIDs[i][0] == args[0])
+                if(_ProgramIDs[i][0] == args[0])
                     programIndex = _ProgramIDs[i][1];
+            */
+            if (_MemoryManager.indexOfProgram(args[0]) != -1)
+                programIndex = _MemoryManager.indexOfProgram(args[0]);
             //check if it exists and make use of the cpu cycles if so.
             if (programIndex == -1)
                 _StdOut.putText("No program with that PID found.");
@@ -434,9 +452,13 @@ var TSOS;
             //loadBox.value = "A9 00 8D EC 00 A9 00 8D EC 00 A9 00 8D ED 00 A9 00 8D ED 00 A9 00 8D EE 00 A9 00 8D EF 00 AD ED 00 8D FF 00 AE FF 00 A9 00 8D FF 00 EC FF 00 D0 BA AD EC 00 8D FF 00 A9 01 6D FF 00 8D EC 00 AD EC 00 8D FF 00 AE FF 00 A9 03 8D FF 00 EC FF 00 D0 05 A9 01 8D ED 00 A9 00 8D EE 00 A9 00 8D EF 00 AD EF 00 8D FF 00 AE FF 00 A9 00 8D FF 00 EC FF 00 D0 49 AD EE 00 8D FF 00 A9 01 6D FF 00 8D EE 00 AD EE 00 8D FF 00 AE FF 00 A9 02 8D FF 00 EC FF 00 D0 05 A9 01 8D EF 00 A9 F8 8D FF 00 A2 02 AC FF 00 FF AD EE 00 A2 01 8D FF 00 AC FF 00 FF A9 00 8D FF 00 A2 01 EC FF 00 D0 A4 A9 F1 8D FF 00 A2 02 AC FF 00 FF AD EC 00 A2 01 8D FF 00 AC FF 00 FF A9 EE 8D FF 00 A2 02 AC FF 00 FF A9 00 8D FF 00 A2 01 EC FF 00 D0 33 00 00 00 20 20 00 20 6F 75 74 65 72 00 20 69 6E 6E 65 72 00 00";
             //test program #3: 1 2 DONE
             loadBox.value = "A9 03 8D 41 00 A9 01 8D 40 00 AC 40 00 A2 01 FF EE 40 00 AE 40 00 EC 41 00 D0 EF A9 44 8D 42 00 A9 4F 8D 43 00 A9 4E 8D 44 00 A9 45 8D 45 00 A9 00 8D 46 00 A2 02 A0 42 FF 00";
-            _StdOut.putText("index of program 2:   " + String(_MemoryManager.indexOfProgram(2)));
+            _StdOut.putText("THE FOLLOWING WON'T WORK UNTIL 256 BYTE PARTITIONS ARE MADE!");
+            _StdOut.advanceLine();
+            _StdOut.putText("index of program 1:   " + String(_MemoryManager.indexOfProgram(1)));
             _StdOut.advanceLine();
             _StdOut.putText("program at index 256: " + String(_MemoryManager.programAtIndex(256)));
+            _StdOut.advanceLine();
+            _StdOut.putText("has space: " + String(_MemoryManager.hasSpace()));
         };
         return Shell;
     }());

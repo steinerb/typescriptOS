@@ -15,11 +15,11 @@ var TSOS;
             return true;
         };
         Memory.prototype.storeValueAt = function (address, partition, value) {
-            //if partition is zero, logical address is physical address
-            if (partition == 0)
+            //if partition is -1, logical address is physical address
+            if (partition == -1)
                 this.registers[address] = value;
-            else if ((partition >= 1) && (partition <= 3))
-                this.registers[(address + (256 * (partition - 1)))] = value;
+            else if ((partition >= 0) && (partition <= 2))
+                this.registers[(address + (256 * partition))] = value;
         };
         Memory.prototype.wipe = function () {
             this.registers = new Array(768);

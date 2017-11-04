@@ -22,22 +22,44 @@ var TSOS;
         MemoryManager.prototype.numPartitions = function () {
             return this.pidPartitions.length;
         };
+        MemoryManager.prototype.hasSpace = function () {
+            for (var i = 0; i < this.numPartitions(); i++) {
+                if ((typeof this.pidPartitions[i]) == 'undefined')
+                    return true;
+            }
+            return false;
+        };
+        MemoryManager.prototype.nextAvailablePID = function () {
+            for (var i = 0; i < this.numPartitions(); i++) {
+                if ((typeof this.pidPartitions[i]) == 'undefined')
+                    return i;
+            }
+            return -1;
+        };
+        MemoryManager.prototype.nextAvailableIndex = function () {
+            for (var i = 0; i < this.numPartitions(); i++) {
+                if ((typeof this.pidPartitions[i]) == 'undefined')
+                    return i * this.parLength;
+            }
+            return -1;
+        };
+        MemoryManager.prototype.fillPartition = function () {
+            this.pidPartitions[this.nextAvailablePID()] = this.nextAvailablePID();
+        };
         MemoryManager.prototype.indexOfProgram = function (pid) {
             var current;
             for (var i = 0; i < this.numPartitions(); i++) {
                 current = this.pidPartitions[i];
                 if (current == pid)
-                    return (current - 1) * this.parLength;
+                    return current * this.parLength;
             }
             return -1;
         };
         MemoryManager.prototype.programAtIndex = function (index) {
             var current;
-            var currentPID;
-            for (var i = 0; i < this.numPartitions(); i++) {
-                currentPID = i + 1;
-                current = i * this.parLength;
-                if ((current == index) && ((typeof this.pidPartitions[i]) != 'undefined'))
+            for (var currentPID = 0; currentPID < this.numPartitions(); currentPID++) {
+                current = currentPID * this.parLength;
+                if ((current == index) && ((typeof this.pidPartitions[currentPID]) != 'undefined'))
                     return currentPID;
             }
             return -1;

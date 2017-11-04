@@ -518,27 +518,44 @@ module TSOS
             	_StdOut.putText("Invalid input; failed to load program.");
             else
             {
-            	
+            	/*
             	_StdOut.putText("Program "+String(_NextAvailablePID)+" loaded successfully.");
             	
 
             	//now save Program ID for later calling
             	_ProgramIDs[_ProgramIDs.length] = [_NextAvailablePID, _NextAvailableIndex];
             	_NextAvailablePID++;
-				
+				*/
 
 
 
-            	//now load to memory
-            	var toLoad: string[] = input.value.toLowerCase().split(" ");
-            	var current: number;
-            	for(var i = 0; i < toLoad.length; i++)
-            	{
-            		current = Number( ("0x"+toLoad[i]) );
-            		//_Memory[_NextAvailableIndex] = current;
-            		_Memory.storeValueAt(_NextAvailableIndex, 0, current);
-            		_NextAvailableIndex++;
-            	}
+				if(_MemoryManager.hasSpace())
+				{
+					
+	            	_StdOut.putText("Program "+String(_MemoryManager.nextAvailablePID())+" loaded successfully.");
+            	
+            		
+
+	            	//now load to memory
+	            	var toLoad: string[] = input.value.toLowerCase().split(" ");
+	            	var current: number;
+	            	for(var i = 0; i < toLoad.length; i++)
+	            	{
+	            		current = Number( ("0x"+toLoad[i]) );
+	            		//_Memory[_NextAvailableIndex] = current;
+	            		_Memory.storeValueAt(_NextAvailableIndex, _MemoryManager.nextAvailablePID(), current);
+	            		_NextAvailableIndex++;
+	            	}
+
+	            	//reset index for loading to memory
+	            	_NextAvailableIndex = 0;
+
+	            	//now save Program ID for later calling
+					_MemoryManager.fillPartition();
+				}
+				else
+					_StdOut.putText("Memory full; failed to load program.");
+
 
             	Utils.updateMemory();
             }
@@ -549,9 +566,13 @@ module TSOS
         {
         	//get index of first op code of the program
         	var programIndex: number = -1;
+        	/*
         	for (var i = 0; i < _ProgramIDs.length; i++)
         		if(_ProgramIDs[i][0] == args[0])
         			programIndex = _ProgramIDs[i][1];
+        	*/
+        	if(_MemoryManager.indexOfProgram(args[0]) != -1)
+        		programIndex = _MemoryManager.indexOfProgram(args[0]);
 
         	//check if it exists and make use of the cpu cycles if so.
         	if (programIndex == -1)
@@ -562,8 +583,7 @@ module TSOS
 				_CPU.isExecuting = true;
         	}
 
-        	 
-
+ 
         }
 
         public shellStatus(args) 
@@ -605,10 +625,14 @@ module TSOS
         	//test program #3: 1 2 DONE
         	loadBox.value = "A9 03 8D 41 00 A9 01 8D 40 00 AC 40 00 A2 01 FF EE 40 00 AE 40 00 EC 41 00 D0 EF A9 44 8D 42 00 A9 4F 8D 43 00 A9 4E 8D 44 00 A9 45 8D 45 00 A9 00 8D 46 00 A2 02 A0 42 FF 00";
 
-        	_StdOut.putText("index of program 2:   "+String(_MemoryManager.indexOfProgram(2)));
-        	_StdOut.advanceLine()
-        	_StdOut.putText("program at index 256: "+String(_MemoryManager.programAtIndex(256)));
 
+        	_StdOut.putText("THE FOLLOWING WON'T WORK UNTIL 256 BYTE PARTITIONS ARE MADE!");
+        	_StdOut.advanceLine();
+        	_StdOut.putText("index of program 1:   "+String(_MemoryManager.indexOfProgram(1)));
+        	_StdOut.advanceLine();
+        	_StdOut.putText("program at index 256: "+String(_MemoryManager.programAtIndex(256)));
+        	_StdOut.advanceLine();
+        	_StdOut.putText("has space: "+String(_MemoryManager.hasSpace()));
 
 
         	
