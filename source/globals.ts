@@ -48,8 +48,7 @@ const COMMAND_NAMES: string[] =
 
 
 
-//list of indexes for first elements of programs, paired with ids, in 2 element lists.
-						//ex:	[PID, indexInMemory]
+//linking variables between shell and cpu for running programs
 var _NextAvailableIndex: number = 0;
 var _IndexOfProgramToRun: number;
 
