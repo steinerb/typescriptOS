@@ -446,7 +446,6 @@ var TSOS;
             _StdOut.advanceLine();
             _StdOut.putText("is memtest empty: "+String(_memTest.isEmpty()));
             _StdOut.advanceLine();*/
-            _StdOut.putText(_memTest.toString());
             //PCB test
             //var x = new Pcb("new", 0, 0, 0, 0, 0, 0);
             //_StdOut.putText(String(x.state));

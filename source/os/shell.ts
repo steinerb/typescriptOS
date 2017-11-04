@@ -518,12 +518,15 @@ module TSOS
             	_StdOut.putText("Invalid input; failed to load program.");
             else
             {
+            	
             	_StdOut.putText("Program "+String(_NextAvailablePID)+" loaded successfully.");
             	
 
             	//now save Program ID for later calling
             	_ProgramIDs[_ProgramIDs.length] = [_NextAvailablePID, _NextAvailableIndex];
             	_NextAvailablePID++;
+				
+
 
 
             	//now load to memory
@@ -615,7 +618,7 @@ module TSOS
         	_StdOut.putText("is memtest empty: "+String(_memTest.isEmpty()));
         	_StdOut.advanceLine();*/
 
-        	_StdOut.putText(_memTest.toString());
+
 
         	//PCB test
             //var x = new Pcb("new", 0, 0, 0, 0, 0, 0);
