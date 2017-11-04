@@ -28,6 +28,7 @@ var COMMAND_NAMES = [
     "roll",
     "date",
     "whereami",
+    "clearmem",
     "load",
     "run",
     "status",

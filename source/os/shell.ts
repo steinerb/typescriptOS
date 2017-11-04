@@ -104,6 +104,12 @@ module TSOS
                                   "- Description of your current location.");
             this.commandList[this.commandList.length] = sc;
 
+            // clearmem
+            sc = new ShellCommand(this.shellClearMem,
+                                  "clearmem",
+                                  "- Clears memory.");
+            this.commandList[this.commandList.length] = sc;
+
             // load
             sc = new ShellCommand(this.shellLoad,
                                   "load",
@@ -371,6 +377,10 @@ module TSOS
                         _StdOut.putText("Whereami helps you find where you are.");
                         break;
                     //load
+                    case "clearmem":
+                        _StdOut.putText("Clears all memory.");
+                        break;
+                    //load
                     case "load":
                         _StdOut.putText("Loads a program from User Program Input.");
                         break;
@@ -507,6 +517,13 @@ module TSOS
         public shellWhereAmI(args) 
         {
             _StdOut.putText("[A better answer coming soon!]");
+        }
+
+        public shellClearMem(args)
+        {
+        	_Memory.wipe();
+        	_MemoryManager.init();
+        	Utils.updateMemory();
         }
 
         public shellLoad(args) 

@@ -33,6 +33,7 @@ const COMMAND_NAMES: string[] =
 	"roll",
 	"date",
 	"whereami",
+	"clearmem",
 	"load",
 	"run",
 	"status",

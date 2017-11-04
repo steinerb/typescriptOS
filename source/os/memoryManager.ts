@@ -15,6 +15,11 @@ module TSOS
 		{
 		}
 
+		public init(): void
+		{
+			this.pidPartitions = new Array(3);
+		}
+
 		public numPartitions(): number
 		{
 			return this.pidPartitions.length;
@@ -36,16 +41,6 @@ module TSOS
 			{
 				if ((typeof this.pidPartitions[i]) == 'undefined')
 					return i;
-			}
-			return -1;
-		}
-
-		public nextAvailableIndex(): number
-		{
-			for(var i = 0; i < this.numPartitions(); i++)
-			{
-				if ((typeof this.pidPartitions[i]) == 'undefined')
-					return i*this.parLength;
 			}
 			return -1;
 		}

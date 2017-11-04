@@ -19,6 +19,9 @@ var TSOS;
             this.par3Base = par3Base;
             this.par3Limit = par3Limit;
         }
+        MemoryManager.prototype.init = function () {
+            this.pidPartitions = new Array(3);
+        };
         MemoryManager.prototype.numPartitions = function () {
             return this.pidPartitions.length;
         };
@@ -33,13 +36,6 @@ var TSOS;
             for (var i = 0; i < this.numPartitions(); i++) {
                 if ((typeof this.pidPartitions[i]) == 'undefined')
                     return i;
-            }
-            return -1;
-        };
-        MemoryManager.prototype.nextAvailableIndex = function () {
-            for (var i = 0; i < this.numPartitions(); i++) {
-                if ((typeof this.pidPartitions[i]) == 'undefined')
-                    return i * this.parLength;
             }
             return -1;
         };

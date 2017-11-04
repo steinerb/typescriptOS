@@ -59,6 +59,9 @@ var TSOS;
             // whereami
             sc = new TSOS.ShellCommand(this.shellWhereAmI, "whereami", "- Description of your current location.");
             this.commandList[this.commandList.length] = sc;
+            // clearmem
+            sc = new TSOS.ShellCommand(this.shellClearMem, "clearmem", "- Clears memory.");
+            this.commandList[this.commandList.length] = sc;
             // load
             sc = new TSOS.ShellCommand(this.shellLoad, "load", "- Validates the program input.");
             this.commandList[this.commandList.length] = sc;
@@ -263,6 +266,10 @@ var TSOS;
                         _StdOut.putText("Whereami helps you find where you are.");
                         break;
                     //load
+                    case "clearmem":
+                        _StdOut.putText("Clears all memory.");
+                        break;
+                    //load
                     case "load":
                         _StdOut.putText("Loads a program from User Program Input.");
                         break;
@@ -372,6 +379,11 @@ var TSOS;
         };
         Shell.prototype.shellWhereAmI = function (args) {
             _StdOut.putText("[A better answer coming soon!]");
+        };
+        Shell.prototype.shellClearMem = function (args) {
+            _Memory.wipe();
+            _MemoryManager.init();
+            TSOS.Utils.updateMemory();
         };
         Shell.prototype.shellLoad = function (args) {
             var input = document.getElementById("taProgramInput");
