@@ -523,6 +523,10 @@ module TSOS
         {
         	_Memory.wipe();
         	_MemoryManager.init();
+
+        	_ResidentList = [];
+        	_ReadyQueue = new Queue();
+
         	Utils.updateMemory();
         }
 
@@ -550,7 +554,6 @@ module TSOS
 	            	for(var i = 0; i < toLoad.length; i++)
 	            	{
 	            		current = Number( ("0x"+toLoad[i]) );
-	            		//_Memory[_NextAvailableIndex] = current;
 	            		_Memory.storeValueAt(_NextAvailableIndex, _MemoryManager.nextAvailablePID(), current);
 	            		_NextAvailableIndex++;
 	            	}
@@ -558,7 +561,10 @@ module TSOS
 	            	//reset index for loading to memory
 	            	_NextAvailableIndex = 0;
 
-	            	//now save Program ID for later calling
+	            	//add new PCB to Resident List to be called
+	            	_ResidentList.push(new Pcb("new", _MemoryManager.nextAvailablePID(), 0, 0, 0, 0, 0));
+
+	            	//now save Program ID for later calling and update Memory Manager 
 					_MemoryManager.fillPartition();
 				}
 				else
@@ -629,6 +635,7 @@ module TSOS
         	loadBox.value = "A9 03 8D 41 00 A9 01 8D 40 00 AC 40 00 A2 01 FF EE 40 00 AE 40 00 EC 41 00 D0 EF A9 44 8D 42 00 A9 4F 8D 43 00 A9 4E 8D 44 00 A9 45 8D 45 00 A9 00 8D 46 00 A2 02 A0 42 FF 00";
 
 
+        	/*
         	_StdOut.putText("THE FOLLOWING WON'T WORK UNTIL 256 BYTE PARTITIONS ARE MADE!");
         	_StdOut.advanceLine();
         	_StdOut.putText("index of program 1:   "+String(_MemoryManager.indexOfProgram(1)));
@@ -636,7 +643,9 @@ module TSOS
         	_StdOut.putText("program at index 256: "+String(_MemoryManager.programAtIndex(256)));
         	_StdOut.advanceLine();
         	_StdOut.putText("has space: "+String(_MemoryManager.hasSpace()));
+			*/
 
+			_StdOut.putText("Resident List: "+String(_ResidentList));
 
         	
 

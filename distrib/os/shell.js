@@ -383,6 +383,8 @@ var TSOS;
         Shell.prototype.shellClearMem = function (args) {
             _Memory.wipe();
             _MemoryManager.init();
+            _ResidentList = [];
+            _ReadyQueue = new TSOS.Queue();
             TSOS.Utils.updateMemory();
         };
         Shell.prototype.shellLoad = function (args) {
@@ -400,13 +402,14 @@ var TSOS;
                     var current;
                     for (var i = 0; i < toLoad.length; i++) {
                         current = Number(("0x" + toLoad[i]));
-                        //_Memory[_NextAvailableIndex] = current;
                         _Memory.storeValueAt(_NextAvailableIndex, _MemoryManager.nextAvailablePID(), current);
                         _NextAvailableIndex++;
                     }
                     //reset index for loading to memory
                     _NextAvailableIndex = 0;
-                    //now save Program ID for later calling
+                    //add new PCB to Resident List to be called
+                    _ResidentList.push(new TSOS.Pcb("new", _MemoryManager.nextAvailablePID(), 0, 0, 0, 0, 0));
+                    //now save Program ID for later calling and update Memory Manager 
                     _MemoryManager.fillPartition();
                 }
                 else
@@ -451,13 +454,16 @@ var TSOS;
             //loadBox.value = "A9 00 8D EC 00 A9 00 8D EC 00 A9 00 8D ED 00 A9 00 8D ED 00 A9 00 8D EE 00 A9 00 8D EF 00 AD ED 00 8D FF 00 AE FF 00 A9 00 8D FF 00 EC FF 00 D0 BA AD EC 00 8D FF 00 A9 01 6D FF 00 8D EC 00 AD EC 00 8D FF 00 AE FF 00 A9 03 8D FF 00 EC FF 00 D0 05 A9 01 8D ED 00 A9 00 8D EE 00 A9 00 8D EF 00 AD EF 00 8D FF 00 AE FF 00 A9 00 8D FF 00 EC FF 00 D0 49 AD EE 00 8D FF 00 A9 01 6D FF 00 8D EE 00 AD EE 00 8D FF 00 AE FF 00 A9 02 8D FF 00 EC FF 00 D0 05 A9 01 8D EF 00 A9 F8 8D FF 00 A2 02 AC FF 00 FF AD EE 00 A2 01 8D FF 00 AC FF 00 FF A9 00 8D FF 00 A2 01 EC FF 00 D0 A4 A9 F1 8D FF 00 A2 02 AC FF 00 FF AD EC 00 A2 01 8D FF 00 AC FF 00 FF A9 EE 8D FF 00 A2 02 AC FF 00 FF A9 00 8D FF 00 A2 01 EC FF 00 D0 33 00 00 00 20 20 00 20 6F 75 74 65 72 00 20 69 6E 6E 65 72 00 00";
             //test program #3: 1 2 DONE
             loadBox.value = "A9 03 8D 41 00 A9 01 8D 40 00 AC 40 00 A2 01 FF EE 40 00 AE 40 00 EC 41 00 D0 EF A9 44 8D 42 00 A9 4F 8D 43 00 A9 4E 8D 44 00 A9 45 8D 45 00 A9 00 8D 46 00 A2 02 A0 42 FF 00";
+            /*
             _StdOut.putText("THE FOLLOWING WON'T WORK UNTIL 256 BYTE PARTITIONS ARE MADE!");
             _StdOut.advanceLine();
-            _StdOut.putText("index of program 1:   " + String(_MemoryManager.indexOfProgram(1)));
+            _StdOut.putText("index of program 1:   "+String(_MemoryManager.indexOfProgram(1)));
             _StdOut.advanceLine();
-            _StdOut.putText("program at index 256: " + String(_MemoryManager.programAtIndex(256)));
+            _StdOut.putText("program at index 256: "+String(_MemoryManager.programAtIndex(256)));
             _StdOut.advanceLine();
-            _StdOut.putText("has space: " + String(_MemoryManager.hasSpace()));
+            _StdOut.putText("has space: "+String(_MemoryManager.hasSpace()));
+            */
+            _StdOut.putText("Resident List: " + String(_ResidentList));
         };
         return Shell;
     }());
