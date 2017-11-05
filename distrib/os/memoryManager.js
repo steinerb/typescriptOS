@@ -20,15 +20,15 @@ var TSOS;
             }
             return false;
         };
-        MemoryManager.prototype.nextAvailablePID = function () {
+        MemoryManager.prototype.nextAvailablePartition = function () {
             for (var i = 0; i < this.numPartitions(); i++) {
                 if ((typeof this.pidPartitions[i]) == 'undefined')
                     return i;
             }
             return -1;
         };
-        MemoryManager.prototype.fillPartition = function () {
-            this.pidPartitions[this.nextAvailablePID()] = this.nextAvailablePID();
+        MemoryManager.prototype.fillPartition = function (pid) {
+            this.pidPartitions[this.nextAvailablePartition()] = pid;
         };
         MemoryManager.prototype.indexOfProgram = function (pid) {
             var current;

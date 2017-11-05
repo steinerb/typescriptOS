@@ -51,8 +51,10 @@ var _ResidentList: TSOS.Pcb[];
 var _ReadyQueue: TSOS.Queue;
 
 // linking variables between shell and cpu for running programs
+var _NextAvailablePID: number = 0;
 var _NextAvailableIndex: number = 0;
 var _IndexOfProgramToRun: number;
+var _CurrentPartition: number;
 
 // list of numbers that translate to hex values using von Neumann architecture.
 var _Memory: TSOS.Memory;

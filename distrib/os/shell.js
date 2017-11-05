@@ -396,21 +396,22 @@ var TSOS;
             else {
                 //test if any partitions are empty
                 if (_MemoryManager.hasSpace()) {
-                    _StdOut.putText("Program " + String(_MemoryManager.nextAvailablePID()) + " loaded successfully.");
+                    _StdOut.putText("Program " + String(_NextAvailablePID) + " loaded successfully.");
                     //now load to memory
                     var toLoad = input.value.toLowerCase().split(" ");
                     var current;
                     for (var i = 0; i < toLoad.length; i++) {
                         current = Number(("0x" + toLoad[i]));
-                        _Memory.storeValueAt(_NextAvailableIndex, _MemoryManager.nextAvailablePID(), current);
+                        _Memory.storeValueAt(_NextAvailableIndex, _MemoryManager.nextAvailablePartition(), current);
                         _NextAvailableIndex++;
                     }
                     //reset index for loading to memory
                     _NextAvailableIndex = 0;
                     //add new PCB to Resident List to be called
-                    _ResidentList.push(new TSOS.Pcb("new", _MemoryManager.nextAvailablePID(), 0, 0, 0, 0, 0));
+                    _ResidentList.push(new TSOS.Pcb("new", _NextAvailablePID, 0, 0, 0, 0, 0));
                     //now save Program ID for later calling and update Memory Manager 
-                    _MemoryManager.fillPartition();
+                    _MemoryManager.fillPartition(_NextAvailablePID);
+                    _NextAvailablePID++;
                 }
                 else
                     _StdOut.putText("Memory full; failed to load program.");

@@ -521,6 +521,8 @@ module TSOS
 
         public shellClearMem(args)
         {
+
+
         	_Memory.wipe();
         	_MemoryManager.init();
 
@@ -546,7 +548,7 @@ module TSOS
 				if(_MemoryManager.hasSpace())
 				{
 					
-	            	_StdOut.putText("Program "+String(_MemoryManager.nextAvailablePID())+" loaded successfully.");
+	            	_StdOut.putText("Program "+String(_NextAvailablePID)+" loaded successfully.");
             	
 	            	//now load to memory
 	            	var toLoad: string[] = input.value.toLowerCase().split(" ");
@@ -554,7 +556,7 @@ module TSOS
 	            	for(var i = 0; i < toLoad.length; i++)
 	            	{
 	            		current = Number( ("0x"+toLoad[i]) );
-	            		_Memory.storeValueAt(_NextAvailableIndex, _MemoryManager.nextAvailablePID(), current);
+	            		_Memory.storeValueAt(_NextAvailableIndex, _MemoryManager.nextAvailablePartition(), current);
 	            		_NextAvailableIndex++;
 	            	}
 
@@ -562,10 +564,11 @@ module TSOS
 	            	_NextAvailableIndex = 0;
 
 	            	//add new PCB to Resident List to be called
-	            	_ResidentList.push(new Pcb("new", _MemoryManager.nextAvailablePID(), 0, 0, 0, 0, 0));
+	            	_ResidentList.push(new Pcb("new", _NextAvailablePID, 0, 0, 0, 0, 0));
 
 	            	//now save Program ID for later calling and update Memory Manager 
-					_MemoryManager.fillPartition();
+					_MemoryManager.fillPartition(_NextAvailablePID);
+					_NextAvailablePID++;
 				}
 				else
 					_StdOut.putText("Memory full; failed to load program.");
@@ -670,7 +673,7 @@ module TSOS
 
         	
 
-
+			Utils.updateMemory();
         }
 
     }

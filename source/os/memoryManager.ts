@@ -29,7 +29,7 @@ module TSOS
 			return false;
 		}
 
-		public nextAvailablePID(): number
+		public nextAvailablePartition(): number
 		{
 			for(var i = 0; i < this.numPartitions(); i++)
 			{
@@ -39,9 +39,9 @@ module TSOS
 			return -1;
 		}
 
-		public fillPartition(): void
+		public fillPartition(pid: number): void
 		{
-			this.pidPartitions[this.nextAvailablePID()] = this.nextAvailablePID();
+			this.pidPartitions[this.nextAvailablePartition()] = pid;
 		}
 
 		public indexOfProgram(pid: number): number

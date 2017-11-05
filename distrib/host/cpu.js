@@ -49,7 +49,7 @@ var TSOS;
             var yRegBox = document.getElementById("yReg");
             var zFlagBox = document.getElementById("zFlag");
             var memoryBox = document.getElementById("memory");
-            /*
+            /* INCOMPLETE
             if (this.isExecuting == true)
             {
                 if(_ReadyQueue.isEmpty())
@@ -207,8 +207,6 @@ var TSOS;
         Cpu.prototype.inc = function (memLocation) {
             this.PC += 3;
             if ((memLocation >= 0) && (memLocation < _Memory.getSize()))
-                //OLDER: _Memory[memLocation] += 1;
-                //OLD:   _Memory.storeValueAt(memLocation, -1, (_Memory.registers[memLocation]+1));
                 _Memory.storeValueAt(memLocation, (_MemoryManager.programAtIndex(_IndexOfProgramToRun)), (_Memory.getValueAt(memLocation, (_MemoryManager.programAtIndex(_IndexOfProgramToRun))) + 1));
             else
                 _Kernel.krnTrapError("Memory location: " + String(memLocation) + " is out of bounds!");
@@ -220,7 +218,6 @@ var TSOS;
             else if (this.Xreg == 2) {
                 var toReturn = "";
                 var stringIndex = this.Yreg;
-                //while(_Memory.registers[stringIndex] != 0x00)
                 while (_Memory.getValueAt(stringIndex, _MemoryManager.programAtIndex(_IndexOfProgramToRun)) != 0x00) {
                     toReturn += String.fromCharCode(_Memory.getValueAt(stringIndex, _MemoryManager.programAtIndex(_IndexOfProgramToRun)));
                     stringIndex++;

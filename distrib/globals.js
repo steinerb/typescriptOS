@@ -43,8 +43,10 @@ var COMMAND_NAMES = [
 var _ResidentList;
 var _ReadyQueue;
 // linking variables between shell and cpu for running programs
+var _NextAvailablePID = 0;
 var _NextAvailableIndex = 0;
 var _IndexOfProgramToRun;
+var _CurrentPartition;
 // list of numbers that translate to hex values using von Neumann architecture.
 var _Memory;
 var _memTest;
