@@ -419,16 +419,30 @@ var TSOS;
             _StdOut.advanceLine();
         };
         Shell.prototype.shellRun = function (args) {
+            var desiredPID = args[0];
             //get index of first op code of the program
             var programIndex = -1;
-            if (_MemoryManager.indexOfProgram(args[0]) != -1)
-                programIndex = _MemoryManager.indexOfProgram(args[0]);
+            if (_MemoryManager.indexOfProgram(desiredPID) != -1)
+                programIndex = _MemoryManager.indexOfProgram(desiredPID);
             //check if it exists and make use of the cpu cycles if so.
             if (programIndex == -1)
                 _StdOut.putText("No program with that PID found.");
             else {
+                var pcbToLoad;
+                var currentPCB;
+                for (var i = 0; i < _ResidentList.length; i++) {
+                    currentPCB = _ResidentList[i];
+                    if (currentPCB.pid == desiredPID) {
+                        pcbToLoad = currentPCB;
+                        break;
+                    }
+                }
+                _ResidentList = _ResidentList.filter(function (pcb) { return pcb.pid != desiredPID; });
+                _ReadyQueue.enqueue(pcbToLoad);
+                //***OLD AND WORKING***
                 _IndexOfProgramToRun = programIndex;
                 _CPU.isExecuting = true;
+                //***				***
             }
         };
         Shell.prototype.shellStatus = function (args) {
@@ -464,6 +478,8 @@ var TSOS;
             _StdOut.putText("has space: "+String(_MemoryManager.hasSpace()));
             */
             _StdOut.putText("Resident List: " + String(_ResidentList));
+            _StdOut.advanceLine();
+            _StdOut.putText("Ready Queue: " + _ReadyQueue.toString());
         };
         return Shell;
     }());

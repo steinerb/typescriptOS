@@ -49,6 +49,18 @@ var TSOS;
             var yRegBox = document.getElementById("yReg");
             var zFlagBox = document.getElementById("zFlag");
             var memoryBox = document.getElementById("memory");
+            /*
+            if (this.isExecuting == true)
+            {
+                if(_ReadyQueue.isEmpty())
+                    this.isExecuting = false;
+                else
+                {
+                    _ReadyQueue.dequeue();
+                    
+                }
+            }
+            */
             if (this.isExecuting == true) {
                 var indexNextOp = _IndexOfProgramToRun + this.PC + 1;
                 var indexTwoOps = _IndexOfProgramToRun + this.PC + 2;
@@ -139,8 +151,9 @@ var TSOS;
         //NOT FINISHED: account for logical and physical addresses!!!
         Cpu.prototype.sta = function (memLocation) {
             this.PC += 3;
-            //OLD:  _Memory[memLocation] = this.Acc;
-            _Memory.storeValueAt(memLocation, 0, this.Acc);
+            //OLDER: _Memory[memLocation] = this.Acc;
+            _Memory.storeValueAt(memLocation, -1, this.Acc);
+            //_Memory.storeValueAt(memLocation, (_MemoryManager.programAtIndex(_IndexOfProgramToRun)), this.Acc);
         };
         Cpu.prototype.adc = function (memLocation) {
             this.PC += 3;
@@ -203,7 +216,7 @@ var TSOS;
             this.PC += 3;
             if ((memLocation >= 0) && (memLocation < _Memory.getSize()))
                 //_Memory[memLocation] += 1;
-                _Memory.storeValueAt(memLocation, 0, (_Memory.registers[memLocation] + 1));
+                _Memory.storeValueAt(memLocation, -1, (_Memory.registers[memLocation] + 1));
             else
                 _Kernel.krnTrapError("Memory location: " + String(memLocation) + " is out of bounds!");
         };

@@ -54,11 +54,22 @@ module TSOS
             var zFlagBox  = <HTMLInputElement>document.getElementById("zFlag");
             var memoryBox = <HTMLInputElement>document.getElementById("memory");
 
+            /*
+            if (this.isExecuting == true)
+            {
+                if(_ReadyQueue.isEmpty())
+                    this.isExecuting = false;
+                else
+                {
+                    _ReadyQueue.dequeue();
+                    
+                }
+            }
+            */
 
 
             if (this.isExecuting == true)
             {
-
                var indexNextOp: number = _IndexOfProgramToRun+this.PC+1;
                var indexTwoOps: number = _IndexOfProgramToRun+this.PC+2;
 
@@ -186,8 +197,9 @@ module TSOS
         public sta(memLocation): void
         {
             this.PC += 3;
-            //OLD:  _Memory[memLocation] = this.Acc;
-            _Memory.storeValueAt(memLocation, 0, this.Acc);
+            //OLDER: _Memory[memLocation] = this.Acc;
+               _Memory.storeValueAt(memLocation, -1, this.Acc);
+            //_Memory.storeValueAt(memLocation, (_MemoryManager.programAtIndex(_IndexOfProgramToRun)), this.Acc);
         }
 
         public adc(memLocation): void
@@ -272,7 +284,8 @@ module TSOS
             this.PC += 3;
             if ((memLocation >= 0) && (memLocation < _Memory.getSize()))
                 //_Memory[memLocation] += 1;
-                _Memory.storeValueAt(memLocation, 0, (_Memory.registers[memLocation]+1))
+                _Memory.storeValueAt(memLocation, -1, (_Memory.registers[memLocation]+1));
+                //_Memory.storeValueAt(memLocation, (_MemoryManager.programAtIndex(_IndexOfProgramToRun)), (_Memory.registers[memLocation]+1));
             else
                 _Kernel.krnTrapError("Memory location: "+String(memLocation)+" is out of bounds!");
         }
