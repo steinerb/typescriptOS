@@ -26,6 +26,13 @@ var TSOS;
                     return false;
             return true;
         };
+        Memory.prototype.getValueAt = function (address, partition) {
+            if (partition == -1)
+                return this.registers[address];
+            else if ((partition >= 0) && (partition <= 2))
+                return this.registers[(address + (256 * partition))];
+            return -1;
+        };
         Memory.prototype.storeValueAt = function (address, partition, value) {
             //if partition is -1, logical address is physical address
             if (partition == -1)
