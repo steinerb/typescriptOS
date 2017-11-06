@@ -50,6 +50,12 @@ module TSOS
             this.registers = new Array(768);
         }
 
+        public wipePartition(parNum): void
+        {
+            for(var i = (parNum*256); i < 256; i++)
+                _Memory.registers[i] = undefined;
+        }
+
         public toString()
         {
             var toReturn: string = "[";

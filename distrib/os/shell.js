@@ -440,6 +440,7 @@ var TSOS;
                 }
                 _ResidentList = _ResidentList.filter(function (pcb) { return pcb.pid != desiredPID; });
                 _ReadyQueue.enqueue(pcbToLoad);
+                TSOS.Utils.updateReadyQueue();
                 _IndexOfProgramToRun = programIndex;
                 _CPU.isExecuting = true;
             }
@@ -476,6 +477,7 @@ var TSOS;
             _StdOut.advanceLine();
             _StdOut.putText("has space: "+String(_MemoryManager.hasSpace()));
             */
+            TSOS.Utils.updateReadyQueue();
             _StdOut.putText("Resident List: " + String(_ResidentList));
             _StdOut.advanceLine();
             _StdOut.putText("Ready Queue: " + _ReadyQueue.toString());

@@ -77,6 +77,7 @@ module TSOS
 
             if (this.isExecuting == true)
             {
+
                var indexNextOp: number = _IndexOfProgramToRun+this.PC+1;
                var indexTwoOps: number = _IndexOfProgramToRun+this.PC+2;
 
@@ -174,7 +175,7 @@ module TSOS
                zFlagBox.value = String(this.Zflag);
 
                Utils.updateMemory();
-               
+               Utils.updateReadyQueue();
 
             }
             

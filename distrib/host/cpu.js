@@ -137,6 +137,7 @@ var TSOS;
                     yRegBox.value = this.Yreg.toString(16).toUpperCase();
                 zFlagBox.value = String(this.Zflag);
                 TSOS.Utils.updateMemory();
+                TSOS.Utils.updateReadyQueue();
             }
         };
         Cpu.prototype.ldaC = function (constant) {

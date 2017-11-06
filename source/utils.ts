@@ -109,6 +109,20 @@ module TSOS
             memoryBox.value = memString;
         }
 
+        public static updateReadyQueue(): void
+        {
+            var readyBox = (<HTMLInputElement>document.getElementById("readyPCBs"));
+
+            var pcbString: string = "";
+            var currentPCB: TSOS.Pcb;
+            for(var i = 0; i < _ReadyQueue.q.length; i++)
+            {
+                currentPCB = _ReadyQueue.q[i];
+
+                pcbString += ("PID "+String(currentPCB.pid)+": "+currentPCB.toString()+"\n");
+            }
+            readyBox.value = pcbString;
+        }
 
     }
 }

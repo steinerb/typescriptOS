@@ -607,7 +607,7 @@ module TSOS
 
 				_ResidentList = _ResidentList.filter(function(pcb){return pcb.pid != desiredPID;});
 				_ReadyQueue.enqueue(pcbToLoad);
-
+				Utils.updateReadyQueue();
         		
         		_IndexOfProgramToRun = programIndex;
 				_CPU.isExecuting = true;
@@ -667,6 +667,7 @@ module TSOS
         	_StdOut.putText("has space: "+String(_MemoryManager.hasSpace()));
 			*/
 
+			Utils.updateReadyQueue();
 			_StdOut.putText("Resident List: "+String(_ResidentList));
 			_StdOut.advanceLine();
 			_StdOut.putText("Ready Queue: "+_ReadyQueue.toString());
@@ -674,6 +675,7 @@ module TSOS
         	
 
 			Utils.updateMemory();
+
         }
 
     }
