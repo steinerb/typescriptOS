@@ -3,6 +3,7 @@
 ///<reference path="shellCommand.ts" />
 ///<reference path="userCommand.ts" />
 
+///<reference path="queue.ts" />
 ///<reference path="pcb.ts" />
 
 
@@ -521,7 +522,8 @@ module TSOS
 
         public shellClearMem(args)
         {
-
+        	_ResidentList = [];
+        	_ReadyQueue = new Queue();
 
         	_Memory.wipe();
         	_MemoryManager.init();
