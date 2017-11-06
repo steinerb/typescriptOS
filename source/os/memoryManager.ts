@@ -44,6 +44,11 @@ module TSOS
 			this.pidPartitions[this.nextAvailablePartition()] = pid;
 		}
 
+		public wipePartition(parNum: number): void
+		{
+			this.pidPartitions[parNum] = undefined;
+		}
+
 		public indexOfProgram(pid: number): number
 		{
 			var current;
