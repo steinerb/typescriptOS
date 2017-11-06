@@ -2,6 +2,7 @@
 ///<reference path="../utils.ts" />
 ///<reference path="shellCommand.ts" />
 ///<reference path="userCommand.ts" />
+///<reference path="queue.ts" />
 ///<reference path="pcb.ts" />
 /* ------------
    Shell.ts
@@ -381,6 +382,8 @@ var TSOS;
             _StdOut.putText("[A better answer coming soon!]");
         };
         Shell.prototype.shellClearMem = function (args) {
+            _ResidentList = [];
+            _ReadyQueue = new TSOS.Queue();
             _Memory.wipe();
             _MemoryManager.init();
             _ResidentList = [];
@@ -440,7 +443,7 @@ var TSOS;
                 }
                 _ResidentList = _ResidentList.filter(function (pcb) { return pcb.pid != desiredPID; });
                 _ReadyQueue.enqueue(pcbToLoad);
-                TSOS.Utils.updateReadyQueue();
+                TSOS.Utils.updateProcesses();
                 _IndexOfProgramToRun = programIndex;
                 _CPU.isExecuting = true;
             }
@@ -477,7 +480,7 @@ var TSOS;
             _StdOut.advanceLine();
             _StdOut.putText("has space: "+String(_MemoryManager.hasSpace()));
             */
-            TSOS.Utils.updateReadyQueue();
+            TSOS.Utils.updateProcesses();
             _StdOut.putText("Resident List: " + String(_ResidentList));
             _StdOut.advanceLine();
             _StdOut.putText("Ready Queue: " + _ReadyQueue.toString());

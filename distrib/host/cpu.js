@@ -102,8 +102,8 @@ var TSOS;
                         this.nop();
                         break;
                     case 0x00:
-                        this.init();
                         this.brk();
+                        this.init();
                         break;
                     case 0xEC:
                         this.cpx(paramForLocation);
@@ -121,7 +121,7 @@ var TSOS;
                     default:
                         _Kernel.krnTrapError("Invalid op code: " + currentOp.toString(16).toUpperCase());
                 }
-                //set cpu and memory displays
+                //set cpu, memory, and processes displays
                 pcBox.value = String(this.PC);
                 if (this.Acc <= 15)
                     accBox.value = "0" + this.Acc.toString(16).toUpperCase();
@@ -137,7 +137,7 @@ var TSOS;
                     yRegBox.value = this.Yreg.toString(16).toUpperCase();
                 zFlagBox.value = String(this.Zflag);
                 TSOS.Utils.updateMemory();
-                TSOS.Utils.updateReadyQueue();
+                TSOS.Utils.updateProcesses();
             }
         };
         Cpu.prototype.ldaC = function (constant) {
@@ -187,8 +187,12 @@ var TSOS;
         Cpu.prototype.nop = function () {
             this.PC += 1;
         };
+        //INCOMPLETE: CHANGE THIS TO FIT SCHEDULER!!!
         Cpu.prototype.brk = function () {
             this.isExecuting = false;
+            var dequeuedPCB = _ReadyQueue.dequeue();
+            _Memory.wipePartition(_MemoryManager.partitionOfProgram(dequeuedPCB.pid));
+            _MemoryManager.wipePartition(_MemoryManager.partitionOfProgram(dequeuedPCB.pid));
         };
         Cpu.prototype.cpx = function (memLocation) {
             this.PC += 3;

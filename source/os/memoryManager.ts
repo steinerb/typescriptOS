@@ -62,6 +62,19 @@ module TSOS
 			return -1;
 		}
 
+		public partitionOfProgram(desiredPID: number): number
+		{
+			var currentPID;
+			for (var currentPar = 0; currentPar < this.numPartitions(); currentPar++)
+			{
+				currentPID = this.pidPartitions[currentPar];
+				if (currentPID == desiredPID)
+					return currentPar;
+			}
+
+			return -1;
+		}
+
 		public programAtIndex(desiredIndex: number): number
 		{
 			var currentIndex;

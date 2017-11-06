@@ -128,8 +128,8 @@ module TSOS
                        break;
 
                    case 0x00:
-                       this.init();
                        this.brk();
+                       this.init();
                        break;
 
                    case 0xEC:
@@ -154,7 +154,7 @@ module TSOS
                }
 
                
-               //set cpu and memory displays
+               //set cpu, memory, and processes displays
                pcBox.value = String(this.PC);
 
                if(this.Acc <= 15)
@@ -175,7 +175,7 @@ module TSOS
                zFlagBox.value = String(this.Zflag);
 
                Utils.updateMemory();
-               Utils.updateReadyQueue();
+               Utils.updateProcesses();
 
             }
             
@@ -248,9 +248,14 @@ module TSOS
             this.PC += 1;
         }
 
+        //INCOMPLETE: CHANGE THIS TO FIT SCHEDULER!!!
         public brk(): void
         {
             this.isExecuting = false;
+            var dequeuedPCB = _ReadyQueue.dequeue();
+            _Memory.wipePartition(_MemoryManager.partitionOfProgram(dequeuedPCB.pid));
+            _MemoryManager.wipePartition(_MemoryManager.partitionOfProgram(dequeuedPCB.pid));
+            
         }
 
         public cpx(memLocation): void

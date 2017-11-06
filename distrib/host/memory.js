@@ -43,6 +43,10 @@ var TSOS;
         Memory.prototype.wipe = function () {
             this.registers = new Array(768);
         };
+        Memory.prototype.wipePartition = function (parNum) {
+            for (var i = (parNum * 256); i < 256; i++)
+                _Memory.registers[i] = undefined;
+        };
         Memory.prototype.toString = function () {
             var toReturn = "[";
             var current;

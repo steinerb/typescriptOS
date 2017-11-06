@@ -30,12 +30,24 @@ var TSOS;
         MemoryManager.prototype.fillPartition = function (pid) {
             this.pidPartitions[this.nextAvailablePartition()] = pid;
         };
+        MemoryManager.prototype.wipePartition = function (parNum) {
+            this.pidPartitions[parNum] = undefined;
+        };
         MemoryManager.prototype.indexOfProgram = function (pid) {
             var current;
             for (var i = 0; i < this.numPartitions(); i++) {
                 current = this.pidPartitions[i];
                 if (current == pid)
                     return current * this.parLength;
+            }
+            return -1;
+        };
+        MemoryManager.prototype.partitionOfProgram = function (desiredPID) {
+            var currentPID;
+            for (var currentPar = 0; currentPar < this.numPartitions(); currentPar++) {
+                currentPID = this.pidPartitions[currentPar];
+                if (currentPID == desiredPID)
+                    return currentPar;
             }
             return -1;
         };

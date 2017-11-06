@@ -91,15 +91,15 @@ var TSOS;
             }
             memoryBox.value = memString;
         };
-        Utils.updateReadyQueue = function () {
-            var readyBox = document.getElementById("readyPCBs");
+        Utils.updateProcesses = function () {
+            var processesBox = document.getElementById("readyPCBs");
             var pcbString = "";
             var currentPCB;
             for (var i = 0; i < _ReadyQueue.q.length; i++) {
                 currentPCB = _ReadyQueue.q[i];
                 pcbString += ("PID " + String(currentPCB.pid) + ": " + currentPCB.toString() + "\n");
             }
-            readyBox.value = pcbString;
+            processesBox.value = pcbString;
         };
         return Utils;
     }());
