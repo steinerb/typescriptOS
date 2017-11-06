@@ -61,6 +61,12 @@ var TSOS;
                 }
             }
             */
+            if (_IndexOfProgramToRun == 0)
+                _CurrentPartition = 0;
+            else if (_IndexOfProgramToRun == 256)
+                _CurrentPartition = 1;
+            else if (_IndexOfProgramToRun == 512)
+                _CurrentPartition = 2;
             if (this.isExecuting == true) {
                 var indexNextOp = _IndexOfProgramToRun + this.PC + 1;
                 var indexTwoOps = _IndexOfProgramToRun + this.PC + 2;
@@ -140,18 +146,18 @@ var TSOS;
         Cpu.prototype.ldaM = function (memLocation) {
             this.PC += 3;
             if ((memLocation >= 0) && (memLocation < _Memory.getSize()))
-                this.Acc = _Memory.getValueAt(memLocation, (_MemoryManager.programAtIndex(_IndexOfProgramToRun)));
+                this.Acc = _Memory.getValueAt(memLocation, _CurrentPartition);
             else
                 _Kernel.krnTrapError("Memory location: " + String(memLocation) + " is out of bounds!");
         };
         Cpu.prototype.sta = function (memLocation) {
             this.PC += 3;
-            _Memory.storeValueAt(memLocation, (_MemoryManager.programAtIndex(_IndexOfProgramToRun)), this.Acc);
+            _Memory.storeValueAt(memLocation, _CurrentPartition, this.Acc);
         };
         Cpu.prototype.adc = function (memLocation) {
             this.PC += 3;
             if ((memLocation >= 0) && (memLocation < _Memory.getSize()))
-                this.Acc += _Memory.getValueAt(memLocation, (_MemoryManager.programAtIndex(_IndexOfProgramToRun)));
+                this.Acc += _Memory.getValueAt(memLocation, _CurrentPartition);
             else
                 _Kernel.krnTrapError("Memory location: " + String(memLocation) + " is out of bounds!");
         };
@@ -162,7 +168,7 @@ var TSOS;
         Cpu.prototype.ldxM = function (memLocation) {
             this.PC += 3;
             if ((memLocation >= 0) && (memLocation < _Memory.getSize()))
-                this.Xreg = _Memory.getValueAt(memLocation, (_MemoryManager.programAtIndex(_IndexOfProgramToRun)));
+                this.Xreg = _Memory.getValueAt(memLocation, _CurrentPartition);
             else
                 _Kernel.krnTrapError("Memory location: " + String(memLocation) + " is out of bounds!");
         };
@@ -173,7 +179,7 @@ var TSOS;
         Cpu.prototype.ldyM = function (memLocation) {
             this.PC += 3;
             if ((memLocation >= 0) && (memLocation < _Memory.getSize()))
-                this.Yreg = _Memory.getValueAt(memLocation, (_MemoryManager.programAtIndex(_IndexOfProgramToRun)));
+                this.Yreg = _Memory.getValueAt(memLocation, _CurrentPartition);
             else
                 _Kernel.krnTrapError("Memory location: " + String(memLocation) + " is out of bounds!");
         };
@@ -186,7 +192,7 @@ var TSOS;
         Cpu.prototype.cpx = function (memLocation) {
             this.PC += 3;
             if ((memLocation >= 0) && (memLocation < _Memory.getSize())) {
-                if (_Memory.getValueAt(memLocation, (_MemoryManager.programAtIndex(_IndexOfProgramToRun))) == this.Xreg)
+                if (_Memory.getValueAt(memLocation, _CurrentPartition) == this.Xreg)
                     this.Zflag = 1;
                 else
                     this.Zflag = 0;
@@ -207,7 +213,7 @@ var TSOS;
         Cpu.prototype.inc = function (memLocation) {
             this.PC += 3;
             if ((memLocation >= 0) && (memLocation < _Memory.getSize()))
-                _Memory.storeValueAt(memLocation, (_MemoryManager.programAtIndex(_IndexOfProgramToRun)), (_Memory.getValueAt(memLocation, (_MemoryManager.programAtIndex(_IndexOfProgramToRun))) + 1));
+                _Memory.storeValueAt(memLocation, _CurrentPartition, (_Memory.getValueAt(memLocation, _CurrentPartition) + 1));
             else
                 _Kernel.krnTrapError("Memory location: " + String(memLocation) + " is out of bounds!");
         };
@@ -218,8 +224,8 @@ var TSOS;
             else if (this.Xreg == 2) {
                 var toReturn = "";
                 var stringIndex = this.Yreg;
-                while (_Memory.getValueAt(stringIndex, _MemoryManager.programAtIndex(_IndexOfProgramToRun)) != 0x00) {
-                    toReturn += String.fromCharCode(_Memory.getValueAt(stringIndex, _MemoryManager.programAtIndex(_IndexOfProgramToRun)));
+                while (_Memory.getValueAt(stringIndex, _CurrentPartition) != 0x00) {
+                    toReturn += String.fromCharCode(_Memory.getValueAt(stringIndex, _CurrentPartition));
                     stringIndex++;
                 }
                 _StdOut.putText(toReturn);

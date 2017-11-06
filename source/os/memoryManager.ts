@@ -57,14 +57,14 @@ module TSOS
 			return -1;
 		}
 
-		public programAtIndex(index: number): number
+		public programAtIndex(desiredIndex: number): number
 		{
-			var current;
-			for (var currentPID = 0; currentPID < this.numPartitions(); currentPID++)
+			var currentIndex;
+			for (var currentPartition = 0; currentPartition < this.numPartitions(); currentPartition++)
 			{
-				current = currentPID*this.parLength;
-				if((current == index) && ((typeof this.pidPartitions[currentPID]) != 'undefined'))
-					return currentPID;
+				currentIndex = currentPartition*this.parLength;
+				if((currentIndex == desiredIndex) && ((typeof this.pidPartitions[currentPartition]) != 'undefined'))
+					return this.pidPartitions[currentIndex];
 			}
 
 			return -1;

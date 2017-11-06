@@ -608,10 +608,10 @@ module TSOS
 				_ResidentList = _ResidentList.filter(function(pcb){return pcb.pid != desiredPID;});
 				_ReadyQueue.enqueue(pcbToLoad);
 
-        		//***OLD AND WORKING***
+        		
         		_IndexOfProgramToRun = programIndex;
 				_CPU.isExecuting = true;
-				//***				***
+				
         	}
 
  

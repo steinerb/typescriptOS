@@ -39,12 +39,12 @@ var TSOS;
             }
             return -1;
         };
-        MemoryManager.prototype.programAtIndex = function (index) {
-            var current;
-            for (var currentPID = 0; currentPID < this.numPartitions(); currentPID++) {
-                current = currentPID * this.parLength;
-                if ((current == index) && ((typeof this.pidPartitions[currentPID]) != 'undefined'))
-                    return currentPID;
+        MemoryManager.prototype.programAtIndex = function (desiredIndex) {
+            var currentIndex;
+            for (var currentPartition = 0; currentPartition < this.numPartitions(); currentPartition++) {
+                currentIndex = currentPartition * this.parLength;
+                if ((currentIndex == desiredIndex) && ((typeof this.pidPartitions[currentPartition]) != 'undefined'))
+                    return this.pidPartitions[currentIndex];
             }
             return -1;
         };
