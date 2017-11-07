@@ -252,6 +252,7 @@ module TSOS
         public brk(): void
         {
             this.isExecuting = false;
+            
             var dequeuedPCB = _ReadyQueue.dequeue();
             _Memory.wipePartition(_MemoryManager.partitionOfProgram(dequeuedPCB.pid));
             _MemoryManager.wipePartition(_MemoryManager.partitionOfProgram(dequeuedPCB.pid));
