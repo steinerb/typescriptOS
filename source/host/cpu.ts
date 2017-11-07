@@ -47,14 +47,29 @@ module TSOS
             // TODO: Accumulate CPU usage and profiling statistics here.
             // Do the real work here. Be sure to set this.isExecuting appropriately.
 
-            var pcBox     = <HTMLInputElement>document.getElementById("pc");
-            var accBox    = <HTMLInputElement>document.getElementById("acc");
-            var xRegBox   = <HTMLInputElement>document.getElementById("xReg");
-            var yRegBox   = <HTMLInputElement>document.getElementById("yReg");
-            var zFlagBox  = <HTMLInputElement>document.getElementById("zFlag");
-            var memoryBox = <HTMLInputElement>document.getElementById("memory");
+            var pcBox             = <HTMLInputElement>document.getElementById("pc");
+            var accBox            = <HTMLInputElement>document.getElementById("acc");
+            var xRegBox           = <HTMLInputElement>document.getElementById("xReg");
+            var yRegBox           = <HTMLInputElement>document.getElementById("yReg");
+            var zFlagBox          = <HTMLInputElement>document.getElementById("zFlag");
+            var memoryBox         = <HTMLInputElement>document.getElementById("memory");
+            var processesBox      = <HTMLInputElement>document.getElementById("readyPCBs");
 
-            
+            //for first cycle
+            var currentPID: number;
+            if(_CPUScheduler.ticks == 0)
+            {
+                currentPID = _ReadyQueue.q[0].pid;
+                this.PC = _ReadyQueue.q[0].PC;
+                this.Acc = _ReadyQueue.q[0].Acc;
+                this.Xreg = _ReadyQueue.q[0].Xreg;
+                this.Yreg = _ReadyQueue.q[0].Yreg;
+                this.Zflag = _ReadyQueue.q[0].Zflag;
+
+                _ReadyQueue.q[0].state = "RUNNING";
+                Utils.updateProcesses();
+            }
+
 
 
 
@@ -66,111 +81,107 @@ module TSOS
                 _CurrentPartition = 2;
 
 
-            if (this.isExecuting == true)
+
+            var indexNextOp: number = _IndexOfProgramToRun+this.PC+1;
+            var indexTwoOps: number = _IndexOfProgramToRun+this.PC+2;
+
+            var currentOp: number = _Memory.registers[_IndexOfProgramToRun+this.PC];
+
+            var paramForConstant: number = _Memory.registers[indexNextOp];
+
+            var paramForLocation: number = Number("0x"+_Memory.registers[indexTwoOps]+_Memory.registers[indexNextOp]);
+
+           
+            switch(currentOp)
             {
 
-               var indexNextOp: number = _IndexOfProgramToRun+this.PC+1;
-               var indexTwoOps: number = _IndexOfProgramToRun+this.PC+2;
+                case 0xA9:
+                    this.ldaC(paramForConstant);
+                    break;
 
-               var currentOp: number = _Memory.registers[_IndexOfProgramToRun+this.PC];
+                case 0xAD:
+                    this.ldaM(paramForLocation);
+                    break;
 
-               var paramForConstant: number = _Memory.registers[indexNextOp];
+                case 0x8D:
+                    this.sta(paramForLocation);
+                    break;
 
-               var paramForLocation: number = Number("0x"+_Memory.registers[indexTwoOps]+_Memory.registers[indexNextOp]);
+                case 0x6D:
+                    this.adc(paramForLocation);
+                    break
 
-               
-               switch(currentOp)
-               {
+                case 0xA2:
+                    this.ldxC(paramForConstant);
+                    break;
 
-                   case 0xA9:
-                       this.ldaC(paramForConstant);
-                       break;
+                case 0xAE:
+                    this.ldxM(paramForLocation);
+                    break;
 
-                   case 0xAD:
-                       this.ldaM(paramForLocation);
-                       break;
+                case 0xA0:
+                    this.ldyC(paramForConstant);
+                    break;
 
-                   case 0x8D:
-                       this.sta(paramForLocation);
-                       break;
+                case 0xAC:
+                    this.ldyM(paramForLocation);
+                    break;
 
-                   case 0x6D:
-                       this.adc(paramForLocation);
-                       break
+                case 0xEA:
+                    this.nop();
+                    break;
 
-                   case 0xA2:
-                       this.ldxC(paramForConstant);
-                       break;
+                case 0x00:
+                    this.brk();
+                    break;
 
-                   case 0xAE:
-                       this.ldxM(paramForLocation);
-                       break;
+                case 0xEC:
+                    this.cpx(paramForLocation);
+                    break;
 
-                   case 0xA0:
-                       this.ldyC(paramForConstant);
-                       break;
+                case 0xD0:
+                    this.bne(paramForConstant);
+                    break;
 
-                   case 0xAC:
-                       this.ldyM(paramForLocation);
-                       break;
+                case 0xEE:
+                    this.inc(paramForLocation);
+                    break;
 
-                   case 0xEA:
-                       this.nop();
-                       break;
+                case 0xFF:
+                    this.sys();
+                    break;
 
-                   case 0x00:
-                       this.brk();
-                       this.init();
-                       break;
-
-                   case 0xEC:
-                       this.cpx(paramForLocation);
-                       break;
-
-                   case 0xD0:
-                       this.bne(paramForConstant);
-                       break;
-
-                   case 0xEE:
-                       this.inc(paramForLocation);
-                       break;
-
-                   case 0xFF:
-                       this.sys();
-                       break;
-
-                      //error: op code not recognized
-                   default:
-                       _Kernel.krnTrapError("Invalid op code: "+currentOp.toString(16).toUpperCase());
-               }
-
-               
-               //set cpu, memory, and processes displays
-               pcBox.value = String(this.PC);
-
-               if(this.Acc <= 15)
-                   accBox.value = "0"+this.Acc.toString(16).toUpperCase();
-               else
-                   accBox.value = this.Acc.toString(16).toUpperCase();
-
-               if(this.Xreg <= 15)
-                   xRegBox.value = "0"+this.Xreg.toString(16).toUpperCase();
-               else
-                   xRegBox.value = this.Xreg.toString(16).toUpperCase();
-
-               if(this.Yreg <= 15)
-                   yRegBox.value = "0"+this.Yreg.toString(16).toUpperCase();
-               else
-                   yRegBox.value = this.Yreg.toString(16).toUpperCase();
-
-               zFlagBox.value = String(this.Zflag);
-
-               Utils.updateMemory();
-               Utils.updateProcesses();
-
+                   //error: op code not recognized
+                default:
+                    _Kernel.krnTrapError("Invalid op code: "+currentOp.toString(16).toUpperCase());
             }
+
+           
+           //set cpu, memory, and processes displays
+           pcBox.value = String(this.PC);
+
+           if(this.Acc <= 15)
+               accBox.value = "0"+this.Acc.toString(16).toUpperCase();
+           else
+               accBox.value = this.Acc.toString(16).toUpperCase();
+
+           if(this.Xreg <= 15)
+               xRegBox.value = "0"+this.Xreg.toString(16).toUpperCase();
+           else
+               xRegBox.value = this.Xreg.toString(16).toUpperCase();
+
+           if(this.Yreg <= 15)
+               yRegBox.value = "0"+this.Yreg.toString(16).toUpperCase();
+           else
+               yRegBox.value = this.Yreg.toString(16).toUpperCase();
+
+           zFlagBox.value = String(this.Zflag);
+
+           Utils.updateMemory();
+           Utils.updateProcesses();
+
             
-            //_CPUScheduler.ticks++;
+            _CPUScheduler.ticks++;
         }
 
 
@@ -244,9 +255,9 @@ module TSOS
         {
             this.isExecuting = false;
 
-            var dequeuedPCB = _ReadyQueue.dequeue();
-            _Memory.wipePartition(_MemoryManager.partitionOfProgram(dequeuedPCB.pid));
-            _MemoryManager.wipePartition(_MemoryManager.partitionOfProgram(dequeuedPCB.pid));
+            //var dequeuedPCB = _ReadyQueue.dequeue();
+            //_Memory.wipePartition(_MemoryManager.partitionOfProgram(dequeuedPCB.pid));
+            //_MemoryManager.wipePartition(_MemoryManager.partitionOfProgram(dequeuedPCB.pid));
             
         }
 

@@ -411,7 +411,7 @@ var TSOS;
                     //reset index for loading to memory
                     _NextAvailableIndex = 0;
                     //add new PCB to Resident List to be called
-                    _ResidentList.push(new TSOS.Pcb("new", _NextAvailablePID, 0, 0, 0, 0, 0));
+                    _ResidentList.push(new TSOS.Pcb("NEW", _NextAvailablePID, 0, 0, 0, 0, 0));
                     //now save Program ID for later calling and update Memory Manager 
                     _MemoryManager.fillPartition(_NextAvailablePID);
                     _NextAvailablePID++;
@@ -432,17 +432,19 @@ var TSOS;
             if (programIndex == -1)
                 _StdOut.putText("No program with that PID found.");
             else {
-                var pcbToLoad;
+                var pcbToRun;
                 var currentPCB;
                 for (var i = 0; i < _ResidentList.length; i++) {
                     currentPCB = _ResidentList[i];
                     if (currentPCB.pid == desiredPID) {
-                        pcbToLoad = currentPCB;
+                        pcbToRun = currentPCB;
                         break;
                     }
                 }
+                //remove from resident list
                 _ResidentList = _ResidentList.filter(function (pcb) { return pcb.pid != desiredPID; });
-                _ReadyQueue.enqueue(pcbToLoad);
+                //add to ready queue
+                _ReadyQueue.enqueue(pcbToRun);
                 TSOS.Utils.updateProcesses();
                 _IndexOfProgramToRun = programIndex;
                 _CPU.isExecuting = true;

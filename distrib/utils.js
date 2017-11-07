@@ -97,7 +97,7 @@ var TSOS;
             var currentPCB;
             for (var i = 0; i < _ReadyQueue.q.length; i++) {
                 currentPCB = _ReadyQueue.q[i];
-                pcbString += ("PID " + String(currentPCB.pid) + ": " + currentPCB.toString() + "\n");
+                pcbString += ("PID " + String(currentPCB.pid) + ":\t" + currentPCB.toString() + "\n");
             }
             processesBox.value = pcbString;
         };

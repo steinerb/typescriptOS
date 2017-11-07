@@ -119,7 +119,7 @@ module TSOS
             {
                 currentPCB = _ReadyQueue.q[i];
 
-                pcbString += ("PID "+String(currentPCB.pid)+": "+currentPCB.toString()+"\n");
+                pcbString += ("PID "+String(currentPCB.pid)+":\t"+currentPCB.toString()+"\n");
             }
             processesBox.value = pcbString;
         }

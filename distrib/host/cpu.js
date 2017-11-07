@@ -49,85 +49,95 @@ var TSOS;
             var yRegBox = document.getElementById("yReg");
             var zFlagBox = document.getElementById("zFlag");
             var memoryBox = document.getElementById("memory");
+            var processesBox = document.getElementById("readyPCBs");
+            //for first cycle
+            var currentPID;
+            if (_CPUScheduler.ticks == 0) {
+                currentPID = _ReadyQueue.q[0].pid;
+                this.PC = _ReadyQueue.q[0].PC;
+                this.Acc = _ReadyQueue.q[0].Acc;
+                this.Xreg = _ReadyQueue.q[0].Xreg;
+                this.Yreg = _ReadyQueue.q[0].Yreg;
+                this.Zflag = _ReadyQueue.q[0].Zflag;
+                _ReadyQueue.q[0].state = "RUNNING";
+                TSOS.Utils.updateProcesses();
+            }
             if (_IndexOfProgramToRun == 0)
                 _CurrentPartition = 0;
             else if (_IndexOfProgramToRun == 256)
                 _CurrentPartition = 1;
             else if (_IndexOfProgramToRun == 512)
                 _CurrentPartition = 2;
-            if (this.isExecuting == true) {
-                var indexNextOp = _IndexOfProgramToRun + this.PC + 1;
-                var indexTwoOps = _IndexOfProgramToRun + this.PC + 2;
-                var currentOp = _Memory.registers[_IndexOfProgramToRun + this.PC];
-                var paramForConstant = _Memory.registers[indexNextOp];
-                var paramForLocation = Number("0x" + _Memory.registers[indexTwoOps] + _Memory.registers[indexNextOp]);
-                switch (currentOp) {
-                    case 0xA9:
-                        this.ldaC(paramForConstant);
-                        break;
-                    case 0xAD:
-                        this.ldaM(paramForLocation);
-                        break;
-                    case 0x8D:
-                        this.sta(paramForLocation);
-                        break;
-                    case 0x6D:
-                        this.adc(paramForLocation);
-                        break;
-                    case 0xA2:
-                        this.ldxC(paramForConstant);
-                        break;
-                    case 0xAE:
-                        this.ldxM(paramForLocation);
-                        break;
-                    case 0xA0:
-                        this.ldyC(paramForConstant);
-                        break;
-                    case 0xAC:
-                        this.ldyM(paramForLocation);
-                        break;
-                    case 0xEA:
-                        this.nop();
-                        break;
-                    case 0x00:
-                        this.brk();
-                        this.init();
-                        break;
-                    case 0xEC:
-                        this.cpx(paramForLocation);
-                        break;
-                    case 0xD0:
-                        this.bne(paramForConstant);
-                        break;
-                    case 0xEE:
-                        this.inc(paramForLocation);
-                        break;
-                    case 0xFF:
-                        this.sys();
-                        break;
-                    //error: op code not recognized
-                    default:
-                        _Kernel.krnTrapError("Invalid op code: " + currentOp.toString(16).toUpperCase());
-                }
-                //set cpu, memory, and processes displays
-                pcBox.value = String(this.PC);
-                if (this.Acc <= 15)
-                    accBox.value = "0" + this.Acc.toString(16).toUpperCase();
-                else
-                    accBox.value = this.Acc.toString(16).toUpperCase();
-                if (this.Xreg <= 15)
-                    xRegBox.value = "0" + this.Xreg.toString(16).toUpperCase();
-                else
-                    xRegBox.value = this.Xreg.toString(16).toUpperCase();
-                if (this.Yreg <= 15)
-                    yRegBox.value = "0" + this.Yreg.toString(16).toUpperCase();
-                else
-                    yRegBox.value = this.Yreg.toString(16).toUpperCase();
-                zFlagBox.value = String(this.Zflag);
-                TSOS.Utils.updateMemory();
-                TSOS.Utils.updateProcesses();
+            var indexNextOp = _IndexOfProgramToRun + this.PC + 1;
+            var indexTwoOps = _IndexOfProgramToRun + this.PC + 2;
+            var currentOp = _Memory.registers[_IndexOfProgramToRun + this.PC];
+            var paramForConstant = _Memory.registers[indexNextOp];
+            var paramForLocation = Number("0x" + _Memory.registers[indexTwoOps] + _Memory.registers[indexNextOp]);
+            switch (currentOp) {
+                case 0xA9:
+                    this.ldaC(paramForConstant);
+                    break;
+                case 0xAD:
+                    this.ldaM(paramForLocation);
+                    break;
+                case 0x8D:
+                    this.sta(paramForLocation);
+                    break;
+                case 0x6D:
+                    this.adc(paramForLocation);
+                    break;
+                case 0xA2:
+                    this.ldxC(paramForConstant);
+                    break;
+                case 0xAE:
+                    this.ldxM(paramForLocation);
+                    break;
+                case 0xA0:
+                    this.ldyC(paramForConstant);
+                    break;
+                case 0xAC:
+                    this.ldyM(paramForLocation);
+                    break;
+                case 0xEA:
+                    this.nop();
+                    break;
+                case 0x00:
+                    this.brk();
+                    break;
+                case 0xEC:
+                    this.cpx(paramForLocation);
+                    break;
+                case 0xD0:
+                    this.bne(paramForConstant);
+                    break;
+                case 0xEE:
+                    this.inc(paramForLocation);
+                    break;
+                case 0xFF:
+                    this.sys();
+                    break;
+                //error: op code not recognized
+                default:
+                    _Kernel.krnTrapError("Invalid op code: " + currentOp.toString(16).toUpperCase());
             }
-            //_CPUScheduler.ticks++;
+            //set cpu, memory, and processes displays
+            pcBox.value = String(this.PC);
+            if (this.Acc <= 15)
+                accBox.value = "0" + this.Acc.toString(16).toUpperCase();
+            else
+                accBox.value = this.Acc.toString(16).toUpperCase();
+            if (this.Xreg <= 15)
+                xRegBox.value = "0" + this.Xreg.toString(16).toUpperCase();
+            else
+                xRegBox.value = this.Xreg.toString(16).toUpperCase();
+            if (this.Yreg <= 15)
+                yRegBox.value = "0" + this.Yreg.toString(16).toUpperCase();
+            else
+                yRegBox.value = this.Yreg.toString(16).toUpperCase();
+            zFlagBox.value = String(this.Zflag);
+            TSOS.Utils.updateMemory();
+            TSOS.Utils.updateProcesses();
+            _CPUScheduler.ticks++;
         };
         Cpu.prototype.ldaC = function (constant) {
             this.PC += 2;
@@ -179,9 +189,9 @@ var TSOS;
         //INCOMPLETE: CHANGE THIS TO FIT SCHEDULER!!!
         Cpu.prototype.brk = function () {
             this.isExecuting = false;
-            var dequeuedPCB = _ReadyQueue.dequeue();
-            _Memory.wipePartition(_MemoryManager.partitionOfProgram(dequeuedPCB.pid));
-            _MemoryManager.wipePartition(_MemoryManager.partitionOfProgram(dequeuedPCB.pid));
+            //var dequeuedPCB = _ReadyQueue.dequeue();
+            //_Memory.wipePartition(_MemoryManager.partitionOfProgram(dequeuedPCB.pid));
+            //_MemoryManager.wipePartition(_MemoryManager.partitionOfProgram(dequeuedPCB.pid));
         };
         Cpu.prototype.cpx = function (memLocation) {
             this.PC += 3;
