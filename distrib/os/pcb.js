@@ -24,11 +24,11 @@ var TSOS;
         Pcb.prototype.toString = function () {
             var toReturn = "";
             toReturn += ("|state:\t" + this.state + "\t");
-            toReturn += ("|pc:\t" + String(this.PC) + "\t");
-            toReturn += ("|acc:\t" + String(this.Acc) + "\t");
-            toReturn += ("|x:\t" + String(this.Xreg) + "\t");
-            toReturn += ("|y:\t" + String(this.Yreg) + "\t");
-            toReturn += ("|z:\t" + String(this.Zflag) + "\t|");
+            toReturn += ("|pc:\t" + this.PC.toString(16).toUpperCase() + "\t");
+            toReturn += ("|acc:\t" + this.Acc.toString(16).toUpperCase() + "\t");
+            toReturn += ("|x:\t" + this.Xreg.toString(16).toUpperCase() + "\t");
+            toReturn += ("|y:\t" + this.Yreg.toString(16).toUpperCase() + "\t");
+            toReturn += ("|z:\t" + this.Zflag + "\t|");
             return toReturn;
         };
         return Pcb;

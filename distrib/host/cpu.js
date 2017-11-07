@@ -50,18 +50,17 @@ var TSOS;
             var zFlagBox = document.getElementById("zFlag");
             var memoryBox = document.getElementById("memory");
             var processesBox = document.getElementById("readyPCBs");
-            //for first cycle
+            var currentPCB;
             var currentPID;
-            if (_CPUScheduler.ticks == 0) {
-                currentPID = _ReadyQueue.q[0].pid;
-                this.PC = _ReadyQueue.q[0].PC;
-                this.Acc = _ReadyQueue.q[0].Acc;
-                this.Xreg = _ReadyQueue.q[0].Xreg;
-                this.Yreg = _ReadyQueue.q[0].Yreg;
-                this.Zflag = _ReadyQueue.q[0].Zflag;
-                _ReadyQueue.q[0].state = "RUNNING";
-                TSOS.Utils.updateProcesses();
-            }
+            currentPCB = _ReadyQueue.q[0];
+            currentPID = currentPCB.pid;
+            this.PC = currentPCB.PC;
+            this.Acc = currentPCB.Acc;
+            this.Xreg = currentPCB.Xreg;
+            this.Yreg = currentPCB.Yreg;
+            this.Zflag = currentPCB.Zflag;
+            _ReadyQueue.q[0].state = "RUNNING";
+            TSOS.Utils.updateProcesses();
             if (_IndexOfProgramToRun == 0)
                 _CurrentPartition = 0;
             else if (_IndexOfProgramToRun == 256)
@@ -120,7 +119,13 @@ var TSOS;
                 default:
                     _Kernel.krnTrapError("Invalid op code: " + currentOp.toString(16).toUpperCase());
             }
-            //set cpu, memory, and processes displays
+            //edit running PCB for later updating of processes display
+            _ReadyQueue.q[0].PC = this.PC;
+            _ReadyQueue.q[0].Acc = this.Acc;
+            _ReadyQueue.q[0].Xreg = this.Xreg;
+            _ReadyQueue.q[0].Yreg = this.Yreg;
+            _ReadyQueue.q[0].Zflag = this.Zflag;
+            //update cpu displays
             pcBox.value = String(this.PC);
             if (this.Acc <= 15)
                 accBox.value = "0" + this.Acc.toString(16).toUpperCase();
@@ -135,8 +140,10 @@ var TSOS;
             else
                 yRegBox.value = this.Yreg.toString(16).toUpperCase();
             zFlagBox.value = String(this.Zflag);
-            TSOS.Utils.updateMemory();
+            //Update processes display
             TSOS.Utils.updateProcesses();
+            //update memory display
+            TSOS.Utils.updateMemory();
             _CPUScheduler.ticks++;
         };
         Cpu.prototype.ldaC = function (constant) {
