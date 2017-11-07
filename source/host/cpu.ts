@@ -1,6 +1,8 @@
 ///<reference path="../globals.ts" />
 ///<reference path="../utils.ts" />
 
+///<reference path="../os/pcb.ts" />
+
 /* ------------
 	 CPU.ts
 
@@ -55,7 +57,8 @@ module TSOS
 			var memoryBox         = <HTMLInputElement>document.getElementById("memory");
 			var processesBox      = <HTMLInputElement>document.getElementById("readyPCBs");
 
-			
+
+			//fetch data from current pcb for cpu			
 			var currentPCB: TSOS.Pcb;
 			var currentPID: number;
 
@@ -67,13 +70,11 @@ module TSOS
 			this.Yreg 		= currentPCB.Yreg;
 			this.Zflag 		= currentPCB.Zflag;
 
+			//set state as running and update display
 			_ReadyQueue.q[0].state = "RUNNING";
 			Utils.updateProcesses();
 			
-
-
-
-
+			//get current partition number
 			if(_IndexOfProgramToRun == 0)
 				_CurrentPartition = 0;
 			else if (_IndexOfProgramToRun == 256)
@@ -82,7 +83,7 @@ module TSOS
 				_CurrentPartition = 2;
 
 
-
+			//get indexes for current op code and parameters
 			var indexNextOp: number = _IndexOfProgramToRun+this.PC+1;
 			var indexTwoOps: number = _IndexOfProgramToRun+this.PC+2;
 
@@ -92,7 +93,7 @@ module TSOS
 
 			var paramForLocation: number = Number("0x"+_Memory.registers[indexTwoOps]+_Memory.registers[indexNextOp]);
 
-		   
+		    //process current op code
 			switch(currentOp)
 			{
 
@@ -157,12 +158,51 @@ module TSOS
 					_Kernel.krnTrapError("Invalid op code: "+currentOp.toString(16).toUpperCase());
 			}
 
-		   //edit running PCB for later updating of processes display
-		   _ReadyQueue.q[0].PC		= this.PC;
-		   _ReadyQueue.q[0].Acc		= this.Acc;
-		   _ReadyQueue.q[0].Xreg	= this.Xreg;
-		   _ReadyQueue.q[0].Yreg	= this.Yreg;
-		   _ReadyQueue.q[0].Zflag	= this.Zflag;
+
+		   //check if break (00) was reached/program is finished
+		   if(this.isExecuting == false)
+		   {
+		   		//if program is finished, pop it off the queue
+			   	var dequeuedPCB: TSOS.Pcb = _ReadyQueue.dequeue();
+				
+		   		//if program is finished, remove it from memory
+		   		_Memory.wipePartition(_MemoryManager.partitionOfProgram(dequeuedPCB.pid));
+				_MemoryManager.wipePartition(_MemoryManager.partitionOfProgram(dequeuedPCB.pid));
+		   		
+		   		//reset ticks for new round robin cycle
+		   		_CPUScheduler.ticks = 0;
+		   		//check if there are remaining programs and should keep going
+		   		if(_ReadyQueue.getSize() > 0)
+		   			this.isExecuting = true;
+		   }
+		   //check if quantum is reached and if there are other programs waiting
+		   else if(_CPUScheduler.quantumCyclesReached() && (_ReadyQueue.getSize() > 1))
+		   {
+		   		//update current PCB
+		   	    _ReadyQueue.q[0].PC		= this.PC;
+			    _ReadyQueue.q[0].Acc	= this.Acc;
+			    _ReadyQueue.q[0].Xreg	= this.Xreg;
+			    _ReadyQueue.q[0].Yreg	= this.Yreg;
+			    _ReadyQueue.q[0].Zflag	= this.Zflag;
+
+			    //CONTEXT SWITCH
+			    var dequeuedPCB: TSOS.Pcb = _ReadyQueue.dequeue();
+			    _ReadyQueue.enqueue(new Pcb("WAITING", dequeuedPCB.pid, this.PC, this.Acc, this.Xreg, this.Yreg, this.Zflag));
+
+			    //reset ticks for new round robin cycle
+		   		_CPUScheduler.ticks = 0; 
+		   }
+		   //program isn't finished and has more cycles to go before quantum reached
+		   else
+		   {
+		   		//update current PCB
+		   	    _ReadyQueue.q[0].PC		= this.PC;
+			    _ReadyQueue.q[0].Acc	= this.Acc;
+			    _ReadyQueue.q[0].Xreg	= this.Xreg;
+			    _ReadyQueue.q[0].Yreg	= this.Yreg;
+			    _ReadyQueue.q[0].Zflag	= this.Zflag;
+		   }
+		   
 
 		   //update cpu displays
 		   pcBox.value = String(this.PC);
@@ -186,13 +226,16 @@ module TSOS
 
 		   //Update processes display
 		   Utils.updateProcesses();
+
 		   //update memory display
 		   Utils.updateMemory();
 		   
-
-			
-			_CPUScheduler.ticks++;
+		   //tick up
+		   _CPUScheduler.ticks++;
 		}
+
+
+
 
 
 		public ldaC(constant): void
@@ -260,15 +303,9 @@ module TSOS
 			this.PC += 1;
 		}
 
-		//INCOMPLETE: CHANGE THIS TO FIT SCHEDULER!!!
 		public brk(): void
-		{
+		{	
 			this.isExecuting = false;
-
-			//var dequeuedPCB = _ReadyQueue.dequeue();
-			//_Memory.wipePartition(_MemoryManager.partitionOfProgram(dequeuedPCB.pid));
-			//_MemoryManager.wipePartition(_MemoryManager.partitionOfProgram(dequeuedPCB.pid));
-			
 		}
 
 		public cpx(memLocation): void

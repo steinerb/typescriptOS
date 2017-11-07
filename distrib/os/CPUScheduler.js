@@ -1,12 +1,17 @@
 var TSOS;
 (function (TSOS) {
     var CPUScheduler = (function () {
-        function CPUScheduler(ticks, quantam) {
-            if (ticks === void 0) { ticks = 0; }
-            if (quantam === void 0) { quantam = 6; }
+        function CPUScheduler(ticks, quantum) {
+            if (ticks === void 0) { ticks = 1; }
+            if (quantum === void 0) { quantum = 6; }
             this.ticks = ticks;
-            this.quantam = quantam;
+            this.quantum = quantum;
         }
+        CPUScheduler.prototype.quantumCyclesReached = function () {
+            if (((this.ticks % this.quantum) == 0) && (this.ticks > 0))
+                return true;
+            return false;
+        };
         return CPUScheduler;
     }());
     TSOS.CPUScheduler = CPUScheduler;

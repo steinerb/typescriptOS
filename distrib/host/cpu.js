@@ -1,5 +1,6 @@
 ///<reference path="../globals.ts" />
 ///<reference path="../utils.ts" />
+///<reference path="../os/pcb.ts" />
 /* ------------
      CPU.ts
 
@@ -50,6 +51,7 @@ var TSOS;
             var zFlagBox = document.getElementById("zFlag");
             var memoryBox = document.getElementById("memory");
             var processesBox = document.getElementById("readyPCBs");
+            //fetch data from current pcb for cpu			
             var currentPCB;
             var currentPID;
             currentPCB = _ReadyQueue.q[0];
@@ -59,19 +61,23 @@ var TSOS;
             this.Xreg = currentPCB.Xreg;
             this.Yreg = currentPCB.Yreg;
             this.Zflag = currentPCB.Zflag;
+            //set state as running and update display
             _ReadyQueue.q[0].state = "RUNNING";
             TSOS.Utils.updateProcesses();
+            //get current partition number
             if (_IndexOfProgramToRun == 0)
                 _CurrentPartition = 0;
             else if (_IndexOfProgramToRun == 256)
                 _CurrentPartition = 1;
             else if (_IndexOfProgramToRun == 512)
                 _CurrentPartition = 2;
+            //get indexes for current op code and parameters
             var indexNextOp = _IndexOfProgramToRun + this.PC + 1;
             var indexTwoOps = _IndexOfProgramToRun + this.PC + 2;
             var currentOp = _Memory.registers[_IndexOfProgramToRun + this.PC];
             var paramForConstant = _Memory.registers[indexNextOp];
             var paramForLocation = Number("0x" + _Memory.registers[indexTwoOps] + _Memory.registers[indexNextOp]);
+            //process current op code
             switch (currentOp) {
                 case 0xA9:
                     this.ldaC(paramForConstant);
@@ -119,12 +125,40 @@ var TSOS;
                 default:
                     _Kernel.krnTrapError("Invalid op code: " + currentOp.toString(16).toUpperCase());
             }
-            //edit running PCB for later updating of processes display
-            _ReadyQueue.q[0].PC = this.PC;
-            _ReadyQueue.q[0].Acc = this.Acc;
-            _ReadyQueue.q[0].Xreg = this.Xreg;
-            _ReadyQueue.q[0].Yreg = this.Yreg;
-            _ReadyQueue.q[0].Zflag = this.Zflag;
+            //check if break (00) was reached/program is finished
+            if (this.isExecuting == false) {
+                //if program is finished, pop it off the queue
+                var dequeuedPCB = _ReadyQueue.dequeue();
+                //if program is finished, remove it from memory
+                _Memory.wipePartition(_MemoryManager.partitionOfProgram(dequeuedPCB.pid));
+                _MemoryManager.wipePartition(_MemoryManager.partitionOfProgram(dequeuedPCB.pid));
+                //reset ticks for new round robin cycle
+                _CPUScheduler.ticks = 0;
+                //check if there are remaining programs and should keep going
+                if (_ReadyQueue.getSize() > 0)
+                    this.isExecuting = true;
+            }
+            else if (_CPUScheduler.quantumCyclesReached() && (_ReadyQueue.getSize() > 1)) {
+                //update current PCB
+                _ReadyQueue.q[0].PC = this.PC;
+                _ReadyQueue.q[0].Acc = this.Acc;
+                _ReadyQueue.q[0].Xreg = this.Xreg;
+                _ReadyQueue.q[0].Yreg = this.Yreg;
+                _ReadyQueue.q[0].Zflag = this.Zflag;
+                //CONTEXT SWITCH
+                var dequeuedPCB = _ReadyQueue.dequeue();
+                _ReadyQueue.enqueue(new TSOS.Pcb("WAITING", dequeuedPCB.pid, this.PC, this.Acc, this.Xreg, this.Yreg, this.Zflag));
+                //reset ticks for new round robin cycle
+                _CPUScheduler.ticks = 0;
+            }
+            else {
+                //update current PCB
+                _ReadyQueue.q[0].PC = this.PC;
+                _ReadyQueue.q[0].Acc = this.Acc;
+                _ReadyQueue.q[0].Xreg = this.Xreg;
+                _ReadyQueue.q[0].Yreg = this.Yreg;
+                _ReadyQueue.q[0].Zflag = this.Zflag;
+            }
             //update cpu displays
             pcBox.value = String(this.PC);
             if (this.Acc <= 15)
@@ -144,6 +178,7 @@ var TSOS;
             TSOS.Utils.updateProcesses();
             //update memory display
             TSOS.Utils.updateMemory();
+            //tick up
             _CPUScheduler.ticks++;
         };
         Cpu.prototype.ldaC = function (constant) {
@@ -193,12 +228,8 @@ var TSOS;
         Cpu.prototype.nop = function () {
             this.PC += 1;
         };
-        //INCOMPLETE: CHANGE THIS TO FIT SCHEDULER!!!
         Cpu.prototype.brk = function () {
             this.isExecuting = false;
-            //var dequeuedPCB = _ReadyQueue.dequeue();
-            //_Memory.wipePartition(_MemoryManager.partitionOfProgram(dequeuedPCB.pid));
-            //_MemoryManager.wipePartition(_MemoryManager.partitionOfProgram(dequeuedPCB.pid));
         };
         Cpu.prototype.cpx = function (memLocation) {
             this.PC += 3;
