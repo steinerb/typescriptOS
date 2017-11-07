@@ -670,9 +670,9 @@ module TSOS
 			*/
 
 			Utils.updateProcesses();
-			_StdOut.putText("Resident List: "+String(_ResidentList));
+			_StdOut.putText("Resident List First Element: "+_ResidentList[0].toString());
 			_StdOut.advanceLine();
-			_StdOut.putText("Ready Queue: "+_ReadyQueue.toString());
+			_StdOut.putText("Ready Queue First ELement: "+_ReadyQueue.q[0].toString());
 
         	
 

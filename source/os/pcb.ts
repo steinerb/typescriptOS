@@ -30,12 +30,13 @@ module TSOS
 		public toString()
 		{
 			var toReturn: string = "";
-			toReturn += ("|state: "+this.state);
-			toReturn += ("|pc:    "+String(this.PC));
-			toReturn += ("|acc:   "+String(this.Acc));
-			toReturn += ("|x:     "+String(this.Xreg));
-			toReturn += ("|y:     "+String(this.Yreg));
-			toReturn += ("|z:     "+String(this.Zflag)+"|");
+			toReturn += ("|state: "+this.state+" ");
+			toReturn += ("|pc:    "+String(this.PC)+" ");
+			toReturn += ("|acc:   "+String(this.Acc)+" ");
+			toReturn += ("|x:     "+String(this.Xreg)+" ");
+			toReturn += ("|y:     "+String(this.Yreg)+" ");
+			toReturn += ("|z:     "+String(this.Zflag)+" ");
+			return toReturn;
 		}
 
 	}
