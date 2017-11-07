@@ -54,18 +54,9 @@ module TSOS
             var zFlagBox  = <HTMLInputElement>document.getElementById("zFlag");
             var memoryBox = <HTMLInputElement>document.getElementById("memory");
 
-            /* INCOMPLETE
-            if (this.isExecuting == true)
-            {
-                if(_ReadyQueue.isEmpty())
-                    this.isExecuting = false;
-                else
-                {
-                    _ReadyQueue.dequeue();
-                    
-                }
-            }
-            */
+            
+
+
 
             if(_IndexOfProgramToRun == 0)
                 _CurrentPartition = 0;
@@ -179,7 +170,7 @@ module TSOS
 
             }
             
-
+            //_CPUScheduler.ticks++;
         }
 
 
@@ -252,7 +243,7 @@ module TSOS
         public brk(): void
         {
             this.isExecuting = false;
-            
+
             var dequeuedPCB = _ReadyQueue.dequeue();
             _Memory.wipePartition(_MemoryManager.partitionOfProgram(dequeuedPCB.pid));
             _MemoryManager.wipePartition(_MemoryManager.partitionOfProgram(dequeuedPCB.pid));

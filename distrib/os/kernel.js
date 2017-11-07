@@ -2,6 +2,7 @@
 ///<reference path="../utils.ts" />
 ///<reference path="queue.ts" />
 ///<reference path="memoryManager.ts" />
+///<reference path="CPUScheduler.ts" />
 /* ------------
      Kernel.ts
 
@@ -27,8 +28,9 @@ var TSOS;
             _KernelInterruptQueue = new TSOS.Queue(); // A (currently) non-priority queue for interrupt requests (IRQs).
             _KernelBuffers = new Array(); // Buffers... for the kernel.
             _KernelInputQueue = new TSOS.Queue(); // Where device input lands before being processed out somewhere.
-            //_ResidentQueue = new Queue();		  // Where programs go when loaded
-            //_ReadyQueue = new Queue();			  // Where programs go when ran
+            _ReadyQueue = new TSOS.Queue();
+            _ResidentList = [];
+            _CPUScheduler = new TSOS.CPUScheduler();
             //Initialize Memory Manager
             _MemoryManager = new TSOS.MemoryManager();
             // Initialize the console.

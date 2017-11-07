@@ -30,8 +30,6 @@ var TSOS;
         }
         Control.hostInit = function () {
             // This is called from index.html's onLoad event via the onDocumentLoad function pointer.
-            _ResidentList = [];
-            _ReadyQueue = new TSOS.Queue();
             //Initialize Memory
             _memTest = new TSOS.Memory();
             _Memory = new TSOS.Memory();

@@ -49,18 +49,6 @@ var TSOS;
             var yRegBox = document.getElementById("yReg");
             var zFlagBox = document.getElementById("zFlag");
             var memoryBox = document.getElementById("memory");
-            /* INCOMPLETE
-            if (this.isExecuting == true)
-            {
-                if(_ReadyQueue.isEmpty())
-                    this.isExecuting = false;
-                else
-                {
-                    _ReadyQueue.dequeue();
-                    
-                }
-            }
-            */
             if (_IndexOfProgramToRun == 0)
                 _CurrentPartition = 0;
             else if (_IndexOfProgramToRun == 256)
@@ -139,6 +127,7 @@ var TSOS;
                 TSOS.Utils.updateMemory();
                 TSOS.Utils.updateProcesses();
             }
+            //_CPUScheduler.ticks++;
         };
         Cpu.prototype.ldaC = function (constant) {
             this.PC += 2;
