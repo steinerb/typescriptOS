@@ -32,6 +32,7 @@ var COMMAND_NAMES = [
     "quantum",
     "load",
     "run",
+    "runall",
     "status",
     "bsod",
     "test"

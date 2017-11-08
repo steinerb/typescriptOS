@@ -126,7 +126,13 @@ module TSOS
             // run
             sc = new ShellCommand(this.shellRun,
                                   "run",
-                                  "<pid> - Runs a program in memory with an id.");
+                                  "<pid> - Runs a loaded program with an id.");
+            this.commandList[this.commandList.length] = sc;
+
+            // runall
+            sc = new ShellCommand(this.shellRunAll,
+                                  "runall",
+                                  "- Runs all loaded programs.");
             this.commandList[this.commandList.length] = sc;
 
             // status
@@ -399,6 +405,10 @@ module TSOS
                     case "run":
                         _StdOut.putText("Runs a program loaded into the resident list.");
                         break;
+                    //runall
+                    case "runall":
+                        _StdOut.putText("Runs all programs loaded into the resident list.");
+                        break;
                     //status
                     case "status":
                         _StdOut.putText("Status relays a message to the user.");
@@ -639,7 +649,23 @@ module TSOS
 				
         	}
 
- 
+        }
+
+        public shellRunAll(args)
+        {
+        	var currentPCB: TSOS.Pcb;
+        	//add all programs from resident list to ready queue
+        	for(var i = 0; i < _ResidentList.length; i++)
+        	{
+        		currentPCB = _ResidentList[i];
+        		_ReadyQueue.enqueue(currentPCB);
+        	}
+
+        	_ResidentList = [];
+
+        	Utils.updateProcesses();
+
+        	_CPU.isExecuting = true;
         }
 
         public shellStatus(args) 

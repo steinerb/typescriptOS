@@ -37,6 +37,7 @@ const COMMAND_NAMES: string[] =
 	"quantum",
 	"load",
 	"run",
+	"runall",
 	"status",
 	"bsod",
 	"test"

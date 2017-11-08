@@ -70,7 +70,10 @@ var TSOS;
             sc = new TSOS.ShellCommand(this.shellLoad, "load", "- Validates the program input.");
             this.commandList[this.commandList.length] = sc;
             // run
-            sc = new TSOS.ShellCommand(this.shellRun, "run", "<pid> - Runs a program in memory with an id.");
+            sc = new TSOS.ShellCommand(this.shellRun, "run", "<pid> - Runs a loaded program with an id.");
+            this.commandList[this.commandList.length] = sc;
+            // runall
+            sc = new TSOS.ShellCommand(this.shellRunAll, "runall", "- Runs all loaded programs.");
             this.commandList[this.commandList.length] = sc;
             // status
             sc = new TSOS.ShellCommand(this.shellStatus, "status", "<string> - Prints a message in the task bar.");
@@ -285,6 +288,10 @@ var TSOS;
                     case "run":
                         _StdOut.putText("Runs a program loaded into the resident list.");
                         break;
+                    //runall
+                    case "runall":
+                        _StdOut.putText("Runs all programs loaded into the resident list.");
+                        break;
                     //status
                     case "status":
                         _StdOut.putText("Status relays a message to the user.");
@@ -465,6 +472,17 @@ var TSOS;
                 TSOS.Utils.updateProcesses();
                 _CPU.isExecuting = true;
             }
+        };
+        Shell.prototype.shellRunAll = function (args) {
+            var currentPCB;
+            //add all programs from resident list to ready queue
+            for (var i = 0; i < _ResidentList.length; i++) {
+                currentPCB = _ResidentList[i];
+                _ReadyQueue.enqueue(currentPCB);
+            }
+            _ResidentList = [];
+            TSOS.Utils.updateProcesses();
+            _CPU.isExecuting = true;
         };
         Shell.prototype.shellStatus = function (args) {
             var statusBox = document.getElementById("status");
