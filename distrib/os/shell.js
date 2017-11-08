@@ -414,7 +414,7 @@ var TSOS;
                     _NextAvailableIndex = 0;
                     //add new PCB to Resident List to be called
                     var newBase = _MemoryManager.nextAvailablePartition() * 256;
-                    var newLimit = (_MemoryManager.nextAvailablePartition() + 1) * 256;
+                    var newLimit = newBase + 255;
                     _ResidentList.push(new TSOS.Pcb("NEW", _NextAvailablePID, 0, 0, 0, 0, 0, newBase, newLimit));
                     //now save Program ID for later calling and update Memory Manager 
                     _MemoryManager.fillPartition(_NextAvailablePID);
