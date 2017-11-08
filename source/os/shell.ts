@@ -111,6 +111,12 @@ module TSOS
                                   "- Clears memory.");
             this.commandList[this.commandList.length] = sc;
 
+            // quantum
+            sc = new ShellCommand(this.shellQuantum,
+                                  "quantum",
+                                  "<int> - How many CPU cycles per program.");
+            this.commandList[this.commandList.length] = sc;
+
             // load
             sc = new ShellCommand(this.shellLoad,
                                   "load",
@@ -377,9 +383,13 @@ module TSOS
                     case "whereami":
                         _StdOut.putText("Whereami helps you find where you are.");
                         break;
-                    //load
+                    //clearmem
                     case "clearmem":
-                        _StdOut.putText("Clears all memory.");
+                        _StdOut.putText("Clears all partitions.");
+                        break;
+                    //quantum
+                    case "quantum":
+                        _StdOut.putText("How many cycles a cpu will spend on a program before changing.");
                         break;
                     //load
                     case "load":
@@ -387,7 +397,7 @@ module TSOS
                         break;
                     //run
                     case "run":
-                        _StdOut.putText("desc of run");
+                        _StdOut.putText("Runs a program loaded into the resident list.");
                         break;
                     //status
                     case "status":
@@ -522,16 +532,23 @@ module TSOS
 
         public shellClearMem(args)
         {
-        	_ResidentList = [];
-        	_ReadyQueue = new Queue();
-
         	_Memory.wipe();
         	_MemoryManager.init();
 
-        	_ResidentList = [];
-        	_ReadyQueue = new Queue();
-
         	Utils.updateMemory();
+        }
+
+        public shellQuantum(args)
+        {
+        	var desiredQuantum: number = args[0];
+        	var oldQuantum: number = _CPUScheduler.quantum;
+        	if(desiredQuantum > 0)
+        	{
+        		_CPUScheduler.quantum = desiredQuantum;
+        		_StdOut.putText("Quantum changed from "+String(oldQuantum)+" to "+String(desiredQuantum)+".");
+        	}
+        	else
+        		_StdOut.putText("Invalid Quantum; Quantum not set.");
         }
 
         public shellLoad(args) 
@@ -665,15 +682,7 @@ module TSOS
         	loadBox.value = "A9 03 8D 41 00 A9 01 8D 40 00 AC 40 00 A2 01 FF EE 40 00 AE 40 00 EC 41 00 D0 EF A9 44 8D 42 00 A9 4F 8D 43 00 A9 4E 8D 44 00 A9 45 8D 45 00 A9 00 8D 46 00 A2 02 A0 42 FF 00";
 
 
-        	/*
-        	_StdOut.putText("THE FOLLOWING WON'T WORK UNTIL 256 BYTE PARTITIONS ARE MADE!");
-        	_StdOut.advanceLine();
-        	_StdOut.putText("index of program 1:   "+String(_MemoryManager.indexOfProgram(1)));
-        	_StdOut.advanceLine();
-        	_StdOut.putText("program at index 256: "+String(_MemoryManager.programAtIndex(256)));
-        	_StdOut.advanceLine();
-        	_StdOut.putText("has space: "+String(_MemoryManager.hasSpace()));
-			*/
+        	_StdOut.putText("Current Quantum: "+String(_CPUScheduler.quantum));
 
 			Utils.updateProcesses();
 			Utils.updateMemory();

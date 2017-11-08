@@ -29,6 +29,7 @@ var COMMAND_NAMES = [
     "date",
     "whereami",
     "clearmem",
+    "quantum",
     "load",
     "run",
     "status",
