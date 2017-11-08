@@ -38,6 +38,8 @@ const COMMAND_NAMES: string[] =
 	"load",
 	"run",
 	"runall",
+	"ps",
+	"kill",
 	"status",
 	"bsod",
 	"test"

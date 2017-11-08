@@ -33,6 +33,8 @@ var COMMAND_NAMES = [
     "load",
     "run",
     "runall",
+    "ps",
+    "kill",
     "status",
     "bsod",
     "test"

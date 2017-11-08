@@ -75,6 +75,12 @@ var TSOS;
             // runall
             sc = new TSOS.ShellCommand(this.shellRunAll, "runall", "- Runs all loaded programs.");
             this.commandList[this.commandList.length] = sc;
+            // ps
+            sc = new TSOS.ShellCommand(this.shellPs, "ps", "- Displays all active process pids.");
+            this.commandList[this.commandList.length] = sc;
+            // kill
+            sc = new TSOS.ShellCommand(this.shellKill, "kill", "- <pid> Terminates an active process.");
+            this.commandList[this.commandList.length] = sc;
             // status
             sc = new TSOS.ShellCommand(this.shellStatus, "status", "<string> - Prints a message in the task bar.");
             this.commandList[this.commandList.length] = sc;
@@ -292,6 +298,14 @@ var TSOS;
                     case "runall":
                         _StdOut.putText("Runs all programs loaded into the resident list.");
                         break;
+                    //ps
+                    case "ps":
+                        _StdOut.putText("Shows all program ids in the ready queue.");
+                        break;
+                    //kill
+                    case "kill":
+                        _StdOut.putText("Kills a program.");
+                        break;
                     //status
                     case "status":
                         _StdOut.putText("Status relays a message to the user.");
@@ -483,6 +497,23 @@ var TSOS;
             _ResidentList = [];
             TSOS.Utils.updateProcesses();
             _CPU.isExecuting = true;
+        };
+        Shell.prototype.shellPs = function (args) {
+            if (_ReadyQueue.isEmpty())
+                _StdOut("No active processes.");
+            else {
+                var currentPID;
+                for (var i = 0; i < _ReadyQueue.getSize() - 1; i++) {
+                    currentPID = _ReadyQueue.q[i].pid;
+                    _StdOut.putText(String(currentPID) + ", ");
+                }
+                _StdOut.putText(String(_ReadyQueue.q[_ReadyQueue.getSize() - 1].pid));
+            }
+        };
+        Shell.prototype.shellKill = function (args) {
+            var desiredPID = args[0];
+            _ReadyQueue.q.filter(function (pcb) { return pcb.pid != desiredPID; });
+            TSOS.Utils.updateProcesses();
         };
         Shell.prototype.shellStatus = function (args) {
             var statusBox = document.getElementById("status");

@@ -135,6 +135,18 @@ module TSOS
                                   "- Runs all loaded programs.");
             this.commandList[this.commandList.length] = sc;
 
+            // ps
+            sc = new ShellCommand(this.shellPs,
+                                  "ps",
+                                  "- Displays all active process pids.");
+            this.commandList[this.commandList.length] = sc;
+
+            // kill
+            sc = new ShellCommand(this.shellKill,
+                                  "kill",
+                                  "- <pid> Terminates an active process.");
+            this.commandList[this.commandList.length] = sc;
+
             // status
             sc = new ShellCommand(this.shellStatus,
                                   "status",
@@ -409,6 +421,14 @@ module TSOS
                     case "runall":
                         _StdOut.putText("Runs all programs loaded into the resident list.");
                         break;
+                    //ps
+                    case "ps":
+                        _StdOut.putText("Shows all program ids in the ready queue.");
+                        break;
+                    //kill
+                    case "kill":
+                        _StdOut.putText("Kills a program.");
+                        break;
                     //status
                     case "status":
                         _StdOut.putText("Status relays a message to the user.");
@@ -666,6 +686,29 @@ module TSOS
         	Utils.updateProcesses();
 
         	_CPU.isExecuting = true;
+        }
+
+        public shellPs(args)
+        {
+        	if(_ReadyQueue.isEmpty())
+        		_StdOut("No active processes.");
+        	else
+        	{
+        		var currentPID: number;
+        		for(var i = 0; i < _ReadyQueue.getSize()-1; i++)
+        		{
+        			currentPID = _ReadyQueue.q[i].pid;
+        			_StdOut.putText(String(currentPID)+", ");
+        		}
+        		_StdOut.putText(String(_ReadyQueue.q[_ReadyQueue.getSize()-1].pid));
+        	}
+        }
+
+        public shellKill(args)
+        {
+        	var desiredPID: number = args[0];
+        	_ReadyQueue.q.filter(function(pcb){return pcb.pid != desiredPID;});
+        	Utils.updateProcesses();
         }
 
         public shellStatus(args) 
