@@ -10,7 +10,9 @@ module TSOS
 					public Acc: number,
                     public Xreg: number,
                     public Yreg: number,
-                    public Zflag: number
+                    public Zflag: number,
+                    public base: number,
+                    public limit: number
 				   )
 		{
 			this.state = state;
@@ -20,6 +22,8 @@ module TSOS
 			this.Xreg = Xreg;
 			this.Yreg = Yreg;
 			this.Zflag = Zflag;
+			this.base = base;
+			this.limit = limit;
 		}
 
 		public helloWorld(): void

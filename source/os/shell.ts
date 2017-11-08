@@ -566,7 +566,9 @@ module TSOS
 	            	_NextAvailableIndex = 0;
 
 	            	//add new PCB to Resident List to be called
-	            	_ResidentList.push(new Pcb("NEW", _NextAvailablePID, 0, 0, 0, 0, 0));
+	            	var newBase = _MemoryManager.nextAvailablePartition()*256;
+	            	var newLimit = (_MemoryManager.nextAvailablePartition()+1)*256;
+	            	_ResidentList.push(new Pcb("NEW", _NextAvailablePID, 0, 0, 0, 0, 0, newBase, newLimit));
 
 	            	//now save Program ID for later calling and update Memory Manager 
 					_MemoryManager.fillPartition(_NextAvailablePID);
@@ -614,7 +616,6 @@ module TSOS
 
 				Utils.updateProcesses();
         		
-        		_IndexOfProgramToRun = programIndex;
 				_CPU.isExecuting = true;
 				
         	}

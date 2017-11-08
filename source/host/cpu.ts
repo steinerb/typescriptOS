@@ -61,6 +61,7 @@ module TSOS
 			//fetch data from current pcb for cpu			
 			var currentPCB: TSOS.Pcb;
 			var currentPID: number;
+			var currentBase: number;
 
 			currentPCB = _ReadyQueue.q[0];
 			currentPID 		= currentPCB.pid;
@@ -69,25 +70,26 @@ module TSOS
 			this.Xreg 		= currentPCB.Xreg;
 			this.Yreg 		= currentPCB.Yreg;
 			this.Zflag 		= currentPCB.Zflag;
+			currentBase 	= currentPCB.base;
 
 			//set state as running and update display
 			_ReadyQueue.q[0].state = "RUNNING";
 			Utils.updateProcesses();
 			
 			//get current partition number
-			if(_IndexOfProgramToRun == 0)
+			if(currentBase == 0)
 				_CurrentPartition = 0;
-			else if (_IndexOfProgramToRun == 256)
+			else if (currentBase == 256)
 				_CurrentPartition = 1;
-			else if (_IndexOfProgramToRun == 512)
+			else if (currentBase == 512)
 				_CurrentPartition = 2;
 
 
 			//get indexes for current op code and parameters
-			var indexNextOp: number = _IndexOfProgramToRun+this.PC+1;
-			var indexTwoOps: number = _IndexOfProgramToRun+this.PC+2;
+			var indexNextOp: number = currentBase+this.PC+1;
+			var indexTwoOps: number = currentBase+this.PC+2;
 
-			var currentOp: number = _Memory.registers[_IndexOfProgramToRun+this.PC];
+			var currentOp: number = _Memory.registers[currentBase+this.PC];
 
 			var paramForConstant: number = _Memory.registers[indexNextOp];
 
@@ -190,7 +192,7 @@ module TSOS
 
 			    //CONTEXT SWITCH
 			    var dequeuedPCB: TSOS.Pcb = _ReadyQueue.dequeue();
-			    _ReadyQueue.enqueue(new Pcb("WAITING", dequeuedPCB.pid, this.PC, this.Acc, this.Xreg, this.Yreg, this.Zflag));
+			    _ReadyQueue.enqueue(new Pcb("WAITING", dequeuedPCB.pid, this.PC, this.Acc, this.Xreg, this.Yreg, this.Zflag, dequeuedPCB.base, dequeuedPCB.limit));
 
 			    //reset ticks for new round robin cycle
 		   		_CPUScheduler.ticks = 0; 
