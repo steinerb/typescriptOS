@@ -52,7 +52,7 @@ module TSOS
 
         public wipePartition(parNum): void
         {
-            for(var i = (parNum*256); i < 256; i++)
+            for(var i = (parNum*256); i < ((parNum+1)*256); i++)
                 _Memory.registers[i] = undefined;
         }
 
