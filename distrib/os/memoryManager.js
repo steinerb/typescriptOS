@@ -34,11 +34,11 @@ var TSOS;
             this.pidPartitions[parNum] = undefined;
         };
         MemoryManager.prototype.indexOfProgram = function (pid) {
-            var current;
-            for (var i = 0; i < this.numPartitions(); i++) {
-                current = this.pidPartitions[i];
-                if (current == pid)
-                    return current * this.parLength;
+            var currentPID;
+            for (var currentPar = 0; currentPar < this.numPartitions(); currentPar++) {
+                currentPID = this.pidPartitions[currentPar];
+                if (currentPID == pid)
+                    return currentPar * this.parLength;
             }
             return -1;
         };
@@ -56,7 +56,8 @@ var TSOS;
             for (var currentPartition = 0; currentPartition < this.numPartitions(); currentPartition++) {
                 currentIndex = currentPartition * this.parLength;
                 if ((currentIndex == desiredIndex) && ((typeof this.pidPartitions[currentPartition]) != 'undefined'))
-                    return this.pidPartitions[currentIndex];
+                    //return this.pidPartitions[currentIndex];
+                    return this.pidPartitions[currentPartition];
             }
             return -1;
         };

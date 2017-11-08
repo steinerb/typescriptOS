@@ -51,12 +51,12 @@ module TSOS
 
 		public indexOfProgram(pid: number): number
 		{
-			var current;
-			for (var i = 0; i < this.numPartitions(); i++)
+			var currentPID;
+			for (var currentPar = 0; currentPar < this.numPartitions(); currentPar++)
 			{
-				current = this.pidPartitions[i];
-				if (current == pid)
-					return current*this.parLength;
+				currentPID = this.pidPartitions[currentPar];
+				if (currentPID == pid)
+					return currentPar*this.parLength;
 			}
 
 			return -1;
@@ -82,7 +82,8 @@ module TSOS
 			{
 				currentIndex = currentPartition*this.parLength;
 				if((currentIndex == desiredIndex) && ((typeof this.pidPartitions[currentPartition]) != 'undefined'))
-					return this.pidPartitions[currentIndex];
+					//return this.pidPartitions[currentIndex];
+					return this.pidPartitions[currentPartition];
 			}
 
 			return -1;

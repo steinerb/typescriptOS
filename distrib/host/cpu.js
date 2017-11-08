@@ -127,6 +127,8 @@ var TSOS;
             }
             //check if break (00) was reached/program is finished
             if (this.isExecuting == false) {
+                //if program is finished, reset CPU
+                _CPU.init();
                 //if program is finished, pop it off the queue
                 var dequeuedPCB = _ReadyQueue.dequeue();
                 //if program is finished, remove it from memory
