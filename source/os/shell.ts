@@ -517,7 +517,7 @@ module TSOS
 
         public shellWhereAmI(args) 
         {
-            _StdOut.putText("[A better answer coming soon!]");
+            _StdOut.putText("At the computer.");
         }
 
         public shellClearMem(args)
@@ -542,6 +542,8 @@ module TSOS
             if (!Utils.isValidHexString(dataSTR))
             	_StdOut.putText("Invalid input; failed to load program.");
             //test if input is too long
+            else if (input.value.toLowerCase().split(" ").length > 256)
+           		_StdOut.putText("Input over 256 bytes; failed to load program.");
             //else if (dataSTR)
             else
             {

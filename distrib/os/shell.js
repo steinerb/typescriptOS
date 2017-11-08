@@ -379,7 +379,7 @@ var TSOS;
                 _StdOut.putText(String(nowHours) + ':' + nowMinutesStr + "am   " + String(nowMonth) + "/" + String(nowDate) + "/" + String(nowYear));
         };
         Shell.prototype.shellWhereAmI = function (args) {
-            _StdOut.putText("[A better answer coming soon!]");
+            _StdOut.putText("At the computer.");
         };
         Shell.prototype.shellClearMem = function (args) {
             _ResidentList = [];
@@ -396,6 +396,8 @@ var TSOS;
             //test to make sure characters are valid and spacing is proper
             if (!TSOS.Utils.isValidHexString(dataSTR))
                 _StdOut.putText("Invalid input; failed to load program.");
+            else if (input.value.toLowerCase().split(" ").length > 256)
+                _StdOut.putText("Input over 256 bytes; failed to load program.");
             else {
                 //test if any partitions are empty
                 if (_MemoryManager.hasSpace()) {
