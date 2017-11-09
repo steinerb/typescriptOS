@@ -512,7 +512,12 @@ var TSOS;
         };
         Shell.prototype.shellKill = function (args) {
             var desiredPID = args[0];
-            _ReadyQueue.q.filter(function (pcb) { return pcb.pid != desiredPID; });
+            if (_ReadyQueue.q[0].pid == desiredPID) {
+                _ReadyQueue.dequeue();
+                _CPUScheduler.ticks = 0;
+            }
+            else
+                _ReadyQueue.q.filter(function (pcb) { return pcb.pid != desiredPID; });
             TSOS.Utils.updateProcesses();
         };
         Shell.prototype.shellStatus = function (args) {
