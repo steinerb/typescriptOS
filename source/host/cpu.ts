@@ -58,6 +58,9 @@ module TSOS
 			var processesBox      = <HTMLInputElement>document.getElementById("readyPCBs");
 
 
+			//enforce quanta and potentially context switch
+
+
 			//fetch data from current pcb for cpu			
 			var currentPCB: TSOS.Pcb;
 			var currentPID: number;
@@ -157,7 +160,7 @@ module TSOS
 
 				   //error: op code not recognized
 				default:
-					_Kernel.krnTrapError("Invalid op code: "+currentOp.toString(16).toUpperCase());
+					_Kernel.krnTrapError("Invalid op code: "+currentOp.toString(16).toUpperCase()+" in program "+String(currentPID));
 			}
 
 
@@ -192,7 +195,7 @@ module TSOS
 
 			    //CONTEXT SWITCH
 			    var dequeuedPCB: TSOS.Pcb = _ReadyQueue.dequeue();
-			    _ReadyQueue.enqueue(new Pcb("WAITING", dequeuedPCB.pid, this.PC, this.Acc, this.Xreg, this.Yreg, this.Zflag, dequeuedPCB.base, dequeuedPCB.limit));
+			    _ReadyQueue.enqueue(new Pcb("WAITING", dequeuedPCB.pid, dequeuedPCB.PC, dequeuedPCB.Acc, dequeuedPCB.Xreg, dequeuedPCB.Yreg, dequeuedPCB.Zflag, dequeuedPCB.base, dequeuedPCB.limit));
 
 			    //reset ticks for new round robin cycle
 		   		_CPUScheduler.ticks = 0; 

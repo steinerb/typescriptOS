@@ -51,6 +51,7 @@ var TSOS;
             var zFlagBox = document.getElementById("zFlag");
             var memoryBox = document.getElementById("memory");
             var processesBox = document.getElementById("readyPCBs");
+            //enforce quanta and potentially context switch
             //fetch data from current pcb for cpu			
             var currentPCB;
             var currentPID;
@@ -125,7 +126,7 @@ var TSOS;
                     break;
                 //error: op code not recognized
                 default:
-                    _Kernel.krnTrapError("Invalid op code: " + currentOp.toString(16).toUpperCase());
+                    _Kernel.krnTrapError("Invalid op code: " + currentOp.toString(16).toUpperCase() + " in program " + String(currentPID));
             }
             //check if break (00) was reached/program is finished
             if (this.isExecuting == false) {
@@ -151,7 +152,7 @@ var TSOS;
                 _ReadyQueue.q[0].Zflag = this.Zflag;
                 //CONTEXT SWITCH
                 var dequeuedPCB = _ReadyQueue.dequeue();
-                _ReadyQueue.enqueue(new TSOS.Pcb("WAITING", dequeuedPCB.pid, this.PC, this.Acc, this.Xreg, this.Yreg, this.Zflag, dequeuedPCB.base, dequeuedPCB.limit));
+                _ReadyQueue.enqueue(new TSOS.Pcb("WAITING", dequeuedPCB.pid, dequeuedPCB.PC, dequeuedPCB.Acc, dequeuedPCB.Xreg, dequeuedPCB.Yreg, dequeuedPCB.Zflag, dequeuedPCB.base, dequeuedPCB.limit));
                 //reset ticks for new round robin cycle
                 _CPUScheduler.ticks = 0;
             }
