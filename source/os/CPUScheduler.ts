@@ -1,17 +1,29 @@
+///<reference path="../globals.ts" />
+///<reference path="pcb.ts" />
+
+
 module TSOS
 {
 	export class CPUScheduler
 	{
-		constructor(public ticks = 1,
-					public quantum = 6
+		constructor(public quantum = 6
 					)
 		{}
 
-		public quantumCyclesReached(): boolean
+		public contextSwitch(): void
 		{
-			if(((this.ticks%this.quantum) == 0) && (this.ticks > 0))
-				return true;
-			return false;
+			var dequeuedPCB: TSOS.Pcb = _ReadyQueue.dequeue();
+            _ReadyQueue.enqueue(new Pcb("WAITING", 
+            							dequeuedPCB.pid, 
+            							dequeuedPCB.PC, 
+            							dequeuedPCB.Acc, 
+            							dequeuedPCB.Xreg, 
+            							dequeuedPCB.Yreg, 
+            							dequeuedPCB.Zflag, 
+            							dequeuedPCB.base, 
+            							dequeuedPCB.limit)
+            					);
 		}
+		
 	}
 }

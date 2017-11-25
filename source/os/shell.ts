@@ -710,7 +710,7 @@ module TSOS
         	if(_ReadyQueue.q[0].pid == desiredPID)
         	{
         		_ReadyQueue.dequeue();
-        		_CPUScheduler.ticks = 0;
+        		_CPU.ticks = 0;
         	}
         	else
         		_ReadyQueue.q.filter(function(pcb){return pcb.pid != desiredPID;});

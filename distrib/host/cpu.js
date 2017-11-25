@@ -1,6 +1,6 @@
 ///<reference path="../globals.ts" />
 ///<reference path="../utils.ts" />
-///<reference path="../os/pcb.ts" />
+///<reference path="../os/interrupt.ts" />
 /* ------------
      CPU.ts
 
@@ -18,18 +18,20 @@
 var TSOS;
 (function (TSOS) {
     var Cpu = (function () {
-        function Cpu(PC, Acc, Xreg, Yreg, Zflag, isExecuting) {
+        function Cpu(PC, Acc, Xreg, Yreg, Zflag, ticks, isExecuting) {
             if (PC === void 0) { PC = 0; }
             if (Acc === void 0) { Acc = 0; }
             if (Xreg === void 0) { Xreg = 0; }
             if (Yreg === void 0) { Yreg = 0; }
             if (Zflag === void 0) { Zflag = 0; }
+            if (ticks === void 0) { ticks = 0; }
             if (isExecuting === void 0) { isExecuting = false; }
             this.PC = PC;
             this.Acc = Acc;
             this.Xreg = Xreg;
             this.Yreg = Yreg;
             this.Zflag = Zflag;
+            this.ticks = ticks;
             this.isExecuting = isExecuting;
         }
         Cpu.prototype.init = function () {
@@ -38,6 +40,7 @@ var TSOS;
             this.Xreg = 0;
             this.Yreg = 0;
             this.Zflag = 0;
+            this.ticks = 0;
             this.isExecuting = false;
         };
         Cpu.prototype.cycle = function () {
@@ -138,23 +141,25 @@ var TSOS;
                 _Memory.wipePartition(_MemoryManager.partitionOfProgram(dequeuedPCB.pid));
                 _MemoryManager.wipePartition(_MemoryManager.partitionOfProgram(dequeuedPCB.pid));
                 //reset ticks for new round robin cycle
-                _CPUScheduler.ticks = 0;
+                this.ticks = 0;
                 //check if there are remaining programs and should keep going
                 if (_ReadyQueue.getSize() > 0)
                     this.isExecuting = true;
             }
-            else if (_CPUScheduler.quantumCyclesReached() && (_ReadyQueue.getSize() > 1)) {
+            else if ((this.ticks == _CPUScheduler.quantum)) {
                 //update current PCB
                 _ReadyQueue.q[0].PC = this.PC;
                 _ReadyQueue.q[0].Acc = this.Acc;
                 _ReadyQueue.q[0].Xreg = this.Xreg;
                 _ReadyQueue.q[0].Yreg = this.Yreg;
                 _ReadyQueue.q[0].Zflag = this.Zflag;
-                //CONTEXT SWITCH
-                var dequeuedPCB = _ReadyQueue.dequeue();
-                _ReadyQueue.enqueue(new TSOS.Pcb("WAITING", dequeuedPCB.pid, dequeuedPCB.PC, dequeuedPCB.Acc, dequeuedPCB.Xreg, dequeuedPCB.Yreg, dequeuedPCB.Zflag, dequeuedPCB.base, dequeuedPCB.limit));
+                //software interrupt (new context switch)
+                _KernelInterruptQueue.enqueue(new TSOS.Interrupt(TIMER_IRQ, 0));
+                //(old context switch)
+                //var dequeuedPCB: TSOS.Pcb = _ReadyQueue.dequeue();
+                //_ReadyQueue.enqueue(new Pcb("WAITING", dequeuedPCB.pid, dequeuedPCB.PC, dequeuedPCB.Acc, dequeuedPCB.Xreg, dequeuedPCB.Yreg, dequeuedPCB.Zflag, dequeuedPCB.base, dequeuedPCB.limit));
                 //reset ticks for new round robin cycle
-                _CPUScheduler.ticks = 0;
+                this.ticks = 0;
             }
             else {
                 //update current PCB
@@ -184,7 +189,7 @@ var TSOS;
             //update memory display
             TSOS.Utils.updateMemory();
             //tick up
-            _CPUScheduler.ticks++;
+            this.ticks++;
         };
         Cpu.prototype.ldaC = function (constant) {
             this.PC += 2;

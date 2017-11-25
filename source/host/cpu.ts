@@ -1,7 +1,8 @@
 ///<reference path="../globals.ts" />
 ///<reference path="../utils.ts" />
 
-///<reference path="../os/pcb.ts" />
+///<reference path="../os/interrupt.ts" />
+
 
 /* ------------
 	 CPU.ts
@@ -29,6 +30,7 @@ module TSOS
 					public Xreg: number = 0,
 					public Yreg: number = 0,
 					public Zflag: number = 0,
+					public ticks: number = 0,
 					public isExecuting: boolean = false) 
 		{/*leave this empty*/}
 
@@ -39,6 +41,7 @@ module TSOS
 			this.Xreg = 0;
 			this.Yreg = 0;
 			this.Zflag = 0;
+			this.ticks = 0;
 			this.isExecuting = false;
 		}
 
@@ -178,13 +181,14 @@ module TSOS
 				_MemoryManager.wipePartition(_MemoryManager.partitionOfProgram(dequeuedPCB.pid));
 		   		
 		   		//reset ticks for new round robin cycle
-		   		_CPUScheduler.ticks = 0;
+		   		this.ticks = 0;
 		   		//check if there are remaining programs and should keep going
 		   		if(_ReadyQueue.getSize() > 0)
 		   			this.isExecuting = true;
 		   }
 		   //check if quantum is reached and if there are other programs waiting
-		   else if(_CPUScheduler.quantumCyclesReached() && (_ReadyQueue.getSize() > 1))
+		   //else if( (this.ticks == _CPUScheduler.quantum) && (_ReadyQueue.getSize() > 1))
+		   else if( (this.ticks == _CPUScheduler.quantum) )
 		   {
 		   		//update current PCB
 		   	    _ReadyQueue.q[0].PC		= this.PC;
@@ -193,14 +197,17 @@ module TSOS
 			    _ReadyQueue.q[0].Yreg	= this.Yreg;
 			    _ReadyQueue.q[0].Zflag	= this.Zflag;
 
-			    //CONTEXT SWITCH
-			    var dequeuedPCB: TSOS.Pcb = _ReadyQueue.dequeue();
-			    _ReadyQueue.enqueue(new Pcb("WAITING", dequeuedPCB.pid, dequeuedPCB.PC, dequeuedPCB.Acc, dequeuedPCB.Xreg, dequeuedPCB.Yreg, dequeuedPCB.Zflag, dequeuedPCB.base, dequeuedPCB.limit));
+			    //software interrupt (new context switch)
+			    _KernelInterruptQueue.enqueue(new Interrupt(TIMER_IRQ, 0));
+
+			    //(old context switch)
+			    //var dequeuedPCB: TSOS.Pcb = _ReadyQueue.dequeue();
+			    //_ReadyQueue.enqueue(new Pcb("WAITING", dequeuedPCB.pid, dequeuedPCB.PC, dequeuedPCB.Acc, dequeuedPCB.Xreg, dequeuedPCB.Yreg, dequeuedPCB.Zflag, dequeuedPCB.base, dequeuedPCB.limit));
 
 			    //reset ticks for new round robin cycle
-		   		_CPUScheduler.ticks = 0; 
+		   		this.ticks = 0; 
 		   }
-		   //program isn't finished and has more cycles to go before quantum reached
+		   //program isn't finished and has more cycles to go before quanta reached
 		   else
 		   {
 		   		//update current PCB
@@ -239,7 +246,7 @@ module TSOS
 		   Utils.updateMemory();
 		   
 		   //tick up
-		   _CPUScheduler.ticks++;
+		   this.ticks++;
 		}
 
 

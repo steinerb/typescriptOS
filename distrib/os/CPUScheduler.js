@@ -1,16 +1,15 @@
+///<reference path="../globals.ts" />
+///<reference path="pcb.ts" />
 var TSOS;
 (function (TSOS) {
     var CPUScheduler = (function () {
-        function CPUScheduler(ticks, quantum) {
-            if (ticks === void 0) { ticks = 1; }
+        function CPUScheduler(quantum) {
             if (quantum === void 0) { quantum = 6; }
-            this.ticks = ticks;
             this.quantum = quantum;
         }
-        CPUScheduler.prototype.quantumCyclesReached = function () {
-            if (((this.ticks % this.quantum) == 0) && (this.ticks > 0))
-                return true;
-            return false;
+        CPUScheduler.prototype.contextSwitch = function () {
+            var dequeuedPCB = _ReadyQueue.dequeue();
+            _ReadyQueue.enqueue(new TSOS.Pcb("WAITING", dequeuedPCB.pid, dequeuedPCB.PC, dequeuedPCB.Acc, dequeuedPCB.Xreg, dequeuedPCB.Yreg, dequeuedPCB.Zflag, dequeuedPCB.base, dequeuedPCB.limit));
         };
         return CPUScheduler;
     }());
