@@ -174,25 +174,23 @@ module TSOS
 		   //check if break (00) was reached/program is finished
 		   if(this.isExecuting == false)
 		   {
-		   		//if program is finished, reset CPU
-		   		_CPU.init();
-
 		   		//if program is finished, pop it off the queue
 			   	var dequeuedPCB: TSOS.Pcb = _ReadyQueue.dequeue();
 				
 		   		//if program is finished, remove it from memory
 		   		_Memory.wipePartition(_MemoryManager.partitionOfProgram(dequeuedPCB.pid));
 				_MemoryManager.wipePartition(_MemoryManager.partitionOfProgram(dequeuedPCB.pid));
-		   		
-		   		//reset ticks for new round robin cycle
-		   		this.ticks = 0;
+
+				//reset CPU (also resets ticks)
+		   		_CPU.init();		   		
+
 		   		//check if there are remaining programs and should keep going
 		   		if(_ReadyQueue.getSize() > 0)
 		   			this.isExecuting = true;
 		   }
 		   //check if quantum is reached and if there are other programs waiting
 		   //else if( (this.ticks == _CPUScheduler.quantum) && (_ReadyQueue.getSize() > 1))
-		   else if( (this.ticks == _CPUScheduler.quantum) )
+		   else if(this.ticks == (_CPUScheduler.quantum-1))
 		   {
 		   		//update current PCB
 		   	    _ReadyQueue.q[0].PC		= this.PC;
@@ -216,6 +214,9 @@ module TSOS
 			    _ReadyQueue.q[0].Xreg	= this.Xreg;
 			    _ReadyQueue.q[0].Yreg	= this.Yreg;
 			    _ReadyQueue.q[0].Zflag	= this.Zflag;
+
+			    //tick up
+		   		this.ticks++;
 		   }
 		   
 
@@ -245,8 +246,6 @@ module TSOS
 		   //update memory display
 		   Utils.updateMemory();
 		   
-		   //tick up
-		   this.ticks++;
 		}
 
 
