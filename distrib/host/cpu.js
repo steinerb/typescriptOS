@@ -71,11 +71,11 @@ var TSOS;
             _ReadyQueue.q[0].state = "RUNNING";
             TSOS.Utils.updateProcesses();
             //get current partition number
-            if (currentBase == 0)
+            if (currentBase == _Memory.par1Base)
                 _CurrentPartition = 0;
-            else if (currentBase == 256)
+            else if (currentBase == _Memory.par2Base)
                 _CurrentPartition = 1;
-            else if (currentBase == 512)
+            else if (currentBase == _Memory.par3Base)
                 _CurrentPartition = 2;
             //get indexes for current op code and parameters
             var indexNextOp = currentBase + this.PC + 1;
@@ -153,11 +153,8 @@ var TSOS;
                 _ReadyQueue.q[0].Xreg = this.Xreg;
                 _ReadyQueue.q[0].Yreg = this.Yreg;
                 _ReadyQueue.q[0].Zflag = this.Zflag;
-                //software interrupt (new context switch)
+                //software interrupt (new context switch method)
                 _KernelInterruptQueue.enqueue(new TSOS.Interrupt(TIMER_IRQ, 0));
-                //(old context switch)
-                //var dequeuedPCB: TSOS.Pcb = _ReadyQueue.dequeue();
-                //_ReadyQueue.enqueue(new Pcb("WAITING", dequeuedPCB.pid, dequeuedPCB.PC, dequeuedPCB.Acc, dequeuedPCB.Xreg, dequeuedPCB.Yreg, dequeuedPCB.Zflag, dequeuedPCB.base, dequeuedPCB.limit));
                 //reset ticks for new round robin cycle
                 this.ticks = 0;
             }
