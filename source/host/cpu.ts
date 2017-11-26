@@ -92,9 +92,18 @@ module TSOS
 
 
 			//get indexes for current op code and parameters
+			var indexNextOp: number = this.PC+1;
+			var indexTwoOps: number = this.PC+2;
 
+			var currentOp: number = _Memory.getValueAt(this.PC, _CurrentPartition);
 
+			var paramForConstant: number = _Memory.getValueAt(indexNextOp, _CurrentPartition);
+
+			var paramForLocation: number = 
+				Number("0x"+_Memory.getValueAt(indexTwoOps, _CurrentPartition)+_Memory.getValueAt(indexNextOp, _CurrentPartition));
 			
+
+			/*			
 			var indexNextOp: number = currentBase+this.PC+1;
 			var indexTwoOps: number = currentBase+this.PC+2;
 
@@ -103,7 +112,9 @@ module TSOS
 			var paramForConstant: number = _Memory.registers[indexNextOp];
 
 			var paramForLocation: number = Number("0x"+_Memory.registers[indexTwoOps]+_Memory.registers[indexNextOp]);
-			
+			*/
+
+
 
 		    //process current op code
 			switch(currentOp)

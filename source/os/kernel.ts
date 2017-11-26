@@ -163,8 +163,6 @@ module TSOS {
                 _CPUScheduler.contextSwitch();
             }
                 
-
-
         }
 
         //

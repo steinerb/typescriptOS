@@ -78,11 +78,21 @@ var TSOS;
             else if (currentBase == _Memory.par3Base)
                 _CurrentPartition = 2;
             //get indexes for current op code and parameters
-            var indexNextOp = currentBase + this.PC + 1;
-            var indexTwoOps = currentBase + this.PC + 2;
-            var currentOp = _Memory.registers[currentBase + this.PC];
-            var paramForConstant = _Memory.registers[indexNextOp];
-            var paramForLocation = Number("0x" + _Memory.registers[indexTwoOps] + _Memory.registers[indexNextOp]);
+            var indexNextOp = this.PC + 1;
+            var indexTwoOps = this.PC + 2;
+            var currentOp = _Memory.getValueAt(this.PC, _CurrentPartition);
+            var paramForConstant = _Memory.getValueAt(indexNextOp, _CurrentPartition);
+            var paramForLocation = Number("0x" + _Memory.getValueAt(indexTwoOps, _CurrentPartition) + _Memory.getValueAt(indexNextOp, _CurrentPartition));
+            /*
+            var indexNextOp: number = currentBase+this.PC+1;
+            var indexTwoOps: number = currentBase+this.PC+2;
+
+            var currentOp: number = _Memory.registers[currentBase+this.PC];
+
+            var paramForConstant: number = _Memory.registers[indexNextOp];
+
+            var paramForLocation: number = Number("0x"+_Memory.registers[indexTwoOps]+_Memory.registers[indexNextOp]);
+            */
             //process current op code
             switch (currentOp) {
                 case 0xA9:
