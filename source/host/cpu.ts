@@ -178,7 +178,7 @@ module TSOS
 
 				   //error: op code not recognized
 				default:
-					_Kernel.krnTrapError("Invalid op code: "+currentOp.toString(16).toUpperCase()+" in program "+String(currentPID));
+					_Kernel.krnTrapError("Invalid op code: "+currentOp.toString(16).toUpperCase()+" in program "+String(currentPID)+" with a PC of "+String(this.PC));
 			}
 
 

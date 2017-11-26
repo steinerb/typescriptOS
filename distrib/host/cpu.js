@@ -139,7 +139,7 @@ var TSOS;
                     break;
                 //error: op code not recognized
                 default:
-                    _Kernel.krnTrapError("Invalid op code: " + currentOp.toString(16).toUpperCase() + " in program " + String(currentPID));
+                    _Kernel.krnTrapError("Invalid op code: " + currentOp.toString(16).toUpperCase() + " in program " + String(currentPID) + " with a PC of " + String(this.PC));
             }
             //check if break (00) was reached/program is finished
             if (this.isExecuting == false) {
