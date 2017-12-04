@@ -165,6 +165,17 @@ module TSOS
 
             	var offset = _DrawingContext.measureText(this.currentFont, this.currentFontSize, text);
 
+            	//NEW ATTEMPT TO HANDLE SCROLLING WITH OLD SCROLLING FROM ADVANCE LINE
+            	/*var lineHeight: number = 	_DefaultFontSize + 
+                                     	_DrawingContext.fontDescent(this.currentFont, this.currentFontSize) +
+                                     	_FontHeightMargin;
+	            if (this.currentYPosition >= (500+lineHeight))
+	            {
+	            	//Clear Screen
+	            	_Console.init();
+	            	//Draw last line
+	            }*/
+
             	//handles linewrapping
             	if(offset > 490)
             	{
@@ -210,15 +221,36 @@ module TSOS
              															the new y position
              */
 
+            var lineHeight: number = 	_DefaultFontSize + 
+                                     	_DrawingContext.fontDescent(this.currentFont, this.currentFontSize) +
+                                     	_FontHeightMargin;
 
+            var yPositionToBe: number =	this.currentYPosition + lineHeight;
 
-            this.currentYPosition += _DefaultFontSize + 
-                                     _DrawingContext.fontDescent(this.currentFont, this.currentFontSize) +
-                                     _FontHeightMargin;
-
+            
+            //FOR OLD SCROLLING
+            this.currentYPosition += lineHeight;
+			
             //handles scrolling
-            if (this.currentYPosition > 500)
+
+            //OLD SCROLLING
+            if (this.currentYPosition >= (500+lineHeight))
+            {
+            	//Clear Screen
             	_Console.init();
+            	//Draw last line
+            }
+            
+            
+
+            //NEW TEST SCROLLING
+            //if last line
+            /*if(yPositionToBe > 500)
+            {
+             _Console.init();
+            }*/
+
+            
        
         }
          

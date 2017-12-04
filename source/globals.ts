@@ -20,8 +20,6 @@ const TIMER_IRQ: number = 0;  // Pages 23 (timer), 9 (interrupts), and 561 (inte
                               // NOTE: The timer is different from hardware/host clock pulses. Don't confuse these.
 const KEYBOARD_IRQ: number = 1;
 
-const CONTEXT_SWITCH_IRQ: number = 2;
-
 const COMMAND_NAMES: string[] =
 [
 	"ver",
@@ -52,6 +50,7 @@ const COMMAND_NAMES: string[] =
 // TODO: Make a global object and use that instead of the "_" naming convention in the global namespace.
 //
 
+
 // A list for all idle programs
 var _ResidentList: TSOS.Pcb[];
 var _ReadyQueue: TSOS.Queue;
@@ -61,6 +60,7 @@ var _NextAvailablePID: number = 0;
 var _NextAvailableIndex: number = 0;
 var _IndexOfProgramToRun: number;
 var _CurrentPartition: number;
+
 
 // list of numbers that translate to hex values using von Neumann architecture.
 var _Memory: TSOS.Memory;

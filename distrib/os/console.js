@@ -130,6 +130,16 @@ var TSOS;
             if (text !== "") {
                 //width of > is 24 if that isn't included in the offset
                 var offset = _DrawingContext.measureText(this.currentFont, this.currentFontSize, text);
+                //NEW ATTEMPT TO HANDLE SCROLLING WITH OLD SCROLLING FROM ADVANCE LINE
+                /*var lineHeight: number = 	_DefaultFontSize +
+                                        _DrawingContext.fontDescent(this.currentFont, this.currentFontSize) +
+                                        _FontHeightMargin;
+                if (this.currentYPosition >= (500+lineHeight))
+                {
+                    //Clear Screen
+                    _Console.init();
+                    //Draw last line
+                }*/
                 //handles linewrapping
                 if (offset > 490) {
                     var currentText;
@@ -165,12 +175,25 @@ var TSOS;
              * Font height margin is extra spacing between the lines.						_FontHeightMargin;
                                                                         the new y position
              */
-            this.currentYPosition += _DefaultFontSize +
+            var lineHeight = _DefaultFontSize +
                 _DrawingContext.fontDescent(this.currentFont, this.currentFontSize) +
                 _FontHeightMargin;
+            var yPositionToBe = this.currentYPosition + lineHeight;
+            //FOR OLD SCROLLING
+            this.currentYPosition += lineHeight;
             //handles scrolling
-            if (this.currentYPosition > 500)
+            //OLD SCROLLING
+            if (this.currentYPosition >= (500 + lineHeight)) {
+                //Clear Screen
                 _Console.init();
+                //Draw last line
+            }
+            //NEW TEST SCROLLING
+            //if last line
+            /*if(yPositionToBe > 500)
+            {
+             _Console.init();
+            }*/
         };
         return Console;
     }());
