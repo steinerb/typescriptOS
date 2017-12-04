@@ -199,9 +199,9 @@ module TSOS
 		   		if(_ReadyQueue.getSize() > 0)
 		   			this.isExecuting = true;
 		   }
-		   //check if quantum is reached and if there are other programs waiting
+		   //if round robin, check if quantum is reached and if there are other programs waiting
 		   //else if( (this.ticks == _CPUScheduler.quantum) && (_ReadyQueue.getSize() > 1))
-		   else if(this.ticks == (_CPUScheduler.quantum-1))
+		   else if((_CPUScheduler.schedAlg == "rr") && (this.ticks == (_CPUScheduler.quantum-1)))
 		   {
 		   		//update current PCB
 		   	    _ReadyQueue.q[0].PC		= this.PC;
@@ -216,7 +216,7 @@ module TSOS
 			    //reset ticks for new round robin cycle
 		   		this.ticks = 0; 
 		   }
-		   //program isn't finished and has more cycles to go before quanta reached
+		   //program isn't finished and has more cycles to go before finished or quanta reached
 		   else
 		   {
 		   		//update current PCB
@@ -260,8 +260,7 @@ module TSOS
 		}
 
 
-
-
+		//CPU operations
 
 		public ldaC(constant): void
 		{

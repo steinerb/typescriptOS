@@ -154,7 +154,7 @@ var TSOS;
                 if (_ReadyQueue.getSize() > 0)
                     this.isExecuting = true;
             }
-            else if (this.ticks == (_CPUScheduler.quantum - 1)) {
+            else if ((_CPUScheduler.schedAlg == "rr") && (this.ticks == (_CPUScheduler.quantum - 1))) {
                 //update current PCB
                 _ReadyQueue.q[0].PC = this.PC;
                 _ReadyQueue.q[0].Acc = this.Acc;
@@ -196,6 +196,7 @@ var TSOS;
             //update memory display
             TSOS.Utils.updateMemory();
         };
+        //CPU operations
         Cpu.prototype.ldaC = function (constant) {
             this.PC += 2;
             this.Acc = constant;
