@@ -6,7 +6,8 @@ module TSOS
 {
 	export class CPUScheduler
 	{
-		constructor(public quantum = 6
+		constructor(public quantum = 6,
+					public schedAlg = "rr"
 					)
 		{}
 

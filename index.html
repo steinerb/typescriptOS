@@ -164,25 +164,46 @@
                         id="memory"
                         rows="13"
                         cols="36"
-                        style="height:188px;overflow:auto;"
-              ></textarea>
+                        style="height:188px;overflow:auto;">
+              </textarea>
             </td>
           </tr>
         </table>
       </td>
 
+      <!--Active Processes/Disk Storage column-->
       <td>
         <table>
           <tr>Active Processes</tr>
+
           <tr>
             <table>
               <tr>
-                  <textarea name="readyPCBs"
-                            id="readyPCBs"
-                            rows="6"
-                            cols="108"
-                            style="height:94px;overflow:auto;"
-                  ></textarea>
+                <textarea name="readyPCBs"
+                        id="readyPCBs"
+                        rows="6"
+                        cols="108"
+                        style="height:94px;overflow:auto;">
+                </textarea>
+              </tr>
+
+              <tr>
+                <table>
+                 <tr>Disk Storage</tr>
+
+                 <tr>
+                  <table>
+                    <tr>
+                      <textarea name="diskStorage"
+                          id="diskStorage"
+                          rows="4"
+                          cols="108"
+                          style="height:64px;overflow:auto;">
+                      </textarea>
+                    </tr>
+                </table>
+                 </tr>
+                </table>
               </tr>
             </table>
           </tr>
@@ -191,37 +212,8 @@
 
     </tr>
   </table>
+  <!--end master table-->
   
-   
-  
-
-  <!-- OLD AND WORKING!!! 
-  <label>
-    CPU Registers
-    <table>
-      <tr>
-        <td>PC:</td>
-        <td><input id="pc" style="width:50px;" /></td>
-      </tr>
-      <tr>
-        <td>ACC:</td>
-        <td><input id="acc" style="width:50px;" /></td>
-      </tr>
-      <tr>
-        <td>X:</td>
-        <td><input id="xReg" style="width:50px;" /></td>
-      </tr>
-      <tr>
-        <td>Y:</td>
-        <td><input id="yReg" style="width:50px;" /></td>
-      </tr>
-      <tr>
-        <td>zFlag:</td>
-        <td><input id="zFlag" style="width:50px;" /></td>
-      </tr>
-    </table>
-  </label>
-  -->
 
 </div>
 <!---->

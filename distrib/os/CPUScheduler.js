@@ -3,9 +3,11 @@
 var TSOS;
 (function (TSOS) {
     var CPUScheduler = (function () {
-        function CPUScheduler(quantum) {
+        function CPUScheduler(quantum, schedAlg) {
             if (quantum === void 0) { quantum = 6; }
+            if (schedAlg === void 0) { schedAlg = "rr"; }
             this.quantum = quantum;
+            this.schedAlg = schedAlg;
         }
         CPUScheduler.prototype.contextSwitch = function () {
             var dequeuedPCB = _ReadyQueue.dequeue();
