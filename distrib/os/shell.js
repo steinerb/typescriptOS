@@ -69,6 +69,9 @@ var TSOS;
             // setschedule
             sc = new TSOS.ShellCommand(this.shellSetSchedule, "setschedule", "[rr, fcfs, priority] - Sets the CPU scheduling alg.");
             this.commandList[this.commandList.length] = sc;
+            // getschedule
+            sc = new TSOS.ShellCommand(this.shellGetSchedule, "getschedule", "- Displays the current scheduling algorithm.");
+            this.commandList[this.commandList.length] = sc;
             // load
             sc = new TSOS.ShellCommand(this.shellLoad, "load", "- Validates the program input.");
             this.commandList[this.commandList.length] = sc;
@@ -293,6 +296,10 @@ var TSOS;
                     case "setschedule":
                         _StdOut.putText("Decides how programs will be run (rr, fcfs, priority).");
                         break;
+                    //getschedule
+                    case "getschedule":
+                        _StdOut.putText("Displays the way programs will be executed.");
+                        break;
                     //load
                     case "load":
                         _StdOut.putText("Loads a program from User Program Input.");
@@ -449,6 +456,9 @@ var TSOS;
                     _StdOut.putText("Scheduling algorithm changed from " + oldAlg + " to " + _CPUScheduler.schedAlg + ".");
                 }
             }
+        };
+        Shell.prototype.shellGetSchedule = function (args) {
+            _StdOut.putText("Current Scheduling Algorithm: " + _CPUScheduler.schedAlg);
         };
         Shell.prototype.shellLoad = function (args) {
             var input = document.getElementById("taProgramInput");

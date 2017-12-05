@@ -123,6 +123,12 @@ module TSOS
                                   "[rr, fcfs, priority] - Sets the CPU scheduling alg.");
             this.commandList[this.commandList.length] = sc;
 
+            // getschedule
+            sc = new ShellCommand(this.shellGetSchedule,
+                                  "getschedule",
+                                  "- Displays the current scheduling algorithm.");
+            this.commandList[this.commandList.length] = sc;
+
             // load
             sc = new ShellCommand(this.shellLoad,
                                   "load",
@@ -419,6 +425,10 @@ module TSOS
                     case "setschedule":
                         _StdOut.putText("Decides how programs will be run (rr, fcfs, priority).");
                         break;
+                    //getschedule
+                    case "getschedule":
+                        _StdOut.putText("Displays the way programs will be executed.");
+                        break;
                     //load
                     case "load":
                         _StdOut.putText("Loads a program from User Program Input.");
@@ -613,6 +623,11 @@ module TSOS
 	        		_StdOut.putText("Scheduling algorithm changed from "+oldAlg+" to "+_CPUScheduler.schedAlg+".");
 	        	}
 	        }
+        }
+
+        public shellGetSchedule(args)
+        {
+        	_StdOut.putText("Current Scheduling Algorithm: "+_CPUScheduler.schedAlg);
         }
 
         public shellLoad(args) 

@@ -31,6 +31,7 @@ var COMMAND_NAMES = [
     "clearmem",
     "quantum",
     "setschedule",
+    "getschedule",
     "load",
     "run",
     "runall",
