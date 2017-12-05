@@ -35,6 +35,7 @@ const COMMAND_NAMES: string[] =
 	"whereami",
 	"clearmem",
 	"quantum",
+	"setschedule",
 	"load",
 	"run",
 	"runall",

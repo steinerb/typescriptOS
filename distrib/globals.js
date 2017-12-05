@@ -30,6 +30,7 @@ var COMMAND_NAMES = [
     "whereami",
     "clearmem",
     "quantum",
+    "setschedule",
     "load",
     "run",
     "runall",
