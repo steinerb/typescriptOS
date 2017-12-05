@@ -66,6 +66,9 @@ var TSOS;
             // quantum
             sc = new TSOS.ShellCommand(this.shellQuantum, "quantum", "<int> - How many CPU cycles per program.");
             this.commandList[this.commandList.length] = sc;
+            // setschedule
+            sc = new TSOS.ShellCommand(this.shellSetSchedule, "setschedule", "[rr, fcfs, priority] - Sets the CPU scheduling alg.");
+            this.commandList[this.commandList.length] = sc;
             // load
             sc = new TSOS.ShellCommand(this.shellLoad, "load", "- Validates the program input.");
             this.commandList[this.commandList.length] = sc;
@@ -286,6 +289,10 @@ var TSOS;
                     case "quantum":
                         _StdOut.putText("How many cycles a cpu will spend on a program before changing.");
                         break;
+                    //setschedule
+                    case "setschedule":
+                        _StdOut.putText("Decides how programs will be run (rr, fcfs, priority).");
+                        break;
                     //load
                     case "load":
                         _StdOut.putText("Loads a program from User Program Input.");
@@ -422,7 +429,26 @@ var TSOS;
                 _StdOut.putText("Quantum changed from " + String(oldQuantum) + " to " + String(desiredQuantum) + ".");
             }
             else
-                _StdOut.putText("Invalid Quantum; Quantum not set.");
+                _StdOut.putText("Invalid Arguement; Quantum not set.");
+        };
+        Shell.prototype.shellSetSchedule = function (args) {
+            var desiredAlg;
+            if (args.length < 1)
+                _StdOut.putText("Missing algorithm arguement; scheduling algorithm not set.");
+            else if (args.length > 1)
+                _StdOut.putText("Too many arguements; scheduling algorithm not set.");
+            else if ((args[0] != "fcfs") && (args[0] != "rr") && (args[0] != "priority"))
+                _StdOut.putText("Invalid Arguement; scheduling algorithm not set.");
+            else {
+                desiredAlg = args[0];
+                if (_CPUScheduler.schedAlg == desiredAlg)
+                    _StdOut.putText(desiredAlg + " is already selected.");
+                else {
+                    var oldAlg = _CPUScheduler.schedAlg;
+                    _CPUScheduler.schedAlg = desiredAlg;
+                    _StdOut.putText("Scheduling algorithm changed from " + oldAlg + " to " + _CPUScheduler.schedAlg + ".");
+                }
+            }
         };
         Shell.prototype.shellLoad = function (args) {
             var input = document.getElementById("taProgramInput");
@@ -551,11 +577,10 @@ var TSOS;
             //test program #2.5: lots of loops
             //loadBox.value = "A9 00 8D EC 00 A9 00 8D EC 00 A9 00 8D ED 00 A9 00 8D ED 00 A9 00 8D EE 00 A9 00 8D EF 00 AD ED 00 8D FF 00 AE FF 00 A9 00 8D FF 00 EC FF 00 D0 BA AD EC 00 8D FF 00 A9 01 6D FF 00 8D EC 00 AD EC 00 8D FF 00 AE FF 00 A9 03 8D FF 00 EC FF 00 D0 05 A9 01 8D ED 00 A9 00 8D EE 00 A9 00 8D EF 00 AD EF 00 8D FF 00 AE FF 00 A9 00 8D FF 00 EC FF 00 D0 49 AD EE 00 8D FF 00 A9 01 6D FF 00 8D EE 00 AD EE 00 8D FF 00 AE FF 00 A9 02 8D FF 00 EC FF 00 D0 05 A9 01 8D EF 00 A9 F8 8D FF 00 A2 02 AC FF 00 FF AD EE 00 A2 01 8D FF 00 AC FF 00 FF A9 00 8D FF 00 A2 01 EC FF 00 D0 A4 A9 F1 8D FF 00 A2 02 AC FF 00 FF AD EC 00 A2 01 8D FF 00 AC FF 00 FF A9 EE 8D FF 00 A2 02 AC FF 00 FF A9 00 8D FF 00 A2 01 EC FF 00 D0 33 00 00 00 20 20 00 20 6F 75 74 65 72 00 20 69 6E 6E 65 72 00 00";
             //test program #3: 1 2 DONE
-            //loadBox.value = "A9 03 8D 41 00 A9 01 8D 40 00 AC 40 00 A2 01 FF EE 40 00 AE 40 00 EC 41 00 D0 EF A9 44 8D 42 00 A9 4F 8D 43 00 A9 4E 8D 44 00 A9 45 8D 45 00 A9 00 8D 46 00 A2 02 A0 42 FF 00";
-            loadBox.value = "A9 00 8D 7B 00 A9 00 8D 7B 00 A9 00 8D 7C 00 A9 00 8D 7C 00 A9 01 8D 7A 00 A2 00 EC 7A 00 D0 39 A0 7D A2 02 FF AC 7B 00 A2 01 FF AD 7B 00 8D 7A 00 A9 01 6D 7A 00 8D 7B 00 A9 03 AE 7B 00 8D 7A 00 A9 00 EC 7A 00 D0 02 A9 01 8D 7A 00 A2 01 EC 7A 00 D0 05 A9 01 8D 7C 00 A9 00 AE 7C 00 8D 7A 00 A9 00 EC 7A 00 D0 02 A9 01 8D 7A 00 A2 00 EC 7A 00 D0 AC A0 7F A2 02 FF 00 00 00 00 61 00 61 64 6F 6E 65 00";
-            sessionStorage.setItem('tester', 'session storage accessed successfully!!!');
-            var testVar = sessionStorage.getItem('tester');
-            _StdOut.putText(testVar);
+            loadBox.value = "A9 03 8D 41 00 A9 01 8D 40 00 AC 40 00 A2 01 FF EE 40 00 AE 40 00 EC 41 00 D0 EF A9 44 8D 42 00 A9 4F 8D 43 00 A9 4E 8D 44 00 A9 45 8D 45 00 A9 00 8D 46 00 A2 02 A0 42 FF 00";
+            //loadBox.value = "A9 00 8D 7B 00 A9 00 8D 7B 00 A9 00 8D 7C 00 A9 00 8D 7C 00 A9 01 8D 7A 00 A2 00 EC 7A 00 D0 39 A0 7D A2 02 FF AC 7B 00 A2 01 FF AD 7B 00 8D 7A 00 A9 01 6D 7A 00 8D 7B 00 A9 03 AE 7B 00 8D 7A 00 A9 00 EC 7A 00 D0 02 A9 01 8D 7A 00 A2 01 EC 7A 00 D0 05 A9 01 8D 7C 00 A9 00 AE 7C 00 8D 7A 00 A9 00 EC 7A 00 D0 02 A9 01 8D 7A 00 A2 00 EC 7A 00 D0 AC A0 7F A2 02 FF 00 00 00 00 61 00 61 64 6F 6E 65 00";
+            _StdOut.putText("sorting ready queue...");
+            _ReadyQueue.sortQFor(_CPUScheduler.schedAlg);
             TSOS.Utils.updateProcesses();
             TSOS.Utils.updateMemory();
         };

@@ -34,6 +34,14 @@ module TSOS {
             return retVal;
         }
 
+        public sortQFor(desiredSchedAlg: string): void
+        {
+            if(desiredSchedAlg == "fcfs")
+                this.q.sort(function(a, b){return a.pid - b.pid});
+            else if(desiredSchedAlg == "priority")
+                this.q.sort(function(a, b){return b.priority - a.priority});
+        }
+
         public toString() {
             var retVal = "";
             for (var i in this.q) {

@@ -30,6 +30,12 @@ var TSOS;
             }
             return retVal;
         };
+        Queue.prototype.sortQFor = function (desiredSchedAlg) {
+            if (desiredSchedAlg == "fcfs")
+                this.q.sort(function (a, b) { return a.pid - b.pid; });
+            else if (desiredSchedAlg == "priority")
+                this.q.sort(function (a, b) { return b.priority - a.priority; });
+        };
         Queue.prototype.toString = function () {
             var retVal = "";
             for (var i in this.q) {
