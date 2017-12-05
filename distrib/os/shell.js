@@ -533,12 +533,15 @@ var TSOS;
             }
         };
         Shell.prototype.shellRunAll = function (args) {
-            var currentPCB;
             //add all programs from resident list to ready queue
+            var currentPCB;
             for (var i = 0; i < _ResidentList.length; i++) {
                 currentPCB = _ResidentList[i];
                 _ReadyQueue.enqueue(currentPCB);
             }
+            //sort the ready queue according to scheduling alg
+            _ReadyQueue.sortQFor(_CPUScheduler.schedAlg);
+            //empty resident list
             _ResidentList = [];
             TSOS.Utils.updateProcesses();
             _CPU.isExecuting = true;
@@ -589,8 +592,6 @@ var TSOS;
             //test program #3: 1 2 DONE
             loadBox.value = "A9 03 8D 41 00 A9 01 8D 40 00 AC 40 00 A2 01 FF EE 40 00 AE 40 00 EC 41 00 D0 EF A9 44 8D 42 00 A9 4F 8D 43 00 A9 4E 8D 44 00 A9 45 8D 45 00 A9 00 8D 46 00 A2 02 A0 42 FF 00";
             //loadBox.value = "A9 00 8D 7B 00 A9 00 8D 7B 00 A9 00 8D 7C 00 A9 00 8D 7C 00 A9 01 8D 7A 00 A2 00 EC 7A 00 D0 39 A0 7D A2 02 FF AC 7B 00 A2 01 FF AD 7B 00 8D 7A 00 A9 01 6D 7A 00 8D 7B 00 A9 03 AE 7B 00 8D 7A 00 A9 00 EC 7A 00 D0 02 A9 01 8D 7A 00 A2 01 EC 7A 00 D0 05 A9 01 8D 7C 00 A9 00 AE 7C 00 8D 7A 00 A9 00 EC 7A 00 D0 02 A9 01 8D 7A 00 A2 00 EC 7A 00 D0 AC A0 7F A2 02 FF 00 00 00 00 61 00 61 64 6F 6E 65 00";
-            _StdOut.putText("sorting ready queue...");
-            _ReadyQueue.sortQFor(_CPUScheduler.schedAlg);
             TSOS.Utils.updateProcesses();
             TSOS.Utils.updateMemory();
         };
