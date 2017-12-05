@@ -51,6 +51,7 @@ var _NextAvailablePID = 0;
 var _NextAvailableIndex = 0;
 var _IndexOfProgramToRun;
 var _CurrentPartition;
+var _BreakReached = false;
 // list of numbers that translate to hex values using von Neumann architecture.
 var _Memory;
 var _memTest;

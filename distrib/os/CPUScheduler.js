@@ -10,8 +10,10 @@ var TSOS;
             this.schedAlg = schedAlg;
         }
         CPUScheduler.prototype.contextSwitch = function () {
-            var dequeuedPCB = _ReadyQueue.dequeue();
-            _ReadyQueue.enqueue(new TSOS.Pcb("WAITING", dequeuedPCB.pid, dequeuedPCB.PC, dequeuedPCB.Acc, dequeuedPCB.Xreg, dequeuedPCB.Yreg, dequeuedPCB.Zflag, dequeuedPCB.base, dequeuedPCB.limit));
+            if (this.schedAlg == "rr") {
+                var dequeuedPCB = _ReadyQueue.dequeue();
+                _ReadyQueue.enqueue(new TSOS.Pcb("WAITING", dequeuedPCB.pid, dequeuedPCB.PC, dequeuedPCB.Acc, dequeuedPCB.Xreg, dequeuedPCB.Yreg, dequeuedPCB.Zflag, dequeuedPCB.base, dequeuedPCB.limit, dequeuedPCB.priority, dequeuedPCB.location));
+            }
         };
         return CPUScheduler;
     }());

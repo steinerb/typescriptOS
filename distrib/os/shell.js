@@ -424,15 +424,23 @@ var TSOS;
             else
                 _StdOut.putText("Invalid Quantum; Quantum not set.");
         };
-        Shell.prototype.shellLoad = function () {
+        Shell.prototype.shellLoad = function (args) {
             var input = document.getElementById("taProgramInput");
             var dataSTR = input.value.toLowerCase();
+            var priority = -1;
             //test to make sure characters are valid and spacing is proper
             if (!TSOS.Utils.isValidHexString(dataSTR))
                 _StdOut.putText("Invalid input; failed to load program.");
             else if (input.value.toLowerCase().split(" ").length > 256)
                 _StdOut.putText("Input over 256 bytes; failed to load program.");
+            else if ((_CPUScheduler.schedAlg == "priority") && (args.length < 1))
+                _StdOut.putText("Missing priority arguement; failed to load program.");
+            else if ((_CPUScheduler.schedAlg == "priority") && (args.length > 1))
+                _StdOut.putText("Too many arguements; failed to load program.");
             else {
+                //if priority, set priority
+                if (_CPUScheduler.schedAlg == "priority")
+                    priority = args[0];
                 //test if any partitions are empty
                 if (_MemoryManager.hasSpace()) {
                     _StdOut.putText("Program " + String(_NextAvailablePID) + " loaded successfully.");
@@ -449,7 +457,7 @@ var TSOS;
                     //add new PCB to Resident List to be called
                     var newBase = _MemoryManager.nextAvailablePartition() * 256;
                     var newLimit = newBase + 255;
-                    _ResidentList.push(new TSOS.Pcb("NEW", _NextAvailablePID, 0, 0, 0, 0, 0, newBase, newLimit));
+                    _ResidentList.push(new TSOS.Pcb("NEW", _NextAvailablePID, 0, 0, 0, 0, 0, newBase, newLimit, priority, "TEST"));
                     //now save Program ID for later calling and update Memory Manager 
                     _MemoryManager.fillPartition(_NextAvailablePID);
                     _NextAvailablePID++;
@@ -457,6 +465,7 @@ var TSOS;
                 else
                     _StdOut.putText("Memory full; failed to load program.");
                 TSOS.Utils.updateMemory();
+                //update disk storage too!!!
             }
             _StdOut.advanceLine();
         };
@@ -542,8 +551,8 @@ var TSOS;
             //test program #2.5: lots of loops
             //loadBox.value = "A9 00 8D EC 00 A9 00 8D EC 00 A9 00 8D ED 00 A9 00 8D ED 00 A9 00 8D EE 00 A9 00 8D EF 00 AD ED 00 8D FF 00 AE FF 00 A9 00 8D FF 00 EC FF 00 D0 BA AD EC 00 8D FF 00 A9 01 6D FF 00 8D EC 00 AD EC 00 8D FF 00 AE FF 00 A9 03 8D FF 00 EC FF 00 D0 05 A9 01 8D ED 00 A9 00 8D EE 00 A9 00 8D EF 00 AD EF 00 8D FF 00 AE FF 00 A9 00 8D FF 00 EC FF 00 D0 49 AD EE 00 8D FF 00 A9 01 6D FF 00 8D EE 00 AD EE 00 8D FF 00 AE FF 00 A9 02 8D FF 00 EC FF 00 D0 05 A9 01 8D EF 00 A9 F8 8D FF 00 A2 02 AC FF 00 FF AD EE 00 A2 01 8D FF 00 AC FF 00 FF A9 00 8D FF 00 A2 01 EC FF 00 D0 A4 A9 F1 8D FF 00 A2 02 AC FF 00 FF AD EC 00 A2 01 8D FF 00 AC FF 00 FF A9 EE 8D FF 00 A2 02 AC FF 00 FF A9 00 8D FF 00 A2 01 EC FF 00 D0 33 00 00 00 20 20 00 20 6F 75 74 65 72 00 20 69 6E 6E 65 72 00 00";
             //test program #3: 1 2 DONE
-            loadBox.value = "A9 03 8D 41 00 A9 01 8D 40 00 AC 40 00 A2 01 FF EE 40 00 AE 40 00 EC 41 00 D0 EF A9 44 8D 42 00 A9 4F 8D 43 00 A9 4E 8D 44 00 A9 45 8D 45 00 A9 00 8D 46 00 A2 02 A0 42 FF 00";
-            //loadBox.value = "A9 00 8D 7B 00 A9 00 8D 7B 00 A9 00 8D 7C 00 A9 00 8D 7C 00 A9 01 8D 7A 00 A2 00 EC 7A 00 D0 39 A0 7D A2 02 FF AC 7B 00 A2 01 FF AD 7B 00 8D 7A 00 A9 01 6D 7A 00 8D 7B 00 A9 03 AE 7B 00 8D 7A 00 A9 00 EC 7A 00 D0 02 A9 01 8D 7A 00 A2 01 EC 7A 00 D0 05 A9 01 8D 7C 00 A9 00 AE 7C 00 8D 7A 00 A9 00 EC 7A 00 D0 02 A9 01 8D 7A 00 A2 00 EC 7A 00 D0 AC A0 7F A2 02 FF 00 00 00 00 61 00 61 64 6F 6E 65 00";
+            //loadBox.value = "A9 03 8D 41 00 A9 01 8D 40 00 AC 40 00 A2 01 FF EE 40 00 AE 40 00 EC 41 00 D0 EF A9 44 8D 42 00 A9 4F 8D 43 00 A9 4E 8D 44 00 A9 45 8D 45 00 A9 00 8D 46 00 A2 02 A0 42 FF 00";
+            loadBox.value = "A9 00 8D 7B 00 A9 00 8D 7B 00 A9 00 8D 7C 00 A9 00 8D 7C 00 A9 01 8D 7A 00 A2 00 EC 7A 00 D0 39 A0 7D A2 02 FF AC 7B 00 A2 01 FF AD 7B 00 8D 7A 00 A9 01 6D 7A 00 8D 7B 00 A9 03 AE 7B 00 8D 7A 00 A9 00 EC 7A 00 D0 02 A9 01 8D 7A 00 A2 01 EC 7A 00 D0 05 A9 01 8D 7C 00 A9 00 AE 7C 00 8D 7A 00 A9 00 EC 7A 00 D0 02 A9 01 8D 7A 00 A2 00 EC 7A 00 D0 AC A0 7F A2 02 FF 00 00 00 00 61 00 61 64 6F 6E 65 00";
             sessionStorage.setItem('tester', 'session storage accessed successfully!!!');
             var testVar = sessionStorage.getItem('tester');
             _StdOut.putText(testVar);

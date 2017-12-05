@@ -13,8 +13,11 @@ module TSOS
 
 		public contextSwitch(): void
 		{
-			var dequeuedPCB: TSOS.Pcb = _ReadyQueue.dequeue();
-            _ReadyQueue.enqueue(new Pcb("WAITING", 
+
+			if (this.schedAlg == "rr")
+			{
+				var dequeuedPCB: TSOS.Pcb = _ReadyQueue.dequeue();
+            	_ReadyQueue.enqueue(new Pcb("WAITING", 
             							dequeuedPCB.pid, 
             							dequeuedPCB.PC, 
             							dequeuedPCB.Acc, 
@@ -22,8 +25,13 @@ module TSOS
             							dequeuedPCB.Yreg, 
             							dequeuedPCB.Zflag, 
             							dequeuedPCB.base, 
-            							dequeuedPCB.limit)
+            							dequeuedPCB.limit,
+            							dequeuedPCB.priority,
+            							dequeuedPCB.location)
             					);
+			}
+
+			
 		}
 		
 	}

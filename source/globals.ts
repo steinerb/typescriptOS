@@ -60,7 +60,7 @@ var _NextAvailablePID: number = 0;
 var _NextAvailableIndex: number = 0;
 var _IndexOfProgramToRun: number;
 var _CurrentPartition: number;
-
+var _BreakReached: boolean = false;
 
 // list of numbers that translate to hex values using von Neumann architecture.
 var _Memory: TSOS.Memory;

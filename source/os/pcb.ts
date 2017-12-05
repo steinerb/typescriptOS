@@ -12,7 +12,9 @@ module TSOS
                     public Yreg: number,
                     public Zflag: number,
                     public base: number,
-                    public limit: number
+                    public limit: number,
+                    public priority: number,
+                    public location: string
 				   )
 		{
 			this.state = state;
@@ -24,6 +26,8 @@ module TSOS
 			this.Zflag = Zflag;
 			this.base = base;
 			this.limit = limit;
+			this.priority = priority;
+			this.location = location;
 		}
 
 		public helloWorld(): void

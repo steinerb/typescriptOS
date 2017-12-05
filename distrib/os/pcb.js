@@ -2,7 +2,7 @@ var TSOS;
 (function (TSOS) {
     var Pcb = (function () {
         //most flexible constructor
-        function Pcb(state, pid, PC, Acc, Xreg, Yreg, Zflag, base, limit) {
+        function Pcb(state, pid, PC, Acc, Xreg, Yreg, Zflag, base, limit, priority, location) {
             this.state = state;
             this.pid = pid;
             this.PC = PC;
@@ -12,6 +12,8 @@ var TSOS;
             this.Zflag = Zflag;
             this.base = base;
             this.limit = limit;
+            this.priority = priority;
+            this.location = location;
             this.state = state;
             this.pid = pid;
             this.PC = PC;
@@ -21,6 +23,8 @@ var TSOS;
             this.Zflag = Zflag;
             this.base = base;
             this.limit = limit;
+            this.priority = priority;
+            this.location = location;
         }
         Pcb.prototype.helloWorld = function () {
             _StdOut.putText("Hello World! Love, a pcb");
