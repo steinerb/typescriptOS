@@ -36,7 +36,12 @@ var TSOS;
             toReturn += ("|acc:\t" + this.Acc.toString(16).toUpperCase() + "\t");
             toReturn += ("|x:\t" + this.Xreg.toString(16).toUpperCase() + "\t");
             toReturn += ("|y:\t" + this.Yreg.toString(16).toUpperCase() + "\t");
-            toReturn += ("|z:\t" + this.Zflag + "\t|");
+            toReturn += ("|z:\t" + this.Zflag + "\t");
+            if (this.priority == -1)
+                toReturn += ("|prior:\tN/A\t");
+            else
+                toReturn += ("|prior:\t" + String(this.priority) + "\t");
+            toReturn += ("|loc:\t" + this.location + "\t|");
             return toReturn;
         };
         return Pcb;
