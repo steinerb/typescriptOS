@@ -45,7 +45,7 @@ var TSOS;
         };
         Memory.prototype.wipePartition = function (parNum) {
             for (var i = (parNum * 256); i < ((parNum + 1) * 256); i++)
-                _Memory.registers[i] = undefined;
+                this.registers[i] = undefined;
         };
         Memory.prototype.toString = function () {
             var toReturn = "[";

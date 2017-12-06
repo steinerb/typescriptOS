@@ -56,7 +56,6 @@ var TSOS;
             for (var currentPartition = 0; currentPartition < this.numPartitions(); currentPartition++) {
                 currentIndex = currentPartition * this.parLength;
                 if ((currentIndex == desiredIndex) && ((typeof this.pidPartitions[currentPartition]) != 'undefined'))
-                    //return this.pidPartitions[currentIndex];
                     return this.pidPartitions[currentPartition];
             }
             return -1;
