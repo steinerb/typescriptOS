@@ -89,6 +89,8 @@ module TSOS
 				_CurrentPartition = 1;
 			else if (currentBase == _Memory.par3Base)
 				_CurrentPartition = 2;
+			else
+				_Kernel.krnTrapError("_CurrentPartition not valid!!");
 
 
 			//get indexes for current op code and parameters
@@ -99,9 +101,8 @@ module TSOS
 
 			var paramForConstant: number = _Memory.getValueAt(indexNextOp, _CurrentPartition);
 
-			var paramForLocation: number = 
-				Number("0x"+_Memory.getValueAt(indexTwoOps, _CurrentPartition)+_Memory.getValueAt(indexNextOp, _CurrentPartition));
-			
+			var paramForLocation: number = Number("0x"+_Memory.getValueAt(indexTwoOps, _CurrentPartition).toString(16)+_Memory.getValueAt(indexNextOp, _CurrentPartition).toString(16));
+				//Number("0x"+_Memory.getValueAt(indexTwoOps, _CurrentPartition)+_Memory.getValueAt(indexNextOp, _CurrentPartition));
 
 			/*			
 			var indexNextOp: number = currentBase+this.PC+1;
@@ -256,6 +257,8 @@ module TSOS
 
 		   //update memory display
 		   Utils.updateMemory();
+
+		   _CurrentPartition = undefined;
 		   
 		}
 

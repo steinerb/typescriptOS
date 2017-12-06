@@ -77,12 +77,15 @@ var TSOS;
                 _CurrentPartition = 1;
             else if (currentBase == _Memory.par3Base)
                 _CurrentPartition = 2;
+            else
+                _Kernel.krnTrapError("_CurrentPartition not valid!!");
             //get indexes for current op code and parameters
             var indexNextOp = this.PC + 1;
             var indexTwoOps = this.PC + 2;
             var currentOp = _Memory.getValueAt(this.PC, _CurrentPartition);
             var paramForConstant = _Memory.getValueAt(indexNextOp, _CurrentPartition);
-            var paramForLocation = Number("0x" + _Memory.getValueAt(indexTwoOps, _CurrentPartition) + _Memory.getValueAt(indexNextOp, _CurrentPartition));
+            var paramForLocation = Number("0x" + _Memory.getValueAt(indexTwoOps, _CurrentPartition).toString(16) + _Memory.getValueAt(indexNextOp, _CurrentPartition).toString(16));
+            //Number("0x"+_Memory.getValueAt(indexTwoOps, _CurrentPartition)+_Memory.getValueAt(indexNextOp, _CurrentPartition));
             /*
             var indexNextOp: number = currentBase+this.PC+1;
             var indexTwoOps: number = currentBase+this.PC+2;
@@ -195,6 +198,7 @@ var TSOS;
             TSOS.Utils.updateProcesses();
             //update memory display
             TSOS.Utils.updateMemory();
+            _CurrentPartition = undefined;
         };
         //CPU operations
         Cpu.prototype.ldaC = function (constant) {

@@ -30,8 +30,11 @@ module TSOS
         {
             if(partition == -1)
                 return this.registers[address];
+
+
             else if ((partition >= 0) && (partition <= 2))
                 return this.registers[(address+(256*partition))];
+            
             return -1;
         }
 
