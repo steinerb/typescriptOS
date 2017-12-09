@@ -93,13 +93,10 @@ var TSOS;
             // read
             sc = new TSOS.ShellCommand(this.shellRead, "read", "- <filename> Reads a file.");
             this.commandList[this.commandList.length] = sc;
-            /*
             // write
-            sc = new ShellCommand(this.shellWrite,
-                                  "write",
-                                  "- <filename> Writes to a file.");
+            sc = new TSOS.ShellCommand(this.shellWrite, "write", "- <filename> \"data\" writes data to a file.");
             this.commandList[this.commandList.length] = sc;
-
+            /*
             // format
             sc = new ShellCommand(this.shellFormat,
                                   "format",
@@ -631,6 +628,21 @@ var TSOS;
                 _StdOut.putText("File not found; file not read.");
             else {
                 _StdOut.putText("\"" + sessionStorage.getItem(desiredFileName) + "\"");
+            }
+        };
+        Shell.prototype.shellWrite = function (args) {
+            var desiredFileName = String(args[0]);
+            if (args.length > 2)
+                _StdOut.putText("Too many arguements; could not write to file.");
+            else if (sessionStorage.getItem(desiredFileName) == null)
+                _StdOut.putText("File not found; could not write to file.");
+            else if (args.length < 2)
+                _StdOut.putText("Missing data arguement; could not write to file.");
+            else {
+                var oldText = sessionStorage.getItem(desiredFileName);
+                var data = String(args[1]);
+                sessionStorage.setItem(desiredFileName, (oldText + data));
+                _StdOut.putText("Written to file successfully.");
             }
         };
         Shell.prototype.shellStatus = function (args) {

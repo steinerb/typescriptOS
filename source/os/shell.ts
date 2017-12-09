@@ -171,13 +171,13 @@ module TSOS
                                   "- <filename> Reads a file.");
             this.commandList[this.commandList.length] = sc;
 
-            /*
             // write
             sc = new ShellCommand(this.shellWrite,
                                   "write",
-                                  "- <filename> Writes to a file.");
+                                  "- <filename> \"data\" writes data to a file.");
             this.commandList[this.commandList.length] = sc;
 
+            /*
             // format
             sc = new ShellCommand(this.shellFormat,
                                   "format",
@@ -854,6 +854,24 @@ module TSOS
         	else
         	{
         		_StdOut.putText("\""+sessionStorage.getItem(desiredFileName)+"\"");
+        	}
+        }
+
+        public shellWrite(args)
+        {
+        	var desiredFileName: string = String(args[0]);
+        	if(args.length > 2)
+        		_StdOut.putText("Too many arguements; could not write to file.");
+        	else if(sessionStorage.getItem(desiredFileName) == null)
+        		_StdOut.putText("File not found; could not write to file.");
+        	else if(args.length < 2)
+        		_StdOut.putText("Missing data arguement; could not write to file.");
+        	else
+        	{
+        		var oldText = sessionStorage.getItem(desiredFileName);
+        		var data = String(args[1]);
+        		sessionStorage.setItem(desiredFileName, (oldText+data));
+        		_StdOut.putText("Written to file successfully.");
         	}
         }
 
