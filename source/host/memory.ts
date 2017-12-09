@@ -1,6 +1,6 @@
 module TSOS 
 {
-	export class Storage
+	export class Memory
 	{
 		constructor(public name,
                     public registers: number[] = new Array(768),

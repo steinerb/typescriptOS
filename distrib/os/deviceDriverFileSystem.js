@@ -20,7 +20,6 @@ var TSOS;
             var _this = 
             // The code below cannot run because "this" can only be
             // accessed after calling super.
-            //super(this.krnKbdDriverEntry, this.krnKbdDispatchKeyPress);
             _super.call(this) || this;
             _this.driverEntry = _this.krnFileSystemDriverEntry;
             _this.isr = _this.testISR;

@@ -1,6 +1,6 @@
 module TSOS
 {
-	export class StorageManager
+	export class MemoryManager
 	{
 
 		constructor(public pidPartitions: number[] = new Array(3),

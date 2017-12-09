@@ -2,7 +2,7 @@
 ///<reference path="../utils.ts" />
 
 ///<reference path="queue.ts" />
-///<reference path="storageManager.ts" />
+///<reference path="memoryManager.ts" />
 ///<reference path="CPUScheduler.ts" />
 
 /* ------------
@@ -36,8 +36,7 @@ module TSOS {
             _CPUScheduler = new CPUScheduler();
 
             //Initialize Memory Manager
-            _MemoryManager = new StorageManager();
-            _SwapManager = new StorageManager();
+            _MemoryManager = new MemoryManager();
 
             // Initialize the console.
             _Console = new Console();          // The command line interface / console I/O device.
@@ -127,12 +126,14 @@ module TSOS {
             // Keyboard
             Devices.hostEnableKeyboardInterrupt();
             // Put more here.
+            //Devices.hostEnableFileSystemInterrupt();
         }
 
         public krnDisableInterrupts() {
             // Keyboard
             Devices.hostDisableKeyboardInterrupt();
             // Put more here.
+            //Devices.hostDisableFileSystemInterrupt();
         }
 
         public krnInterruptHandler(irq, params) {

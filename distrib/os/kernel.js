@@ -1,7 +1,7 @@
 ///<reference path="../globals.ts" />
 ///<reference path="../utils.ts" />
 ///<reference path="queue.ts" />
-///<reference path="storageManager.ts" />
+///<reference path="memoryManager.ts" />
 ///<reference path="CPUScheduler.ts" />
 /* ------------
      Kernel.ts
@@ -32,8 +32,7 @@ var TSOS;
             _ResidentList = [];
             _CPUScheduler = new TSOS.CPUScheduler();
             //Initialize Memory Manager
-            _MemoryManager = new TSOS.StorageManager();
-            _SwapManager = new TSOS.StorageManager();
+            _MemoryManager = new TSOS.MemoryManager();
             // Initialize the console.
             _Console = new TSOS.Console(); // The command line interface / console I/O device.
             _Console.init();
@@ -49,7 +48,7 @@ var TSOS;
             this.krnTrace("Loading the File System Device ");
             _krnFileSystemDriver = new TSOS.DeviceDriverFileSystem(); // Construct it.
             _krnFileSystemDriver.driverEntry(); // Call the driverEntry() initialization routine.
-            this.krnTrace(_krnKeyboardDriver.status);
+            this.krnTrace(_krnFileSystemDriver.status);
             document.getElementById("pc").value = "0";
             document.getElementById("acc").value = "00";
             document.getElementById("xReg").value = "00";
@@ -106,11 +105,13 @@ var TSOS;
             // Keyboard
             TSOS.Devices.hostEnableKeyboardInterrupt();
             // Put more here.
+            //Devices.hostEnableFileSystemInterrupt();
         };
         Kernel.prototype.krnDisableInterrupts = function () {
             // Keyboard
             TSOS.Devices.hostDisableKeyboardInterrupt();
             // Put more here.
+            //Devices.hostDisableFileSystemInterrupt();
         };
         Kernel.prototype.krnInterruptHandler = function (irq, params) {
             // This is the Interrupt Handler Routine.  See pages 8 and 560.

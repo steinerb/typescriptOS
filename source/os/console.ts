@@ -240,8 +240,6 @@ module TSOS
             	_Console.init();
             	//Draw last line
             }
-            
-            
 
             //NEW TEST SCROLLING
             //if last line
@@ -249,12 +247,9 @@ module TSOS
             {
              _Console.init();
             }*/
-
-            
-       
         }
-         
 
       
     }
  }
+        

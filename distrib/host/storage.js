@@ -1,7 +1,7 @@
 var TSOS;
 (function (TSOS) {
-    var Storage = (function () {
-        function Storage(name, registers, par1Base, par1Limit, par2Base, par2Limit, par3Base, par3Limit) {
+    var Memory = (function () {
+        function Memory(name, registers, par1Base, par1Limit, par2Base, par2Limit, par3Base, par3Limit) {
             if (registers === void 0) { registers = new Array(768); }
             if (par1Base === void 0) { par1Base = 0; }
             if (par1Limit === void 0) { par1Limit = 255; }
@@ -19,37 +19,37 @@ var TSOS;
             this.par3Limit = par3Limit;
             this.name = name;
         }
-        Storage.prototype.getSize = function () {
+        Memory.prototype.getSize = function () {
             return this.registers.length;
         };
-        Storage.prototype.isEmpty = function () {
+        Memory.prototype.isEmpty = function () {
             for (var i = 0; i < this.getSize(); i++)
                 if (typeof this.registers[i] != 'undefined')
                     return false;
             return true;
         };
-        Storage.prototype.getValueAt = function (address, partition) {
+        Memory.prototype.getValueAt = function (address, partition) {
             if (partition == -1)
                 return this.registers[address];
             else if ((partition >= 0) && (partition <= 2))
                 return this.registers[(address + (256 * partition))];
             return -1;
         };
-        Storage.prototype.storeValueAt = function (address, partition, value) {
+        Memory.prototype.storeValueAt = function (address, partition, value) {
             //if partition is -1, logical address is physical address
             if (partition == -1)
                 this.registers[address] = value;
             else if ((partition >= 0) && (partition <= 2))
                 this.registers[(address + (256 * partition))] = value;
         };
-        Storage.prototype.wipe = function () {
+        Memory.prototype.wipe = function () {
             this.registers = new Array(768);
         };
-        Storage.prototype.wipePartition = function (parNum) {
+        Memory.prototype.wipePartition = function (parNum) {
             for (var i = (parNum * 256); i < ((parNum + 1) * 256); i++)
                 this.registers[i] = undefined;
         };
-        Storage.prototype.toString = function () {
+        Memory.prototype.toString = function () {
             var toReturn = "[";
             var current;
             for (var i = 0; i < this.getSize() - 1; i++) {
@@ -65,7 +65,7 @@ var TSOS;
                 toReturn += ("0]");
             return toReturn;
         };
-        return Storage;
+        return Memory;
     }());
-    TSOS.Storage = Storage;
+    TSOS.Memory = Memory;
 })(TSOS || (TSOS = {}));

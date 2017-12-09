@@ -1,39 +1,39 @@
 var TSOS;
 (function (TSOS) {
-    var StorageManager = (function () {
-        function StorageManager(pidPartitions, parLength) {
+    var MemoryManager = (function () {
+        function MemoryManager(pidPartitions, parLength) {
             if (pidPartitions === void 0) { pidPartitions = new Array(3); }
             if (parLength === void 0) { parLength = 256; }
             this.pidPartitions = pidPartitions;
             this.parLength = parLength;
         }
-        StorageManager.prototype.init = function () {
+        MemoryManager.prototype.init = function () {
             this.pidPartitions = new Array(3);
         };
-        StorageManager.prototype.numPartitions = function () {
+        MemoryManager.prototype.numPartitions = function () {
             return this.pidPartitions.length;
         };
-        StorageManager.prototype.hasSpace = function () {
+        MemoryManager.prototype.hasSpace = function () {
             for (var i = 0; i < this.numPartitions(); i++) {
                 if ((typeof this.pidPartitions[i]) == 'undefined')
                     return true;
             }
             return false;
         };
-        StorageManager.prototype.nextAvailablePartition = function () {
+        MemoryManager.prototype.nextAvailablePartition = function () {
             for (var i = 0; i < this.numPartitions(); i++) {
                 if ((typeof this.pidPartitions[i]) == 'undefined')
                     return i;
             }
             return -1;
         };
-        StorageManager.prototype.fillPartition = function (pid) {
+        MemoryManager.prototype.fillPartition = function (pid) {
             this.pidPartitions[this.nextAvailablePartition()] = pid;
         };
-        StorageManager.prototype.wipePartition = function (parNum) {
+        MemoryManager.prototype.wipePartition = function (parNum) {
             this.pidPartitions[parNum] = undefined;
         };
-        StorageManager.prototype.indexOfProgram = function (pid) {
+        MemoryManager.prototype.indexOfProgram = function (pid) {
             var currentPID;
             for (var currentPar = 0; currentPar < this.numPartitions(); currentPar++) {
                 currentPID = this.pidPartitions[currentPar];
@@ -42,7 +42,7 @@ var TSOS;
             }
             return -1;
         };
-        StorageManager.prototype.partitionOfProgram = function (desiredPID) {
+        MemoryManager.prototype.partitionOfProgram = function (desiredPID) {
             var currentPID;
             for (var currentPar = 0; currentPar < this.numPartitions(); currentPar++) {
                 currentPID = this.pidPartitions[currentPar];
@@ -51,7 +51,7 @@ var TSOS;
             }
             return -1;
         };
-        StorageManager.prototype.programAtIndex = function (desiredIndex) {
+        MemoryManager.prototype.programAtIndex = function (desiredIndex) {
             var currentIndex;
             for (var currentPartition = 0; currentPartition < this.numPartitions(); currentPartition++) {
                 currentIndex = currentPartition * this.parLength;
@@ -60,10 +60,10 @@ var TSOS;
             }
             return -1;
         };
-        StorageManager.prototype.toString = function () {
+        MemoryManager.prototype.toString = function () {
             return "***MEMORY MANAGER toString REACHED***";
         };
-        return StorageManager;
+        return MemoryManager;
     }());
-    TSOS.StorageManager = StorageManager;
+    TSOS.MemoryManager = MemoryManager;
 })(TSOS || (TSOS = {}));
