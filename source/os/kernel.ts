@@ -60,7 +60,7 @@ module TSOS {
             this.krnTrace("Loading the File System Device ");
             _krnFileSystemDriver = new DeviceDriverFileSystem();     // Construct it.
             _krnFileSystemDriver.driverEntry();                    // Call the driverEntry() initialization routine.
-            this.krnTrace(_krnKeyboardDriver.status);
+            this.krnTrace(_krnFileSystemDriver.status);
             
 
             (<HTMLInputElement>document.getElementById("pc")).value = "0";
