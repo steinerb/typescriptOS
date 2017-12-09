@@ -43,7 +43,7 @@ const COMMAND_NAMES: string[] =
 	"ps",
 	"kill",
 	"create",
-	//"read",
+	"read",
 	//"write",
 	//"delete",
 	//"format",
