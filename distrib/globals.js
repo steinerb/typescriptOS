@@ -40,7 +40,7 @@ var COMMAND_NAMES = [
     "create",
     "read",
     "write",
-    //"delete",
+    "delete",
     //"format",
     "status",
     "bsod",

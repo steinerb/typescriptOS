@@ -174,7 +174,13 @@ module TSOS
             // write
             sc = new ShellCommand(this.shellWrite,
                                   "write",
-                                  "- <filename> \"data\" writes data to a file.");
+                                  "- <filename> \"data\" Writes data to a file.");
+            this.commandList[this.commandList.length] = sc;
+
+            // delete
+            sc = new ShellCommand(this.shellDelete,
+                                  "delete",
+                                  "- <filename> Deletes a file.");
             this.commandList[this.commandList.length] = sc;
 
             /*
@@ -838,7 +844,7 @@ module TSOS
         	{
         		sessionStorage.setItem(desiredFileName, "");
         		Utils.updateDiskStorage();
-        		_StdOut.putText("file created successfully.");
+        		_StdOut.putText("File created successfully.");
         	}
         }
 
@@ -872,6 +878,23 @@ module TSOS
         		var data = String(args[1]);
         		sessionStorage.setItem(desiredFileName, (oldText+data));
         		_StdOut.putText("Written to file successfully.");
+        	}
+        }
+
+        public shellDelete(args)
+        {
+        	var desiredFileName: string = String(args[0]);
+        	if(args.length > 1)
+        		_StdOut.putText("Too many arguements; file not deleted.");
+        	else if(args.length < 1)
+        		_StdOut.putText("Missing filename arguement; file not deleted.");
+        	else if(sessionStorage.getItem(desiredFileName) == null)
+        		_StdOut.putText("File not found; file not deleted.");
+        	else
+        	{
+        		sessionStorage.removeItem(desiredFileName);
+        		Utils.updateDiskStorage();
+        		_StdOut.putText("File deleted successfully.");
         	}
         }
 
