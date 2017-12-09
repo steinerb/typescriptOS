@@ -1,8 +1,9 @@
 module TSOS 
 {
-	export class Memory 
+	export class Storage
 	{
-		constructor(public registers: number[] = new Array(768),
+		constructor(public name,
+                    public registers: number[] = new Array(768),
                     public par1Base:  number = 0,
                     public par1Limit: number = 255,
                     public par2Base:  number = 256,
@@ -11,6 +12,7 @@ module TSOS
                     public par3Limit: number = 767
                     )
 		{
+            this.name = name;
 		}
 
 		public getSize(): number

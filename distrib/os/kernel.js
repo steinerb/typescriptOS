@@ -1,7 +1,7 @@
 ///<reference path="../globals.ts" />
 ///<reference path="../utils.ts" />
 ///<reference path="queue.ts" />
-///<reference path="memoryManager.ts" />
+///<reference path="storageManager.ts" />
 ///<reference path="CPUScheduler.ts" />
 /* ------------
      Kernel.ts
@@ -32,7 +32,8 @@ var TSOS;
             _ResidentList = [];
             _CPUScheduler = new TSOS.CPUScheduler();
             //Initialize Memory Manager
-            _MemoryManager = new TSOS.MemoryManager();
+            _MemoryManager = new TSOS.StorageManager();
+            _SwapManager = new TSOS.StorageManager();
             // Initialize the console.
             _Console = new TSOS.Console(); // The command line interface / console I/O device.
             _Console.init();

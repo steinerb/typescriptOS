@@ -1,7 +1,7 @@
 ///<reference path="../globals.ts" />
 ///<reference path="../os/canvastext.ts" />
 ///<reference path="../os/queue.ts" />
-///<reference path="memory.ts" />
+///<reference path="storage.ts" />
 /* ------------
      Control.ts
 
@@ -31,8 +31,8 @@ var TSOS;
         Control.hostInit = function () {
             // This is called from index.html's onLoad event via the onDocumentLoad function pointer.
             //Initialize Memory
-            _memTest = new TSOS.Memory();
-            _Memory = new TSOS.Memory();
+            _Memory = new TSOS.Storage("MEMORY");
+            _Swap = new TSOS.Storage("SWAP");
             // Get a global reference to the canvas.  TODO: Should we move this stuff into a Display Device Driver?
             _Canvas = document.getElementById('display');
             // Get a global reference to the drawing context.

@@ -72,6 +72,7 @@ module TSOS
             return false;
         }
 
+        //GUI functions
         public static updateMemory(): void
         {
             var memoryBox = (<HTMLInputElement>document.getElementById("memory"));
@@ -123,6 +124,15 @@ module TSOS
             }
             processesBox.value = pcbString;
         }
+
+        public static updateDiskStorage(): void
+        {
+            var processesBox = (<HTMLInputElement>document.getElementById("diskStorage"));
+
+            
+        }
+
+
 
     }
 }

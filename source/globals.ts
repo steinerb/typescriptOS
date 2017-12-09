@@ -65,11 +65,12 @@ var _CurrentPartition: number;
 var _BreakReached: boolean = false;
 
 // list of numbers that translate to hex values using von Neumann architecture.
-var _Memory: TSOS.Memory;
-var _memTest: TSOS.Memory;
+var _Memory:	TSOS.Storage;
+var _Swap:		TSOS.Storage;
 
 // self explanatory
-var _MemoryManager : TSOS.MemoryManager;
+var _MemoryManager:	TSOS.StorageManager;
+var _SwapManager:	TSOS.StorageManager;
 
 var _CPUScheduler: TSOS.CPUScheduler;
 var _CPU: TSOS.Cpu;  // Utilize TypeScript's type annotation system to ensure that _CPU is an instance of the Cpu class.

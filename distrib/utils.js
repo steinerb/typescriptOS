@@ -64,6 +64,7 @@ var TSOS;
             }
             return false;
         };
+        //GUI functions
         Utils.updateMemory = function () {
             var memoryBox = document.getElementById("memory");
             var memString = "";
@@ -100,6 +101,9 @@ var TSOS;
                 pcbString += ("PID " + String(currentPCB.pid) + ":\t" + currentPCB.toString() + "\n");
             }
             processesBox.value = pcbString;
+        };
+        Utils.updateDiskStorage = function () {
+            var processesBox = document.getElementById("diskStorage");
         };
         return Utils;
     }());

@@ -2,7 +2,7 @@
 ///<reference path="../utils.ts" />
 
 ///<reference path="queue.ts" />
-///<reference path="memoryManager.ts" />
+///<reference path="storageManager.ts" />
 ///<reference path="CPUScheduler.ts" />
 
 /* ------------
@@ -36,7 +36,8 @@ module TSOS {
             _CPUScheduler = new CPUScheduler();
 
             //Initialize Memory Manager
-            _MemoryManager = new MemoryManager();
+            _MemoryManager = new StorageManager();
+            _SwapManager = new StorageManager();
 
             // Initialize the console.
             _Console = new Console();          // The command line interface / console I/O device.

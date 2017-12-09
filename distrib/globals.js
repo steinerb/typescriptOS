@@ -56,9 +56,10 @@ var _CurrentPartition;
 var _BreakReached = false;
 // list of numbers that translate to hex values using von Neumann architecture.
 var _Memory;
-var _memTest;
+var _Swap;
 // self explanatory
 var _MemoryManager;
+var _SwapManager;
 var _CPUScheduler;
 var _CPU; // Utilize TypeScript's type annotation system to ensure that _CPU is an instance of the Cpu class.
 var _OSclock = 0; // Page 23.
