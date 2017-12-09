@@ -46,7 +46,7 @@ const COMMAND_NAMES: string[] =
 	"read",
 	"write",
 	"delete",
-	//"format",
+	"format",
 	"status",
 	"bsod",
 	"test"

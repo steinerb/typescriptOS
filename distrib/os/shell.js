@@ -99,13 +99,9 @@ var TSOS;
             // delete
             sc = new TSOS.ShellCommand(this.shellDelete, "delete", "- <filename> Deletes a file.");
             this.commandList[this.commandList.length] = sc;
-            /*
             // format
-            sc = new ShellCommand(this.shellFormat,
-                                  "format",
-                                  "- Clears disk storage.");
+            sc = new TSOS.ShellCommand(this.shellFormat, "format", "- Clears disk storage.");
             this.commandList[this.commandList.length] = sc;
-            */
             // status
             sc = new TSOS.ShellCommand(this.shellStatus, "status", "<string> - Prints a message in the task bar.");
             this.commandList[this.commandList.length] = sc;
@@ -661,6 +657,11 @@ var TSOS;
                 TSOS.Utils.updateDiskStorage();
                 _StdOut.putText("File deleted successfully.");
             }
+        };
+        Shell.prototype.shellFormat = function (args) {
+            sessionStorage.clear();
+            TSOS.Utils.updateDiskStorage();
+            _StdOut.putText("Storage formatted successfully.");
         };
         Shell.prototype.shellStatus = function (args) {
             var statusBox = document.getElementById("status");

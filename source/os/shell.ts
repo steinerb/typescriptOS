@@ -183,13 +183,11 @@ module TSOS
                                   "- <filename> Deletes a file.");
             this.commandList[this.commandList.length] = sc;
 
-            /*
             // format
             sc = new ShellCommand(this.shellFormat,
                                   "format",
                                   "- Clears disk storage.");
             this.commandList[this.commandList.length] = sc;
-            */
 
             // status
             sc = new ShellCommand(this.shellStatus,
@@ -896,6 +894,13 @@ module TSOS
         		Utils.updateDiskStorage();
         		_StdOut.putText("File deleted successfully.");
         	}
+        }
+
+        public shellFormat(args)
+        {
+        	sessionStorage.clear();
+        	Utils.updateDiskStorage();
+        	_StdOut.putText("Storage formatted successfully.");
         }
 
         public shellStatus(args) 
