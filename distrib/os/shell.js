@@ -102,6 +102,9 @@ var TSOS;
             // format
             sc = new TSOS.ShellCommand(this.shellFormat, "format", "- Clears disk storage.");
             this.commandList[this.commandList.length] = sc;
+            // ls
+            sc = new TSOS.ShellCommand(this.shellLs, "ls", "- Lists all stored files.");
+            this.commandList[this.commandList.length] = sc;
             // status
             sc = new TSOS.ShellCommand(this.shellStatus, "status", "<string> - Prints a message in the task bar.");
             this.commandList[this.commandList.length] = sc;
@@ -354,6 +357,10 @@ var TSOS;
                     //format
                     case "format":
                         _StdOut.putText("Clears disk storage.");
+                        break;
+                    //ls
+                    case "ls":
+                        _StdOut.putText("Displays all files saved on disk storage.");
                         break;
                     //status
                     case "status":
@@ -662,6 +669,13 @@ var TSOS;
             sessionStorage.clear();
             TSOS.Utils.updateDiskStorage();
             _StdOut.putText("Storage formatted successfully.");
+        };
+        Shell.prototype.shellLs = function (args) {
+            var fileNames = Object.keys(sessionStorage);
+            for (var i = 0; i < fileNames.length; i++) {
+                _StdOut.putText(fileNames[i]);
+                _StdOut.advanceLine();
+            }
         };
         Shell.prototype.shellStatus = function (args) {
             var statusBox = document.getElementById("status");

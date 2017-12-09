@@ -189,6 +189,12 @@ module TSOS
                                   "- Clears disk storage.");
             this.commandList[this.commandList.length] = sc;
 
+            // ls
+            sc = new ShellCommand(this.shellLs,
+                                  "ls",
+                                  "- Lists all stored files.");
+            this.commandList[this.commandList.length] = sc;
+
             // status
             sc = new ShellCommand(this.shellStatus,
                                   "status",
@@ -498,6 +504,10 @@ module TSOS
                     //format
                     case "format":
                         _StdOut.putText("Clears disk storage.");
+                        break;
+                    //ls
+                    case "ls":
+                        _StdOut.putText("Displays all files saved on disk storage.");
                         break;
                     //status
                     case "status":
@@ -901,6 +911,16 @@ module TSOS
         	sessionStorage.clear();
         	Utils.updateDiskStorage();
         	_StdOut.putText("Storage formatted successfully.");
+        }
+
+        public shellLs(args)
+        {
+        	var fileNames: string[] = Object.keys(sessionStorage);
+            for(var i = 0; i < fileNames.length; i++)
+            {
+                _StdOut.putText(fileNames[i]);
+                _StdOut.advanceLine();
+            }
         }
 
         public shellStatus(args) 

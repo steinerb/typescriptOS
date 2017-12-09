@@ -42,6 +42,7 @@ var COMMAND_NAMES = [
     "write",
     "delete",
     "format",
+    "ls",
     "status",
     "bsod",
     "test"
