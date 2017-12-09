@@ -56,9 +56,12 @@ module TSOS {
             _krnKeyboardDriver.driverEntry();                    // Call the driverEntry() initialization routine.
             this.krnTrace(_krnKeyboardDriver.status);
 
-            //
-            // ... more?
-            //
+            // Load the FsDD Device Driver
+            this.krnTrace("Loading the File System Device ");
+            _krnFileSystemDriver = new DeviceDriverFileSystem();     // Construct it.
+            _krnFileSystemDriver.driverEntry();                    // Call the driverEntry() initialization routine.
+            this.krnTrace(_krnKeyboardDriver.status);
+            
 
             (<HTMLInputElement>document.getElementById("pc")).value = "0";
             (<HTMLInputElement>document.getElementById("acc")).value = "00";

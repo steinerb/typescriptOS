@@ -22,14 +22,16 @@ var TSOS;
             // accessed after calling super.
             //super(this.krnKbdDriverEntry, this.krnKbdDispatchKeyPress);
             _super.call(this) || this;
-            _this.driverEntry = _this.krnFileSystemDriverEntry();
-            _this.isr = null;
+            _this.driverEntry = _this.krnFileSystemDriverEntry;
+            _this.isr = _this.testISR;
             return _this;
         }
         DeviceDriverFileSystem.prototype.krnFileSystemDriverEntry = function () {
             // Initialization routine for this, the kernel-mode Keyboard Device Driver.
             this.status = "loaded";
             // More?
+        };
+        DeviceDriverFileSystem.prototype.testISR = function () {
         };
         return DeviceDriverFileSystem;
     }(TSOS.DeviceDriver));

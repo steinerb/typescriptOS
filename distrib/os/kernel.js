@@ -45,9 +45,11 @@ var TSOS;
             _krnKeyboardDriver = new TSOS.DeviceDriverKeyboard(); // Construct it.
             _krnKeyboardDriver.driverEntry(); // Call the driverEntry() initialization routine.
             this.krnTrace(_krnKeyboardDriver.status);
-            //
-            // ... more?
-            //
+            // Load the FsDD Device Driver
+            this.krnTrace("Loading the File System Device ");
+            _krnFileSystemDriver = new TSOS.DeviceDriverFileSystem(); // Construct it.
+            _krnFileSystemDriver.driverEntry(); // Call the driverEntry() initialization routine.
+            this.krnTrace(_krnKeyboardDriver.status);
             document.getElementById("pc").value = "0";
             document.getElementById("acc").value = "00";
             document.getElementById("xReg").value = "00";
