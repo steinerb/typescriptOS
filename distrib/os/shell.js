@@ -90,13 +90,10 @@ var TSOS;
             // create
             sc = new TSOS.ShellCommand(this.shellCreate, "create", "- <filename> Creates a file.");
             this.commandList[this.commandList.length] = sc;
-            /*
             // read
-            sc = new ShellCommand(this.shellRead,
-                                  "read",
-                                  "- <filename> Reads a file.");
+            sc = new TSOS.ShellCommand(this.shellRead, "read", "- <filename> Reads a file.");
             this.commandList[this.commandList.length] = sc;
-
+            /*
             // write
             sc = new ShellCommand(this.shellWrite,
                                   "write",
@@ -622,6 +619,18 @@ var TSOS;
                 sessionStorage.setItem(desiredFileName, "");
                 TSOS.Utils.updateDiskStorage();
                 _StdOut.putText("file created successfully.");
+            }
+        };
+        Shell.prototype.shellRead = function (args) {
+            var desiredFileName = String(args[0]);
+            if (args.length > 1)
+                _StdOut.putText("Too many arguements; file not read.");
+            else if (args.length < 1)
+                _StdOut.putText("Missing filename arguement; file not read.");
+            else if (sessionStorage.getItem(desiredFileName) == null)
+                _StdOut.putText("File not found; file not read.");
+            else {
+                _StdOut.putText("\"" + sessionStorage.getItem(desiredFileName) + "\"");
             }
         };
         Shell.prototype.shellStatus = function (args) {
