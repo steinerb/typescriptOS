@@ -258,6 +258,9 @@ module TSOS
 		   //update memory display
 		   Utils.updateMemory();
 
+		   //update storage display
+		   Utils.updateDiskStorage();
+
 		   _CurrentPartition = undefined;
 		   
 		}

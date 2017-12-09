@@ -127,9 +127,14 @@ module TSOS
 
         public static updateDiskStorage(): void
         {
-            var processesBox = (<HTMLInputElement>document.getElementById("diskStorage"));
+            var storageBox = (<HTMLInputElement>document.getElementById("diskStorage"));
+            var toReturn: string = "";
+            var fileNames: string[] = Object.keys(sessionStorage);
 
-            
+            for(var i = 0; i < fileNames.length; i++)
+                toReturn += (fileNames[i] + "\n");
+
+            storageBox.value = toReturn;
         }
 
 

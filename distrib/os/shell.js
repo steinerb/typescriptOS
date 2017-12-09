@@ -87,6 +87,28 @@ var TSOS;
             // kill
             sc = new TSOS.ShellCommand(this.shellKill, "kill", "- <pid> Terminates an active process.");
             this.commandList[this.commandList.length] = sc;
+            // create
+            sc = new TSOS.ShellCommand(this.shellCreate, "create", "- <filename> Creates a file.");
+            this.commandList[this.commandList.length] = sc;
+            /*
+            // read
+            sc = new ShellCommand(this.shellRead,
+                                  "read",
+                                  "- <filename> Reads a file.");
+            this.commandList[this.commandList.length] = sc;
+
+            // write
+            sc = new ShellCommand(this.shellWrite,
+                                  "write",
+                                  "- <filename> Writes to a file.");
+            this.commandList[this.commandList.length] = sc;
+
+            // format
+            sc = new ShellCommand(this.shellFormat,
+                                  "format",
+                                  "- Clears disk storage.");
+            this.commandList[this.commandList.length] = sc;
+            */
             // status
             sc = new TSOS.ShellCommand(this.shellStatus, "status", "<string> - Prints a message in the task bar.");
             this.commandList[this.commandList.length] = sc;
@@ -319,6 +341,26 @@ var TSOS;
                     //kill
                     case "kill":
                         _StdOut.putText("Kills a program.");
+                        break;
+                    //create
+                    case "create":
+                        _StdOut.putText("Adds a file to disk storage.");
+                        break;
+                    //read
+                    case "read":
+                        _StdOut.putText("Displays contents of a chosen file in disk storage.");
+                        break;
+                    //write
+                    case "write":
+                        _StdOut.putText("Appends text to a chosen file in disk storage.");
+                        break;
+                    //delete
+                    case "delete":
+                        _StdOut.putText("Deletes a chosen file in disk storage.");
+                        break;
+                    //format
+                    case "format":
+                        _StdOut.putText("Clears disk storage.");
                         break;
                     //status
                     case "status":
@@ -567,6 +609,20 @@ var TSOS;
             else
                 _ReadyQueue.q.filter(function (pcb) { return pcb.pid != desiredPID; });
             TSOS.Utils.updateProcesses();
+        };
+        Shell.prototype.shellCreate = function (args) {
+            var desiredFileName = String(args[0]);
+            if (args.length > 1)
+                _StdOut.putText("Too many arguements; file not created.");
+            else if (args.length < 1)
+                _StdOut.putText("Missing filename arguement; file not created.");
+            else if (sessionStorage.getItem(desiredFileName) != null)
+                _StdOut.putText("File with name \"" + desiredFileName + "\" already exists.");
+            else {
+                sessionStorage.setItem(desiredFileName, "");
+                TSOS.Utils.updateDiskStorage();
+                _StdOut.putText("file created successfully.");
+            }
         };
         Shell.prototype.shellStatus = function (args) {
             var statusBox = document.getElementById("status");

@@ -198,6 +198,8 @@ var TSOS;
             TSOS.Utils.updateProcesses();
             //update memory display
             TSOS.Utils.updateMemory();
+            //update storage display
+            TSOS.Utils.updateDiskStorage();
             _CurrentPartition = undefined;
         };
         //CPU operations

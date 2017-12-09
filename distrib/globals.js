@@ -37,6 +37,11 @@ var COMMAND_NAMES = [
     "runall",
     "ps",
     "kill",
+    "create",
+    //"read",
+    //"write",
+    //"delete",
+    //"format",
     "status",
     "bsod",
     "test"

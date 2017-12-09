@@ -103,7 +103,12 @@ var TSOS;
             processesBox.value = pcbString;
         };
         Utils.updateDiskStorage = function () {
-            var processesBox = document.getElementById("diskStorage");
+            var storageBox = document.getElementById("diskStorage");
+            var toReturn = "";
+            var fileNames = Object.keys(sessionStorage);
+            for (var i = 0; i < fileNames.length; i++)
+                toReturn += (fileNames[i] + "\n");
+            storageBox.value = toReturn;
         };
         return Utils;
     }());
