@@ -193,7 +193,7 @@ module TSOS
                 _KernelInputQueue.enqueue(chr);
             }
 
-            //BELOW ARE NOT WORKING!!!
+            //BELOW WORK ON MORE RECENT BROWSERS ONLY
             else if (keyCode == 186)							// ; :
             {
             	if(isShifted)

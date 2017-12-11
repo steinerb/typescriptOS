@@ -70,6 +70,8 @@ var _IndexOfProgramToRun: number;
 var _CurrentPartition: number;
 var _BreakReached: boolean = false;
 
+var _ShellCommandPaused: boolean = false;
+
 // list of numbers that translate to hex values using von Neumann architecture.
 var _Memory:	TSOS.Memory;
 
