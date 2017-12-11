@@ -183,7 +183,7 @@ var TSOS;
             this.currentYPosition += lineHeight;
             //handles scrolling
             //OLD SCROLLING
-            if (this.currentYPosition >= (500 + lineHeight)) {
+            if (this.currentYPosition >= 500) {
                 //Clear Screen
                 _Console.init();
                 //Draw last line

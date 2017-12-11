@@ -60,6 +60,7 @@ var _NextAvailableIndex = 0;
 var _IndexOfProgramToRun;
 var _CurrentPartition;
 var _BreakReached = false;
+var _ShellCommandPaused = false;
 // list of numbers that translate to hex values using von Neumann architecture.
 var _Memory;
 // self explanatory
