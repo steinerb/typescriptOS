@@ -237,12 +237,18 @@ var TSOS;
             _StdOut.putText(APP_NAME + " version " + APP_VERSION);
         };
         Shell.prototype.shellHelp = function (args) {
+            var oldFontSize = _DefaultFontSize;
+            var oldFontHeightMargin = _FontHeightMargin;
+            _DefaultFontSize = 8;
+            _FontHeightMargin = 2;
             _StdOut.init();
             _StdOut.putText("Commands:");
             for (var i in _OsShell.commandList) {
                 _StdOut.advanceLine();
                 _StdOut.putText("  " + _OsShell.commandList[i].command + " " + _OsShell.commandList[i].description);
             }
+            _DefaultFontSize = oldFontSize;
+            _FontHeightMargin = oldFontHeightMargin;
         };
         Shell.prototype.shellShutdown = function (args) {
             _StdOut.putText("Shutting down...");
