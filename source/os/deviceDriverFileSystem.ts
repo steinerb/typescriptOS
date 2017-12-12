@@ -25,7 +25,7 @@ module TSOS
             // More?
         }
 
-        public testISR()
+        public testISR(params)
         {
 
         }

@@ -30,7 +30,7 @@ var TSOS;
             this.status = "loaded";
             // More?
         };
-        DeviceDriverFileSystem.prototype.testISR = function () {
+        DeviceDriverFileSystem.prototype.testISR = function (params) {
         };
         return DeviceDriverFileSystem;
     }(TSOS.DeviceDriver));

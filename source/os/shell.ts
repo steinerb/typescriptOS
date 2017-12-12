@@ -120,7 +120,7 @@ module TSOS
             // setschedule
             sc = new ShellCommand(this.shellSetSchedule,
                                   "setschedule",
-                                  "[rr, fcfs, priority] - Sets the CPU scheduling alg.");
+                                  "[rr, fcfs, priority] - Sets the CPU schedulin  g alg.");
             this.commandList[this.commandList.length] = sc;
 
             // getschedule

@@ -67,7 +67,7 @@ var TSOS;
             sc = new TSOS.ShellCommand(this.shellQuantum, "quantum", "<int> - How many CPU cycles per program.");
             this.commandList[this.commandList.length] = sc;
             // setschedule
-            sc = new TSOS.ShellCommand(this.shellSetSchedule, "setschedule", "[rr, fcfs, priority] - Sets the CPU scheduling alg.");
+            sc = new TSOS.ShellCommand(this.shellSetSchedule, "setschedule", "[rr, fcfs, priority] - Sets the CPU schedulin  g alg.");
             this.commandList[this.commandList.length] = sc;
             // getschedule
             sc = new TSOS.ShellCommand(this.shellGetSchedule, "getschedule", "- Displays the current scheduling algorithm.");
